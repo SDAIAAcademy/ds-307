@@ -581,6 +581,354 @@
       "level": "evaluate",
       "pool": "practice",
       "weight": 1
+    },
+    {
+      "id": "d3-decision-first",
+      "type": "single",
+      "prompt": "A depot manager asks for \"a dashboard for operations\". What should you establish before choosing any panel?",
+      "options": [
+        "Which chart library the team already uses",
+        "Who will use it, which decision it serves and how often",
+        "Every metric the warehouse can compute",
+        "The colour palette of the organisation"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Audience, decision and cadence decide which questions belong; without them every question qualifies and the page fills up.",
+      "misconceptions": [
+        "Tools follow the design; they do not decide what to show",
+        "",
+        "Showing everything the warehouse holds is a report, not a decision dashboard",
+        "Colours matter later; they do not choose panels"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "day3",
+      "session": 1,
+      "level": "understand",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d3-comparison",
+      "type": "single",
+      "prompt": "A panel shows \"R11: 76% of departures on time\". The director must decide whether R11 gets a reserve bus next week. Which comparison helps most?",
+      "options": [
+        "R11's own level over the four weeks before",
+        "The number of stops on R11",
+        "None: the figure speaks for itself",
+        "The on-time rate of the whole year"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A reserve bus fixes an unusual week; R11's usual level (86%) shows that last week was unusual for this route.",
+      "misconceptions": [
+        "",
+        "Stops explain a timetable, not whether last week was unusual",
+        "A number alone does not say whether to act",
+        "A yearly figure mixes seasons and timetable changes and moves too slowly to flag one week"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "day3",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d3-cut-panel",
+      "type": "single",
+      "prompt": "The brief allows six panels. A seventh is proposed: the ten cards that tapped most last week. What do you do?",
+      "options": [
+        "Add it, because it is interesting",
+        "Replace the on-time panel with it",
+        "Add it with the card numbers shortened",
+        "Leave it out: it does not serve the decision, and card numbers are Restricted"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "The panel serves no part of the reserve-bus decision, and grouping by card number exposes a Restricted field.",
+      "misconceptions": [
+        "Interest is not a reason to take space from the decision",
+        "The on-time panel is a direct input of the decision",
+        "Shortened card numbers are still personal data grouped and shown",
+        ""
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "day3",
+      "session": 1,
+      "level": "evaluate",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d3-rtl",
+      "type": "single",
+      "prompt": "You build the Arabic version of a horizontal bar panel. Which change is required besides translating the text?",
+      "options": [
+        "Sort the bars in the opposite order of values",
+        "Convert every digit to Eastern Arabic numerals",
+        "Mirror the panel: labels on the right and bars growing from the right",
+        "Use a different colour for each bar"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A right-to-left reader starts at the right; labels and the start of each bar belong there.",
+      "misconceptions": [
+        "The order of values carries meaning and does not depend on the language",
+        "The Academy keeps Western digits in Arabic material; digits are not the layout problem",
+        "",
+        "Colour does not set the reading direction"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "day3",
+      "session": 2,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d3-suppress",
+      "type": "single",
+      "prompt": "A weekly panel shows complaints by subject. Accessibility has 3 complaints. The chart hides the bar, but the page embeds the full data. What is wrong?",
+      "options": [
+        "Nothing: the bar is hidden",
+        "The count can still be read from the page source; it must be removed from the data itself",
+        "The threshold of 10 is too high for complaints",
+        "Accessibility complaints should be merged into another subject"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "A dashboard page ships its data; suppression must remove the value from the data, not only from the drawing.",
+      "misconceptions": [
+        "Hiding the mark leaves the value readable in the embedded specification",
+        "",
+        "The threshold is set by the model's owner; the problem is where the value still lives",
+        "Merging subjects changes the meaning of the panel to hide a number"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "day3",
+      "session": 2,
+      "level": "analyze",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d3-n-plus-one",
+      "type": "single",
+      "prompt": "A dashboard of 336 tiles sends one query per tile and takes 25 seconds. Each query takes about the same time. What will most reduce the load time?",
+      "options": [
+        "One grouped query that computes every tile, ideally from a table built at refresh time",
+        "Fewer decimal places in each tile",
+        "A faster laptop",
+        "Caching each tile's result after it is first viewed"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The cost is in repeating the same work 336 times; one grouped query does it once, and a refresh-time table moves it out of view time.",
+      "misconceptions": [
+        "",
+        "Formatting is not where the time goes",
+        "A faster machine shrinks each query a little but keeps all 336",
+        "The first view of every tile is still slow, and every refresh starts again"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "day3",
+      "session": 3,
+      "level": "analyze",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d3-keep-parts",
+      "type": "single",
+      "prompt": "A route-day table feeds weekly and depot views of the on-time rate. Which columns must it store?",
+      "options": [
+        "The daily on-time rate",
+        "The average delay of the day",
+        "The weekly on-time rate",
+        "On-time departures and departed trips"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "The two counts add across days, routes and depots, so any grouping is a ratio of sums; a stored rate cannot be re-aggregated.",
+      "misconceptions": [
+        "Averaging daily rates gives light days the same weight as busy ones",
+        "An average delay is a different metric from the on-time rate",
+        "A weekly figure cannot serve daily or depot views",
+        ""
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "day3",
+      "session": 3,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d3-equality",
+      "type": "single",
+      "prompt": "The new dashboard is 3,000 times faster, but 16 of 336 tiles show \"empty\" where the old one showed 0. What should happen before release?",
+      "options": [
+        "Release: 95% of the tiles agree",
+        "Release, and note the difference in the footer",
+        "Fix the table so those route-days hold 0, and repeat the equality test",
+        "Go back to the slow dashboard for good"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A faster dashboard must show the same numbers; the difference has a cause (no tap with a route) and a fix (store 0).",
+      "misconceptions": [
+        "A partial match still shows wrong figures on some tiles",
+        "A footer note leaves the wrong tiles in front of the reader",
+        "",
+        "The fix is small; the speed gain is kept once the tiles agree"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "day3",
+      "session": 3,
+      "level": "evaluate",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d3-confirm",
+      "type": "single",
+      "prompt": "Route taps fell 17% in one week while all taps rose 2.5%. What is the best first conclusion?",
+      "options": [
+        "Riders left the network",
+        "Some taps lost their route attribution that week",
+        "The 17% figure was computed wrongly",
+        "Ridership moved to the weekend"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "The taps exist; they are missing only from the count grouped by route, so attribution, not ridership, changed.",
+      "misconceptions": [
+        "If riders had left, all taps would fall too",
+        "",
+        "The 17% is correct for taps with a route; it measures something else",
+        "A shift between days changes neither weekly count"
+      ],
+      "lo": [
+        "LO4"
+      ],
+      "day": "day3",
+      "session": 4,
+      "level": "analyze",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d3-segment",
+      "type": "single",
+      "prompt": "On four days, every fare type on East buses lost its route in exactly the same share. What does this point to?",
+      "options": [
+        "A recording fault on the East equipment",
+        "A change in student travel",
+        "A fare increase for adults",
+        "A road closure on one route"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A real change in demand hits segments unevenly; an equal loss across all of them points at the equipment.",
+      "misconceptions": [
+        "",
+        "Students alone would move, not every fare type",
+        "A fare change would hit one fare type and would reduce taps, not routes",
+        "A road closure affects one route, not every bus of a depot"
+      ],
+      "lo": [
+        "LO4"
+      ],
+      "day": "day3",
+      "session": 4,
+      "level": "evaluate",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d3-validate-restatement",
+      "type": "single",
+      "prompt": "You restate missing routes with an as-of join from each tap to the last trip of its bus. What should you do before publishing the restated week?",
+      "options": [
+        "Nothing: the join is exact by construction",
+        "Ask the depot to confirm the total by phone",
+        "Compare the restated week with the same week last year",
+        "Run the same join on days where the trip is recorded and check it finds the recorded trip"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "A restatement is a model of missing data; it is trusted once it reproduces data you already have.",
+      "misconceptions": [
+        "An early tap or a delayed trip can attach a tap to the wrong trip",
+        "A phoned total is not evidence about each tap",
+        "Last year's week differs for many reasons and cannot validate the join",
+        ""
+      ],
+      "lo": [
+        "LO4"
+      ],
+      "day": "day3",
+      "session": 4,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d3-note",
+      "type": "single",
+      "prompt": "Which line belongs in an anomaly note about the October drop?",
+      "options": [
+        "The East depot team failed to check the validators",
+        "Ridership data cannot be trusted",
+        "Route taps fell 17% because of the validator update; restated, the week rose 2.5%",
+        "The drop may be due to many factors"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A note states what was seen, the cause, the size and the change, with numbers and without blame.",
+      "misconceptions": [
+        "Blame does not prevent the next fault; a test does",
+        "A general distrust gives the reader nothing to act on",
+        "",
+        "A vague cause is not a finding"
+      ],
+      "lo": [
+        "LO4"
+      ],
+      "day": "day3",
+      "session": 4,
+      "level": "understand",
+      "pool": "practice",
+      "weight": 1
     }
   ]
 }

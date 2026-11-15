@@ -1,0 +1,60 @@
+{
+ "decision": "Where to place the six reserve buses and the four field supervisors next week, by depot and route.",
+ "panels": [
+  {
+   "title": "Routes leaving late",
+   "question": "Q1",
+   "metric": "on_time_rate",
+   "dimensions": [
+    "routes.route_id"
+   ],
+   "comparison": "target",
+   "also": "the route's level over the four weeks before",
+   "owner": "Tawfiq Al-Sahafi, control centre"
+  },
+  {
+   "title": "Trips that did not run",
+   "question": "Q2",
+   "metric": "cancellation_rate",
+   "dimensions": [
+    "routes.depot"
+   ],
+   "comparison": "prior_period",
+   "owner": "Tawfiq Al-Sahafi, control centre"
+  },
+  {
+   "title": "Riders per trip (crowding)",
+   "question": "Q3",
+   "metric": "boardings_per_departed_trip",
+   "dimensions": [
+    "routes.route_id"
+   ],
+   "comparison": "prior_period",
+   "owner": "Dhuha Al-Rowais, network planning"
+  },
+  {
+   "title": "Complaints by subject",
+   "question": "Q4",
+   "metric": "complaints.complaints",
+   "dimensions": [
+    "complaints.category"
+   ],
+   "comparison": "prior_period",
+   "owner": "Yasmeen Al-Jaafari, strategy and finance"
+  },
+  {
+   "title": "Network taps",
+   "question": "Q5",
+   "metric": "boardings.boardings",
+   "dimensions": [],
+   "comparison": "prior_period",
+   "owner": "Muneer Al-Thaqafi, data platform"
+  }
+ ],
+ "drill_through": "Q9, average delay by timepoint, opened from a route in the first panel",
+ "left_out": [
+  "Q6 revenue belongs to finance",
+  "Q7 card numbers are Restricted",
+  "Q8 a forecast is not this decision"
+ ]
+}

@@ -1,158 +1,438 @@
+<!-- ======================= OPENING ======================= -->
 <section class="slide title" id="title" data-auto="title">
-  <aside class="notes">REPLACE: welcome; introduce yourself; one question to the room that calibrates the pace; the rhythm of the day</aside>
+  <aside class="notes"><p>Welcome back. Two days of definitions and a tested model; today someone uses them. Ask: who brought a dashboard from their own work? Keep two of them for the first session, and ask the room what decision each one serves. Usually nobody can say, which is the point of Session 1.</p></aside>
 </section>
 
 <section class="slide" id="agenda" data-auto="agenda"></section>
 
-<!-- Session 1 -->
-
-<section class="slide section" id="s1" data-auto="section" data-session="1"></section>
-
-<section class="slide" id="s1-idea" data-lo="LO5">
-  <div class="kicker">REPLACE: the question this slide answers</div>
-  <h2>REPLACE: one idea, stated as a sentence</h2>
-  <div class="cols cols-2">
-    <ul class="bullets">
-      <li>REPLACE: at most six bullets, each a complete thought</li>
-      <li>REPLACE: bold the key phrase; numbers come from the lab run, not from memory</li>
-    </ul>
-    <div class="card c-teal"><h4>In the case study</h4><p class="small mb0">REPLACE: tie the idea to the case study and its data</p></div>
+<section class="slide" id="review-day2" data-lo="LO3">
+  <div class="kicker">Review of Day 2</div>
+  <h2>What does the semantic layer do with this request?</h2>
+  <div class="quiz" data-type="single" data-lo="LO3">
+    <p class="lead">A request asks for <code>boardings.boardings</code> and <code>trips.departed_trips</code> by <code>routes.route_id</code> for one week. Both facts reach routes. What SQL does the layer generate?</p>
+    <div class="opts">
+      <div class="opt" data-why="Joining taps to trips first repeats each trip once per tap: the fan-out of Session 3">Join taps to trips, then group by route</div>
+      <div class="opt" data-ok>Aggregate each fact by route on its own, then join the two results on the route</div>
+      <div class="opt" data-why="The layer never averages per-trip figures; it keeps the counts and joins them">Average taps per trip, then multiply by trips</div>
+      <div class="opt" data-why="The layer has a valid path for both facts, so it has no reason to refuse">Refuse: two facts cannot meet</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> Each fact is aggregated to the shared grain first, along many-to-one paths only; the results then meet one row per route, so nothing is repeated.</div>
   </div>
-  <div class="callout warn mt"><b>What goes wrong.</b> REPLACE: the failure participants will hit, and how to recognise it</div>
-  <aside class="notes">REPLACE: what to say, the demo to run, the question to ask the room, the common failure and its fix</aside>
+  <aside class="notes"><p>Answer: B. This is the query behind the crowding panel of today's dashboard: taps per departed trip by route. If A is popular, show the compiled SQL from Lab 2.4 again: one common table expression per fact, then a join on the route.</p></aside>
 </section>
 
-<section class="slide" id="s1-steps" data-lo="LO5">
-  <div class="kicker">Step by step</div>
-  <h2>REPLACE: a process, shown one step per key press</h2>
-  <div class="flow">
-    <div class="step c-teal"><b>1 · REPLACE: name</b>REPLACE: what happens first</div>
-    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · REPLACE: name</b>REPLACE: the next piece</div>
-    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · REPLACE: name</b>REPLACE: the result</div>
+<!-- ======================= SESSION 1 ======================= -->
+<section class="slide section" id="s1" data-auto="section" data-session="1"></section>
+
+<section class="slide" id="dashboard-is-for" data-lo="LO5">
+  <div class="kicker">What a dashboard is for</div>
+  <h2>A dashboard serves one audience making one decision on a cadence</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Audience</h4><p class="small mb0">Mashael Al-Saadi, operations director, and her two depot leads.</p></div>
+    <div class="card c-cyan"><h4>Decision</h4><p class="small mb0">Where the six reserve buses and four field supervisors go next week.</p></div>
+    <div class="card c-coral"><h4>Cadence</h4><p class="small mb0">Sunday morning, before the depots open; data to Saturday.</p></div>
   </div>
-  <div class="callout tip mt frag"><b>Takeaway.</b> REPLACE: the one sentence to remember</div>
-  <aside class="notes">Press once per step and say what each step adds before the next one appears. REPLACE: the example to walk through</aside>
+  <div class="callout warn mt"><b>What goes wrong.</b> "A dashboard for operations" names no decision, so every question qualifies and the page fills up.</div>
+  <aside class="notes"><p>These three lines open the brief in labs/data/dashboard/brief.yaml. Ask the owners of the dashboards brought by participants to fill the three boxes for theirs. A dashboard that cannot fill "decision" is a report, which is fine, but it is designed differently: for lookup, not for action.</p></aside>
+</section>
+
+<section class="slide" id="brief-questions" data-lo="LO5">
+  <div class="kicker">The brief</div>
+  <h2>Nine good questions; four of them decide</h2>
+  <table class="t small">
+    <tr><th>Question</th><th>Serves the decision?</th></tr>
+    <tr class="hl"><td>Q1 Which routes leave late, against the 85% target?</td><td>decides</td></tr>
+    <tr class="hl"><td>Q2 Where were trips cancelled?</td><td>decides</td></tr>
+    <tr class="hl"><td>Q3 Which routes are crowded?</td><td>decides</td></tr>
+    <tr class="hl"><td>Q4 What are riders complaining about?</td><td>decides</td></tr>
+    <tr><td>Q5 Network taps this week</td><td>context</td></tr>
+    <tr><td>Q6 Revenue by product · Q7 Top card numbers · Q8 Next month's forecast</td><td>no</td></tr>
+    <tr><td>Q9 Delay by timepoint on one route</td><td>drill-through</td></tr>
+  </table>
+  <aside class="notes"><p>Read the nine questions aloud and ask the room to vote on each before showing the marks. Q6 and Q8 are good questions for other people. Q7 is not a question this dashboard may ever answer: card numbers are Restricted. Q9 belongs on a second page opened from a route, not on the first screen.</p></aside>
+</section>
+
+<section class="slide" id="question-to-panel" data-lo="LO5">
+  <div class="kicker">From question to panel</div>
+  <h2>A panel is a question, a governed metric, a split, a comparison and an owner</h2>
+  <pre class="code s" data-file="Lab 3.1 · wireframe"><code class="language-yaml">- title: Routes leaving late
+  question: Q1
+  metric: on_time_rate          # from the semantic model
+  dimensions: [routes.route_id]
+  comparison: target            # 85%, from the brief
+  also: the route's level over the four weeks before
+  owner: Tawfiq Al-Sahafi, control centre</code></pre>
+  <div class="callout tip mt"><b>Only governed metrics.</b> A panel that cannot name a metric of the model is asking for a definition first.</div>
+  <aside class="notes"><p>The five parts map back to the course: the metric from Day 1's catalogue and Day 2's model, the owner from the catalogue entry. The checker in Lab 3.1 refuses a metric the model does not know, such as "fare_revenue" or "ridership_forecast".</p></aside>
+</section>
+
+<section class="slide" id="every-panel-compares" data-lo="LO5">
+  <div class="kicker">Comparisons</div>
+  <h2>A number alone does not say whether to act</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Target</h4><p class="small mb0">76% against 85%: below the promise.</p></div>
+    <div class="card c-cyan"><h4>Prior period</h4><p class="small mb0">76% against a usual 86%: a bad week.</p></div>
+    <div class="card c-coral"><h4>Peer</h4><p class="small mb0">76% against other feeders at 77% to 90%: this route.</p></div>
+  </div>
+  <div class="callout tip mt"><b>Pick the comparison the decision needs.</b> A reserve bus fixes a bad week, so Q1 shows the target and the usual level.</div>
+  <aside class="notes"><p>The example is R11 in the week of 25 October, from Lab 3.2. Ask: which comparison would make you send a reserve bus? The prior period: R11 is normally at its target and was not last week. The checker in Lab 3.1 refuses a panel with no comparison.</p></aside>
+</section>
+
+<section class="slide" id="few-panels" data-lo="LO5">
+  <div class="kicker">The brief checker</div>
+  <h2>The wish list gets 13 findings; five panels get none</h2>
+  <div class="cols cols-2">
+    <ul class="bullets small">
+      <li>9 panels: a decision dashboard has at most six</li>
+      <li>Q6, Q7, Q8 do not serve the decision</li>
+      <li><code>fare_revenue</code> and <code>ridership_forecast</code> are not metrics of the model</li>
+      <li><code>boardings.card_id</code> is Restricted and cannot be shown</li>
+      <li>Six panels have no comparison</li>
+    </ul>
+    <div class="card c-teal"><h4>The wireframe</h4><p class="small mb0">Late routes, cancellations by depot, riders per trip, complaints by subject, network taps; Q9 as a drill-through.</p></div>
+  </div>
+  <aside class="notes"><p>The findings are the real output of D.check_wireframe on the director's wish list in Lab 3.1. The checker is a reviewer's checklist written as code; participants can read it in labs/wnt_dash.py. Ask: which finding would you have missed by eye? Usually the Restricted dimension.</p></aside>
+</section>
+
+<section class="slide" id="nbia-use-case" data-lo="LO5">
+  <div class="kicker">The national standard</div>
+  <h2>A dashboard is an analytics use case: plan it, validate it, register it</h2>
+  <ul class="bullets">
+    <li>The NDMO Business Intelligence and Analytics domain asks for <b>identified, prioritised use cases</b></li>
+    <li>It asks that their outcomes be <b>validated</b>, personal data protection included</li>
+    <li>The wireframe is the use case; the brief checker and Lab 3.3's equality test are the validation</li>
+  </ul>
+  <aside class="notes"><p>Source: NDMO Data Management and Personal Data Protection Standards, Business Intelligence and Analytics domain. Day 1 showed the KPI and register side of the same domain; today it is the use-case side. Say what it asks in plain words; do not read clause text.</p></aside>
+</section>
+
+<section class="slide" id="checkpoint-1" data-lo="LO5">
+  <div class="kicker">Checkpoint</div>
+  <h2>Which panel do you cut?</h2>
+  <div class="quiz" data-type="single" data-lo="LO5">
+    <p class="lead">Your wireframe has seven panels and the limit is six. Mashael's decision is where reserve buses go next week. Which panel goes?</p>
+    <div class="opts">
+      <div class="opt" data-ok>Revenue by fare product this month</div>
+      <div class="opt" data-why="Late departures by route is the first input of the decision">On-time departures by route against the target</div>
+      <div class="opt" data-why="Crowding tells where an extra bus carries most riders">Taps per departed trip by route</div>
+      <div class="opt" data-why="Cancellations by depot show where buses are missing">Cancellation rate by depot against last week</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> Revenue is a fair question for finance, but it does not change where a reserve bus goes on Sunday; the other three are the decision's inputs.</div>
+  </div>
+  <aside class="notes"><p>Answer: A. Some will argue that revenue matters to everyone. Agree, and ask what Mashael would do differently on Sunday if it rose or fell. Nothing: so it belongs elsewhere.</p></aside>
 </section>
 
 <section class="slide lab" id="lab-3-1" data-auto="lab" data-lab="3.1">
-  <aside class="notes">REPLACE: what to watch for while participants work, the typical problems, and the fallback for anyone who did not finish an earlier lab</aside>
+  <aside class="notes"><p>AI-off: choosing panels is the skill. Watch for panels that answer Q6 to Q8 "because there was room", and for dimensions such as boardings.card_id. Participants who finish early do the stretch: Arabic titles and a check that each route has an Arabic name. The safety net supplies the reference wireframe for Lab 3.2.</p></aside>
 </section>
 
-<!-- Session 2 -->
-
+<!-- ======================= SESSION 2 ======================= -->
 <section class="slide section" id="s2" data-auto="section" data-session="2"></section>
 
-<section class="slide" id="s2-idea" data-lo="LO5">
-  <div class="kicker">REPLACE: the question this slide answers</div>
-  <h2>REPLACE: one idea, stated as a sentence</h2>
-  <div class="cols cols-2">
-    <ul class="bullets">
-      <li>REPLACE: at most six bullets, each a complete thought</li>
-      <li>REPLACE: bold the key phrase; numbers come from the lab run, not from memory</li>
-    </ul>
-    <div class="card c-teal"><h4>In the case study</h4><p class="small mb0">REPLACE: tie the idea to the case study and its data</p></div>
-  </div>
-  <div class="callout warn mt"><b>What goes wrong.</b> REPLACE: the failure participants will hit, and how to recognise it</div>
-  <aside class="notes">REPLACE: what to say, the demo to run, the question to ask the room, the common failure and its fix</aside>
+<section class="slide" id="three-panels" data-lo="LO5">
+  <div class="kicker">From wireframe to panels</div>
+  <h2>Every panel asks the semantic layer, never the raw tables</h2>
+  <pre class="code s" data-file="Lab 3.2 · panel_data"><code class="language-python">w = ["dates.week_start = DATE '2026-10-25'"]
+model.query(["on_time_rate", "trips.departed_trips"],
+            ["routes.route_id", "routes.route_name_en",
+             "routes.route_name_ar"], w)</code></pre>
+  <ul class="bullets small mt-s">
+    <li>The same definition as the catalogue and the 25 tests</li>
+    <li>Arabic and English route names come from the model, not from a translation table in the chart</li>
+  </ul>
+  <aside class="notes"><p>Ask what would happen if the dashboard computed on-time departures in its own SQL: the three-report problem of Day 1, on a fourth screen. Week of 25 to 31 October, the last full week of the data.</p></aside>
 </section>
 
-<section class="slide" id="s2-steps" data-lo="LO5">
-  <div class="kicker">Step by step</div>
-  <h2>REPLACE: a process, shown one step per key press</h2>
-  <div class="flow">
-    <div class="step c-teal"><b>1 · REPLACE: name</b>REPLACE: what happens first</div>
-    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · REPLACE: name</b>REPLACE: the next piece</div>
-    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · REPLACE: name</b>REPLACE: the result</div>
+<section class="slide" id="target-and-usual" data-lo="LO5">
+  <div class="kicker">The week of 25 October</div>
+  <h2>Eight routes miss 85%; only some of them had a bad week</h2>
+  <table class="t small">
+    <tr><th>Route</th><th class="num">Last week</th><th class="num">Usual (4 weeks)</th><th>Reading</th></tr>
+    <tr><td>R09 East Trunk</td><td class="num">60.8%</td><td class="num">65.7%</td><td>always far below: timetable</td></tr>
+    <tr><td>R01 Al-Nakheel to City Centre</td><td class="num">66.4%</td><td class="num">69.6%</td><td>always below: timetable</td></tr>
+    <tr class="hl"><td>R11 Al-Faisaliyah Feeder</td><td class="num">76.4%</td><td class="num">85.5%</td><td>a bad week: reserve bus</td></tr>
+    <tr class="hl"><td>R02 Al-Wurud Loop</td><td class="num">77.7%</td><td class="num">85.2%</td><td>a bad week: reserve bus</td></tr>
+  </table>
+  <div class="callout tip mt"><b>Two comparisons, two actions.</b> The target says "below"; the usual level says "unusual".</div>
+  <aside class="notes"><p>Figures from Lab 3.2, task 2. The trunk routes R01, R05 and R09 are below target every week: that is a matter for network planning (Dhuha), not a reserve bus. R11 and R02 fell about eight to nine points against their own usual level. That is what the tick on the panel shows.</p></aside>
+</section>
+
+<section class="slide" id="rtl-mirroring" data-lo="LO5">
+  <div class="kicker">Two directions</div>
+  <h2>In Arabic the panel mirrors; it is not only translated</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>English, left to right</h4><p class="small mb0">Labels on the left; bars grow to the right; the title starts on the left.</p></div>
+    <div class="card c-coral"><h4>Arabic, right to left</h4><p class="small mb0">Labels on the right; bars grow to the left; the title starts on the right; the page has <code>dir="rtl"</code>.</p></div>
   </div>
-  <div class="callout tip mt frag"><b>Takeaway.</b> REPLACE: the one sentence to remember</div>
-  <aside class="notes">Press once per step and say what each step adds before the next one appears. REPLACE: the example to walk through</aside>
+  <ul class="bullets small mt-s">
+    <li>Digits stay Western (0 to 9) in both, as in the Academy's Arabic material</li>
+    <li>Route names from <code>route_name_ar</code>; subjects from a reviewed list, never machine-translated on the fly</li>
+  </ul>
+  <aside class="notes"><p>Open artifacts/D3_2/dashboard_ar.html after the lab and ask an Arabic reader where the eye lands first. The bar starts where the label is; with an unmirrored chart the reader meets the end of the bar first. The scale is reversed with Altair's scale(reverse=True), and the axis is moved to the right.</p></aside>
+</section>
+
+<section class="slide" id="small-counts" data-lo="LO5">
+  <div class="kicker">Before publishing</div>
+  <h2>Counts below ten are hidden, and the page says so</h2>
+  <div class="cols cols-2">
+    <ul class="bullets small">
+      <li>Complaints by subject, one week: 4 of 6 subjects have fewer than 10</li>
+      <li>Small counts can point to a person and move by chance</li>
+      <li>The threshold is in the model's extension: <code>small_count_threshold: 10</code></li>
+      <li>Hidden values are removed from the data, not only from the chart</li>
+    </ul>
+    <div class="card c-teal"><h4>On the page</h4><p class="small mb0">"fewer than 10: accessibility, card, cleanliness, driver". The subject is named; its count is not.</p></div>
+  </div>
+  <aside class="notes"><p>The Personal Data Protection Law limits personal data to what the purpose needs; a weekly count of three accessibility complaints on one route can identify a wheelchair user. Ask: why remove the value from the data rather than hide it in the chart? Because the page ships the data inside it: the Vega specification is readable by anyone who opens the source.</p></aside>
+</section>
+
+<section class="slide" id="colour-not-alone" data-lo="LO5">
+  <div class="kicker">Colour</div>
+  <h2>Meaning must survive without colour</h2>
+  <table class="t small">
+    <tr><th>Pair</th><th class="num">Contrast</th></tr>
+    <tr><td>teal bar on white</td><td class="num">5.47 to 1</td></tr>
+    <tr><td>orange tick on white</td><td class="num">5.18 to 1</td></tr>
+    <tr class="hl"><td>teal bar against orange tick</td><td class="num">1.06 to 1</td></tr>
+  </table>
+  <div class="callout tip mt"><b>A different mark, not only a different colour.</b> The usual level is a tick and the target a dashed rule, so they read apart even where the two colours do not.</div>
+  <aside class="notes"><p>From the stretch of Lab 3.2 (the WCAG contrast formula). Both colours pass against white, but against each other they are nearly the same lightness: a reader with low colour vision tells them apart by shape. Colour and bilingual charts were taught in DS-203; this slide is the dashboard-specific part.</p></aside>
+</section>
+
+<section class="slide" id="checkpoint-2" data-lo="LO5">
+  <div class="kicker">Checkpoint</div>
+  <h2>What does the Arabic panel need?</h2>
+  <div class="quiz" data-type="single" data-lo="LO5">
+    <p class="lead">The English crowding panel is finished. A colleague makes the Arabic one by translating the title and the axis label. What is still wrong?</p>
+    <div class="opts">
+      <div class="opt" data-why="The Academy's Arabic material keeps Western digits; changing them is not the problem">The digits must become Eastern Arabic</div>
+      <div class="opt" data-why="The values are the same in both languages; only the layout and labels change">The numbers must be recomputed for Arabic readers</div>
+      <div class="opt" data-why="Colour carries no direction; the problem is where labels and bars start">The colours must change</div>
+      <div class="opt" data-ok>The route labels and the start of the bars must move to the right, with Arabic route names</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> A right-to-left reader starts at the right, so the panel is mirrored: labels on the right, bars growing left, names from <code>route_name_ar</code>.</div>
+  </div>
+  <aside class="notes"><p>Answer: D. If time allows, show both HTML pages side by side from the lab's artifacts folder.</p></aside>
 </section>
 
 <section class="slide lab" id="lab-3-2" data-auto="lab" data-lab="3.2">
-  <aside class="notes">REPLACE: what to watch for while participants work, the typical problems, and the fallback for anyone who did not finish an earlier lab</aside>
+  <aside class="notes"><p>AI-tutor. The pages load Vega from a CDN, so opening them needs a network; the checks in the notebook do not. Typical problems: merging the usual level on the route name instead of route_id, and suppressing in the chart but leaving the count in the data. Anyone without Lab 3.1 uses the reference wireframe; the safety nets supply the panel data.</p></aside>
 </section>
 
-<!-- Session 3 -->
-
+<!-- ======================= SESSION 3 ======================= -->
 <section class="slide section" id="s3" data-auto="section" data-session="3"></section>
 
-<section class="slide" id="s3-idea" data-lo="LO5">
-  <div class="kicker">REPLACE: the question this slide answers</div>
-  <h2>REPLACE: one idea, stated as a sentence</h2>
-  <div class="cols cols-2">
-    <ul class="bullets">
-      <li>REPLACE: at most six bullets, each a complete thought</li>
-      <li>REPLACE: bold the key phrase; numbers come from the lab run, not from memory</li>
-    </ul>
-    <div class="card c-teal"><h4>In the case study</h4><p class="small mb0">REPLACE: tie the idea to the case study and its data</p></div>
-  </div>
-  <div class="callout warn mt"><b>What goes wrong.</b> REPLACE: the failure participants will hit, and how to recognise it</div>
-  <aside class="notes">REPLACE: what to say, the demo to run, the question to ask the room, the common failure and its fix</aside>
+<section class="slide" id="budget" data-lo="LO5">
+  <div class="kicker">The budget</div>
+  <h2>Three seconds is part of the brief, like the decision</h2>
+  <ul class="bullets">
+    <li>Mashael opens the page on a tablet at the depot; a slow page is not opened twice</li>
+    <li>The budget is measured, not felt: <b>time each part, then add</b></li>
+    <li>The work splits into refresh time (night) and view time (Sunday morning)</li>
+    <li>Only view time counts against the budget</li>
+  </ul>
+  <aside class="notes"><p>The brief states load_time_budget_seconds: 3. Ask the room about the slowest dashboard they use and how long they wait before giving up. The split between refresh and view time is the idea of the session.</p></aside>
 </section>
 
-<section class="slide" id="s3-steps" data-lo="LO5">
-  <div class="kicker">Step by step</div>
-  <h2>REPLACE: a process, shown one step per key press</h2>
-  <div class="flow">
-    <div class="step c-teal"><b>1 · REPLACE: name</b>REPLACE: what happens first</div>
-    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · REPLACE: name</b>REPLACE: the next piece</div>
-    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · REPLACE: name</b>REPLACE: the result</div>
+<section class="slide" id="n-plus-one" data-lo="LO5">
+  <div class="kicker">Where the seconds go</div>
+  <h2>One query per tile: 672 queries, 24.6 seconds</h2>
+  <div class="cols cols-2">
+    <pre class="code s" data-file="Lab 3.3 · the first version"><code class="language-python">for r in ROUTES:          # 12
+    for d in days:        # 28
+        model.value("on_time_rate", [r, d])
+        model.value("boardings_per_departed_trip", [r, d])</code></pre>
+    <ul class="bullets small">
+      <li>Each query reads the files, plans the joins and returns one number</li>
+      <li>The work is the same; only the filter changes</li>
+      <li>The pattern has a name: <b>N+1 queries</b></li>
+    </ul>
   </div>
-  <div class="callout tip mt frag"><b>Takeaway.</b> REPLACE: the one sentence to remember</div>
-  <aside class="notes">Press once per step and say what each step adds before the next one appears. REPLACE: the example to walk through</aside>
+  <aside class="notes"><p>Measured on a laptop CPU in Lab 3.3: 24.6 seconds for 336 tiles, two queries each. Quick mode uses one week and still takes about six seconds. Ask what would happen with 30 routes. The cost grows with tiles, not with data.</p></aside>
+</section>
+
+<section class="slide" id="pre-aggregate" data-lo="LO5">
+  <div class="kicker">Step by step</div>
+  <h2>One grouped query at refresh time, one small read at view time</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>1 · Group once</b>route by day, from the semantic layer</div>
+    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · Keep the parts</b>on-time departures, departed trips, taps</div>
+    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · Read the table</b>every tile in one query: 0.005 s</div>
+  </div>
+  <div class="callout tip mt frag"><b>Takeaway.</b> The table took 0.04 s to build; the dashboard became thousands of times faster.</div>
+  <aside class="notes"><p>Press once per step. Step 2 is where participants go wrong: they store the daily on-time rate. Ask why that fails before showing the next slide. The table is built from model.compile(), so the definitions stay governed.</p></aside>
+</section>
+
+<section class="slide" id="keep-the-parts" data-lo="LO5">
+  <div class="kicker">Ratios in an aggregate table</div>
+  <h2>Store the numerator and the denominator, never the rate</h2>
+  <div class="cols cols-2">
+    <ul class="bullets small">
+      <li>A week's rate is <b>the sum of on-time departures over the sum of departed trips</b></li>
+      <li>The mean of seven daily rates gives Friday, with half the trips, a full vote</li>
+      <li>Week of 25 October: the mean of daily rates is off by up to <b>1.9 points</b> on a route</li>
+    </ul>
+    <div class="card c-teal"><h4>Day 1, again</h4><p class="small mb0">The ratio of sums from Lab 1.3, now as a rule for any table that feeds a dashboard.</p></div>
+  </div>
+  <aside class="notes"><p>From Lab 3.3, task 4: the rate rebuilt from the parts equals the governed weekly rate exactly; the mean of daily rates does not. 1.9 points is the size of a target miss on several routes, so it would change a decision.</p></aside>
+</section>
+
+<section class="slide" id="same-numbers" data-lo="LO5">
+  <div class="kicker">The equality test</div>
+  <h2>A faster dashboard that shows other numbers is a new dashboard</h2>
+  <ul class="bullets">
+    <li>Compare every tile, slow against fast, before switching</li>
+    <li>In the first run, 16 crowding tiles differed: <b>0 in the slow version, empty in the fast one</b></li>
+    <li>Those route-days had no tap with a route (East, 5 to 8 October): the table must hold 0, not nothing</li>
+    <li>State freshness under the title: "Data to 31 October"</li>
+  </ul>
+  <aside class="notes"><p>This happened while the lab was written: the grouped query left the taps empty where no tap had a route, and the tile-by-tile version counted 0. The equality test found it in seconds. The four days are the anomaly of Session 4, seen here from the other side.</p></aside>
+</section>
+
+<section class="slide" id="checkpoint-3" data-lo="LO5">
+  <div class="kicker">Checkpoint</div>
+  <h2>What goes in the route-day table?</h2>
+  <div class="quiz" data-type="single" data-lo="LO5">
+    <p class="lead">The dashboard shows on-time rate by route for any week and depot. You pre-aggregate to one row per route and day. Which columns do you store?</p>
+    <div class="opts">
+      <div class="opt" data-why="A daily rate cannot be re-aggregated: a week averaged from it weighs light days like busy ones">The daily on-time rate</div>
+      <div class="opt" data-why="One row per trip is the source grain: the table would not be smaller or faster than the fact">Every trip with its delay</div>
+      <div class="opt" data-ok>On-time departures and departed trips</div>
+      <div class="opt" data-why="The week is a grouping of days the table can compute; storing only it loses the daily tiles">The weekly on-time rate, repeated on each day</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The two counts add up across days, routes and depots, so every grouping is re-aggregated exactly as a ratio of sums.</div>
+  </div>
+  <aside class="notes"><p>Answer: C. Ask what else must be stored to show taps per departed trip: the taps count, and departed trips again as its denominator.</p></aside>
 </section>
 
 <section class="slide lab" id="lab-3-3" data-auto="lab" data-lab="3.3">
-  <aside class="notes">REPLACE: what to watch for while participants work, the typical problems, and the fallback for anyone who did not finish an earlier lab</aside>
+  <aside class="notes"><p>AI-tutor. Run the notebook with WNT_QUICK=1 on slow laptops or Colab: one week instead of four, about six seconds for the first version. Watch for tables that store the rate, and for equality checks that compare only a sample of tiles. The safety net supplies the reference route-day table.</p></aside>
 </section>
 
-<!-- Session 4 -->
-
+<!-- ======================= SESSION 4 ======================= -->
 <section class="slide section" id="s4" data-auto="section" data-session="4"></section>
 
-<section class="slide" id="s4-idea" data-lo="LO4">
-  <div class="kicker">REPLACE: the question this slide answers</div>
-  <h2>REPLACE: one idea, stated as a sentence</h2>
+<section class="slide" id="the-alarm" data-lo="LO4">
+  <div class="kicker">Monday's network pack</div>
+  <h2>"Route ridership down 17% in the week of 4 October"</h2>
   <div class="cols cols-2">
-    <ul class="bullets">
-      <li>REPLACE: at most six bullets, each a complete thought</li>
-      <li>REPLACE: bold the key phrase; numbers come from the lab run, not from memory</li>
+    <ul class="bullets small">
+      <li>Route taps: <b>16,210</b> against 19,615 the week before</li>
+      <li>The board asks which routes lost their riders</li>
+      <li>Planning drafts a timetable cut for the East</li>
     </ul>
-    <div class="card c-teal"><h4>In the case study</h4><p class="small mb0">REPLACE: tie the idea to the case study and its data</p></div>
+    <div class="card c-coral"><h4>First question</h4><p class="small mb0">Not "who left?" but "is the drop in the riders or in the data?"</p></div>
   </div>
-  <div class="callout warn mt"><b>What goes wrong.</b> REPLACE: the failure participants will hit, and how to recognise it</div>
-  <aside class="notes">REPLACE: what to say, the demo to run, the question to ask the room, the common failure and its fix</aside>
+  <aside class="notes"><p>The pack counts taps grouped by route, which silently drops taps without a route. Ask the room to guess the cause before the next slides: most say a holiday or school break. The data says otherwise.</p></aside>
 </section>
 
-<section class="slide" id="s4-steps" data-lo="LO4">
-  <div class="kicker">Step by step</div>
-  <h2>REPLACE: a process, shown one step per key press</h2>
+<section class="slide" id="two-counts" data-lo="LO4">
+  <div class="kicker">Confirm the drop</div>
+  <h2>All taps rose 2.5%; taps with a route fell 17.4%</h2>
+  <table class="t small">
+    <tr><th>Week of</th><th class="num">All taps</th><th class="num">Taps with a route</th></tr>
+    <tr><td><time>2026-09-27</time></td><td class="num">19,615</td><td class="num">19,615</td></tr>
+    <tr class="hl"><td><time>2026-10-04</time></td><td class="num">20,112</td><td class="num">16,210</td></tr>
+    <tr><td><time>2026-10-11</time></td><td class="num">19,863</td><td class="num">19,863</td></tr>
+  </table>
+  <div class="callout tip mt"><b>3,902 taps</b> are in the data and missing from the pack: they lost their route, not their riders.</div>
+  <aside class="notes"><p>From Lab 3.4, task 1. The governed metric boardings.boardings counts every tap, including those without a route; its description says so. Grouping by route drops them. Two counts of the same week that disagree are the first clue.</p></aside>
+</section>
+
+<section class="slide" id="drill-tree" data-lo="LO4">
+  <div class="kicker">Drill down</div>
+  <h2>Follow the gap down until it has an address</h2>
   <div class="flow">
-    <div class="step c-teal"><b>1 · REPLACE: name</b>REPLACE: what happens first</div>
-    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · REPLACE: name</b>REPLACE: the next piece</div>
-    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · REPLACE: name</b>REPLACE: the result</div>
+    <div class="step c-teal"><b>Network</b>-3,405 route taps</div>
+    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>Depot</b>East: 5,533 to 1,862</div>
+    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>Bus depot</b>East buses: 5,533 to 5,764</div>
+    <div class="arrow frag" data-frag="d">→</div><div class="step c-purple frag" data-frag="d"><b>Day</b>no route on 5 to 8 October</div>
   </div>
-  <div class="callout tip mt frag"><b>Takeaway.</b> REPLACE: the one sentence to remember</div>
-  <aside class="notes">Press once per step and say what each step adds before the next one appears. REPLACE: the example to walk through</aside>
+  <div class="callout tip mt frag" data-frag="d"><b>Takeaway.</b> By route the East lost two thirds; by bus it gained. The buses kept their riders.</div>
+  <aside class="notes"><p>Press once per level. The bus's depot comes from vehicles.depot, which taps keep even without a route. The by-day table in the lab shows East buses with about 950 to 1,020 taps a day and zero with a route on exactly four days.</p></aside>
+</section>
+
+<section class="slide" id="data-or-demand" data-lo="LO4">
+  <div class="kicker">Segment</div>
+  <h2>A fault hits everyone alike; a change in demand does not</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>Demand</h4><p class="small mb0">Students fall on a school holiday; adults fall in a heatwave; segments move unevenly.</p></div>
+    <div class="card c-coral"><h4>Data</h4><p class="small mb0">On 5 to 8 October, <b>100% of taps on East buses</b> lost their route, for every fare type alike.</p></div>
+  </div>
+  <div class="callout warn mt"><b>The cause.</b> <code>dim_vehicle</code> shows the East validators updated from firmware 2.4 to 3.0 on 5 October.</div>
+  <aside class="notes"><p>From Lab 3.4, task 3. Ask what segment would have moved if the drop had been real: students (a school event), or one route (a road closure). Equal loss across every segment points at the equipment. The firmware column is the kind of attribute a vehicle dimension should keep.</p></aside>
+</section>
+
+<section class="slide" id="restate" data-lo="LO4">
+  <div class="kicker">Correct</div>
+  <h2>Restated by bus, the week of 4 October is ordinary</h2>
+  <ul class="bullets">
+    <li>Each tap kept its bus; each bus has a home route; an as-of join finds the trip</li>
+    <li>Validated first: on 1 to 3 October the as-of join finds the recorded trip for <b>100%</b> of R09's taps</li>
+    <li>Restated route taps: <b>20,112</b>, +2.5% on the week before</li>
+    <li>No route lost riders; the timetable cut is withdrawn</li>
+  </ul>
+  <aside class="notes"><p>A restatement is a model of missing data; trust it only after it reproduces data you already have, which is why the validation comes first. The as-of join is the same idea as Day 2's route versions: the latest trip of that bus that departed before the tap.</p></aside>
+</section>
+
+<section class="slide" id="anomaly-note" data-lo="LO4">
+  <div class="kicker">The anomaly note</div>
+  <h2>Four lines: seen, cause, size, change</h2>
+  <div class="trace s">
+    <div class="ev user"><b>seen</b>route taps -17% in the week of 4 October (16,210 against 19,615)</div>
+    <div class="ev model"><b>cause</b>East validator update of 5 October: 3,902 taps without route or trip to 8 October</div>
+    <div class="ev call"><b>size</b>restated by bus, 20,112 taps (+2.5%); no route lost riders</div>
+    <div class="ev final"><b>change</b>the pack shows taps without a route; a test fails above 1% a day</div>
+  </div>
+  <aside class="notes"><p>No blame: the note names a cause and a change, not a person. Each line has a number. The test in the last line is the reconciliation test of Day 2, applied every night. The note is the evidence for the fourth course outcome.</p></aside>
+</section>
+
+<section class="slide" id="simpson" data-lo="LO4">
+  <div class="kicker">When the mix moves</div>
+  <h2>The network improved while every route type got worse</h2>
+  <table class="t small">
+    <tr><th>On time</th><th class="num">August</th><th class="num">September</th><th class="num">Departed trips, Aug to Sep</th></tr>
+    <tr><td>express</td><td class="num">92.3%</td><td class="num">89.3%</td><td class="num">873 to 1,864</td></tr>
+    <tr><td>feeder</td><td class="num">83.0%</td><td class="num">82.8%</td><td class="num">4,498 to 4,312</td></tr>
+    <tr><td>trunk</td><td class="num">69.6%</td><td class="num">67.0%</td><td class="num">3,210 to 1,857</td></tr>
+    <tr class="hl"><td>network</td><td class="num">79.0%</td><td class="num">80.7%</td><td class="num"></td></tr>
+  </table>
+  <aside class="notes"><p>The stretch of Lab 3.4. From 1 September express trips doubled and trunk trips were cut for a driver shortage, so the mix moved toward the most punctual type. Simpson's paradox was introduced in DS-203; here it is a step of every investigation: before reading a total, check whether the mix changed.</p></aside>
+</section>
+
+<section class="slide" id="checkpoint-4" data-lo="LO4">
+  <div class="kicker">Checkpoint</div>
+  <h2>Data or demand?</h2>
+  <div class="quiz" data-type="single" data-lo="LO4">
+    <p class="lead">Route taps on the East depot fell by two thirds for four days. Taps on East buses did not fall. Every fare type lost its route in the same share. What do you conclude?</p>
+    <div class="opts">
+      <div class="opt" data-why="Riders who left would take their taps with them; the taps on East buses did not fall">East riders moved to other routes</div>
+      <div class="opt" data-ok>A recording fault: the taps lost their route, not their riders</div>
+      <div class="opt" data-why="A holiday would cut taps on the buses too, and would hit students more than adults">A school holiday in the East</div>
+      <div class="opt" data-why="Cancelled trips carry no taps at all; the taps exist, only without a route">East trips were cancelled</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The taps are present on the buses, and an even loss across every segment points at the equipment, not at rider behaviour.</div>
+  </div>
+  <aside class="notes"><p>Answer: B. Ask what single extra fact confirms it: the firmware update on 5 October in dim_vehicle.</p></aside>
 </section>
 
 <section class="slide lab" id="lab-3-4" data-auto="lab" data-lab="3.4">
-  <aside class="notes">REPLACE: what to watch for while participants work, the typical problems, and the fallback for anyone who did not finish an earlier lab</aside>
+  <aside class="notes"><p>AI-tutor: an assistant may suggest the next cut, but the conclusion and the note are the participant's. Watch for notes that blame the depot or the vendor, and for restatements not validated first. The safety nets supply each step's result, so a participant stuck on the drill-down still reaches the note.</p></aside>
 </section>
 
 <section class="slide" id="wrap-up">
   <div class="kicker">Day 3 · wrap-up</div>
   <h2>Three things to keep</h2>
   <div class="cols cols-3">
-    <div class="card c-teal"><h4>Remember</h4><p class="small mb0">REPLACE: one idea participants keep</p></div>
-    <div class="card c-coral"><h4>Remember</h4><p class="small mb0">REPLACE: one idea participants keep</p></div>
-    <div class="card c-purple"><h4>Remember</h4><p class="small mb0">REPLACE: one idea participants keep</p></div>
+    <div class="card c-teal"><h4>Decision first</h4><p class="small mb0">One audience, one decision, at most six panels, each with a comparison and an owner.</p></div>
+    <div class="card c-coral"><h4>Fast and the same</h4><p class="small mb0">Aggregate once, keep the parts of each ratio, prove every tile equal.</p></div>
+    <div class="card c-purple"><h4>Data before demand</h4><p class="small mb0">Drill down, segment, validate a restatement, write four lines.</p></div>
   </div>
+  <aside class="notes"><p>Ask each participant which of the three they would apply first to a dashboard of their own. The anomaly of today returns tomorrow: an agent asked "how did ridership change in early October?" must not repeat the pack's mistake.</p></aside>
 </section>
 
 <section class="slide dark" id="next" data-label="Next">
   <div class="kicker">Next</div>
   <h2>Day 4: Let an agent answer</h2>
-  <p class="lead">REPLACE: what participants prepare before then; unfinished labs can be finished at home</p>
-  <aside class="notes">REPLACE: accounts, installs or reading participants need before the next unit</aside>
+  <p class="lead">Tomorrow an AI agent answers questions about the network, with and without the semantic layer, and you decide which question types it may answer without review. Unfinished labs can be finished at home with the solution notebooks.</p>
+  <aside class="notes"><p>Day 4 runs on free hosted models through OpenRouter. Participants who want live model calls create a free OpenRouter key tonight and put it in labs/.env (see .env.example); without a key, the labs replay recorded answers, and every result is still reproducible.</p></aside>
 </section>

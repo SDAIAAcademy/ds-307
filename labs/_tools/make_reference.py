@@ -224,6 +224,92 @@ def day2(con):
     print("wrote data/semantic/model_starter.yaml")
 
 
+WIREFRAME = {
+    "decision": "Where to place the six reserve buses and the four field supervisors next week, by depot and route.",
+    "panels": [
+        {"title": "Routes leaving late", "question": "Q1", "metric": "on_time_rate", "dimensions": ["routes.route_id"],
+         "comparison": "target", "also": "the route's level over the four weeks before", "owner": "Tawfiq Al-Sahafi, control centre"},
+        {"title": "Trips that did not run", "question": "Q2", "metric": "cancellation_rate", "dimensions": ["routes.depot"],
+         "comparison": "prior_period", "owner": "Tawfiq Al-Sahafi, control centre"},
+        {"title": "Riders per trip (crowding)", "question": "Q3", "metric": "boardings_per_departed_trip",
+         "dimensions": ["routes.route_id"], "comparison": "prior_period", "owner": "Dhuha Al-Rowais, network planning"},
+        {"title": "Complaints by subject", "question": "Q4", "metric": "complaints.complaints",
+         "dimensions": ["complaints.category"], "comparison": "prior_period", "owner": "Yasmeen Al-Jaafari, strategy and finance"},
+        {"title": "Network taps", "question": "Q5", "metric": "boardings.boardings", "dimensions": [],
+         "comparison": "prior_period", "owner": "Muneer Al-Thaqafi, data platform"},
+    ],
+    "drill_through": "Q9, average delay by timepoint, opened from a route in the first panel",
+    "left_out": ["Q6 revenue belongs to finance", "Q7 card numbers are Restricted", "Q8 a forecast is not this decision"],
+}
+WEEK, PREV, FOUR = "2026-10-25", "2026-10-18", ("2026-09-27", "2026-10-18")
+ONT = ("sum((t.status <> 'cancelled' AND t.dep_delay_min BETWEEN -1 AND 5)::INT)", "sum((t.status <> 'cancelled')::INT)")
+
+
+def day3(con):
+    rv_t, rv_b = RV.format(a="t", d="service_date"), RV.format(a="b", d="service_date")
+    put("d3_1_wireframe", WIREFRAME)
+
+    def on_time(weeks, names=True):
+        cols = "r.route_id, r.route_name_en, r.route_name_ar" if names else "r.route_id"
+        return f"""SELECT {cols}, {ONT[0]} / {ONT[1]} AS on_time_rate, {ONT[1]} AS departed_trips
+            FROM fct_trip t {rv_t} JOIN dim_date d ON d.date = t.service_date
+            WHERE d.week_start BETWEEN DATE '{weeks[0]}' AND DATE '{weeks[1]}' GROUP BY ALL ORDER BY ALL"""
+
+    def crowding(week, names=True):
+        cols = "route_id, route_name_en, route_name_ar" if names else "route_id"
+        return f"""WITH b AS (SELECT r.route_key, count(*) AS taps FROM fct_boarding b {rv_b} JOIN dim_date d ON d.date = b.service_date
+                       WHERE d.week_start = DATE '{week}' AND b.route_id IS NOT NULL GROUP BY 1),
+                  t AS (SELECT r.route_key, {ONT[1]} AS dep FROM fct_trip t {rv_t} JOIN dim_date d ON d.date = t.service_date
+                       WHERE d.week_start = DATE '{week}' GROUP BY 1)
+            SELECT {cols}, sum(b.taps) / sum(t.dep) AS boardings_per_departed_trip
+            FROM dim_route r JOIN b USING (route_key) JOIN t USING (route_key) GROUP BY ALL ORDER BY ALL"""
+
+    def complaints(weeks):
+        return f"""SELECT category, count(*) AS complaints FROM fct_complaint c JOIN dim_date d ON d.date = c.received_date
+            WHERE d.week_start BETWEEN DATE '{weeks[0]}' AND DATE '{weeks[1]}' GROUP BY 1 ORDER BY 1"""
+
+    panels = {"on_time": _rows(con, on_time((WEEK, WEEK))), "crowding": _rows(con, crowding(WEEK)),
+              "complaints": _rows(con, complaints((WEEK, WEEK)))}
+    put("d3_2_panels", panels)
+    usual = {r["route_id"]: r["on_time_rate"] for r in _rows(con, on_time(FOUR, names=False))}
+    prior = {r["route_id"]: r["boardings_per_departed_trip"] for r in _rows(con, crowding(PREV, names=False))}
+    cu = {r["category"]: r["complaints"] / 4 for r in _rows(con, complaints(FOUR))}
+    week_c = {r["category"]: r["complaints"] for r in panels["complaints"]}
+    put("d3_2_compared", {
+        "on_time": [dict(r, usual=usual[r["route_id"]], target=0.85) for r in panels["on_time"]],
+        "crowding": [dict(r, prior=prior[r["route_id"]]) for r in panels["crowding"]],
+        "complaints": [{"category": c, "complaints": week_c.get(c, 0), "usual": cu.get(c)} for c in sorted(set(cu) | set(week_c))],
+    })
+
+    # Lab 3.3: the route-day table of the 56 days to 31 October, with the parts of each ratio
+    put("d3_3_route_day", _rows(con, f"""
+        WITH t AS (SELECT t.route_id, t.service_date AS date, {ONT[1]} AS departed_trips, {ONT[0]} AS on_time_departures
+                   FROM fct_trip t WHERE t.service_date BETWEEN DATE '2026-09-06' AND DATE '2026-10-31' GROUP BY ALL),
+             b AS (SELECT route_id, service_date AS date, count(*) AS boardings FROM fct_boarding
+                   WHERE service_date BETWEEN DATE '2026-09-06' AND DATE '2026-10-31' AND route_id IS NOT NULL GROUP BY ALL)
+        SELECT t.route_id, t.date::VARCHAR AS date, departed_trips, on_time_departures, coalesce(boardings, 0) AS boardings
+        FROM t LEFT JOIN b USING (route_id, date) ORDER BY 1, 2"""))
+
+    # Lab 3.4: the drop in the week of 4 October
+    put("d3_4_weekly", _rows(con, """
+        SELECT d.week_start::VARCHAR AS week_start, count(*) AS taps, count(b.route_id) AS route_taps
+        FROM fct_boarding b JOIN dim_date d ON d.date = b.service_date
+        WHERE d.week_start BETWEEN DATE '2026-09-06' AND DATE '2026-10-25' GROUP BY 1 ORDER BY 1"""))
+    put("d3_4_by_depot", _rows(con, f"""
+        SELECT coalesce(r.depot, '(no route)') AS depot,
+               count(*) FILTER (WHERE b.service_date BETWEEN DATE '2026-09-27' AND DATE '2026-10-03') AS week_before,
+               count(*) FILTER (WHERE b.service_date BETWEEN DATE '2026-10-04' AND DATE '2026-10-10') AS week_of_4_october
+        FROM fct_boarding b {rv_b} WHERE b.service_date BETWEEN DATE '2026-09-27' AND DATE '2026-10-10' GROUP BY 1 ORDER BY 1"""))
+    put("d3_4_by_day", _rows(con, """
+        SELECT b.service_date::VARCHAR AS day, count(*) AS east_bus_taps, count(b.route_id) AS with_route
+        FROM fct_boarding b JOIN dim_vehicle v USING (vehicle_id)
+        WHERE v.depot = 'East' AND b.service_date BETWEEN DATE '2026-10-01' AND DATE '2026-10-10' GROUP BY 1 ORDER BY 1"""))
+    put("d3_4_restated", _rows(con, """
+        SELECT d.week_start::VARCHAR AS week_start, count(coalesce(b.route_id, v.home_route)) AS restated_route_taps
+        FROM fct_boarding b JOIN dim_vehicle v USING (vehicle_id) JOIN dim_date d ON d.date = b.service_date
+        WHERE d.week_start BETWEEN DATE '2026-09-06' AND DATE '2026-10-25' GROUP BY 1 ORDER BY 1"""))
+
+
 def main(units=("day1",)):
     con = W.db()
     REF.mkdir(parents=True, exist_ok=True)
@@ -236,4 +322,4 @@ def main(units=("day1",)):
 
 
 if __name__ == "__main__":
-    main(tuple(sys.argv[1:]) or ("day1", "day2"))
+    main(tuple(sys.argv[1:]) or ("day1", "day2", "day3"))

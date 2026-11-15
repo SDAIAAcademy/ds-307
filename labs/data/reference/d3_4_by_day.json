@@ -1,0 +1,52 @@
+[
+ {
+  "day": "2026-10-01",
+  "east_bus_taps": 922,
+  "with_route": 922
+ },
+ {
+  "day": "2026-10-02",
+  "east_bus_taps": 292,
+  "with_route": 292
+ },
+ {
+  "day": "2026-10-03",
+  "east_bus_taps": 582,
+  "with_route": 582
+ },
+ {
+  "day": "2026-10-04",
+  "east_bus_taps": 991,
+  "with_route": 991
+ },
+ {
+  "day": "2026-10-05",
+  "east_bus_taps": 1019,
+  "with_route": 0
+ },
+ {
+  "day": "2026-10-06",
+  "east_bus_taps": 951,
+  "with_route": 0
+ },
+ {
+  "day": "2026-10-07",
+  "east_bus_taps": 963,
+  "with_route": 0
+ },
+ {
+  "day": "2026-10-08",
+  "east_bus_taps": 969,
+  "with_route": 0
+ },
+ {
+  "day": "2026-10-09",
+  "east_bus_taps": 281,
+  "with_route": 281
+ },
+ {
+  "day": "2026-10-10",
+  "east_bus_taps": 590,
+  "with_route": 590
+ }
+]

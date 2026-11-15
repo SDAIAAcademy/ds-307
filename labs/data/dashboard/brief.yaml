@@ -1,0 +1,21 @@
+# The operations director's brief for the network dashboard (Lab 3.1). Written by Mashael Al-Saadi.
+owner: Mashael Al-Saadi, operations director
+audience: The operations director and the three depot managers (North, Central, East); two of the four read Arabic first.
+decision: >-
+  Every Sunday, before the week's first peak, where to place the six reserve buses and the four field supervisors
+  for the coming week: which depots and which routes.
+cadence: weekly, on Sunday, for the week that ended on Saturday
+load_time_budget_seconds: 3
+targets:
+  on_time_rate: 0.85
+  cancellation_rate: 0.02
+questions:
+  - {id: Q1, text: "Which routes left late most often last week, against the 85% target and their usual level?", decision: yes}
+  - {id: Q2, text: "Where did trips not run last week, by depot, against the week before?", decision: yes}
+  - {id: Q3, text: "Which routes carried more riders per trip than usual (crowding)?", decision: yes}
+  - {id: Q4, text: "Are complaints rising anywhere, and about what?", decision: yes}
+  - {id: Q5, text: "How many card taps did the network record last week, against the week before?", decision: context}
+  - {id: Q6, text: "How much fare revenue did each product bring in?", decision: no}
+  - {id: Q7, text: "Which cards travel most often?", decision: no}
+  - {id: Q8, text: "What will ridership be next year?", decision: no}
+  - {id: Q9, text: "What is the average delay at each timepoint, hour by hour?", decision: drill}

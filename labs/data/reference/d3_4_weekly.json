@@ -1,0 +1,42 @@
+[
+ {
+  "week_start": "2026-09-06",
+  "taps": 19659,
+  "route_taps": 19659
+ },
+ {
+  "week_start": "2026-09-13",
+  "taps": 19826,
+  "route_taps": 19826
+ },
+ {
+  "week_start": "2026-09-20",
+  "taps": 18146,
+  "route_taps": 18146
+ },
+ {
+  "week_start": "2026-09-27",
+  "taps": 19615,
+  "route_taps": 19615
+ },
+ {
+  "week_start": "2026-10-04",
+  "taps": 20112,
+  "route_taps": 16210
+ },
+ {
+  "week_start": "2026-10-11",
+  "taps": 19863,
+  "route_taps": 19863
+ },
+ {
+  "week_start": "2026-10-18",
+  "taps": 19996,
+  "route_taps": 19996
+ },
+ {
+  "week_start": "2026-10-25",
+  "taps": 20285,
+  "route_taps": 20285
+ }
+]

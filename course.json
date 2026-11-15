@@ -488,9 +488,9 @@
         {
           "title": "Load time is a design constraint",
           "outcomes": [
-            "Measure a dashboard panel by panel",
+            "Measure a dashboard tile by tile",
             "Replace per-tile queries with one grouped query",
-            "Pre-aggregate to the grain the panels need"
+            "Pre-aggregate to the grain the panels need, keeping the parts of each ratio"
           ],
           "lo": [
             "LO5"
@@ -503,23 +503,23 @@
             "href": "D3_3_load_time.ipynb",
             "steps": [
               {
-                "text": "Time the slow dashboard, panel by panel",
+                "text": "Time the tile-by-tile dashboard",
                 "minutes": 5
               },
               {
-                "text": "Find where the time goes",
-                "minutes": 5
+                "text": "Build a route-day table with the parts of each ratio",
+                "minutes": 8
               },
               {
-                "text": "Pre-aggregate and rewrite the panels",
-                "minutes": 10
+                "text": "Redraw the dashboard from the table and time it",
+                "minutes": 7
               },
               {
-                "text": "Time it again and record the result",
+                "text": "Prove the numbers did not change, and date the data",
                 "minutes": 5
               }
             ],
-            "stretch": "Decide when the daily table must be rebuilt"
+            "stretch": "Refresh only the newest day"
           },
           "summary": "Where the seconds go, and how to get them back"
         },
