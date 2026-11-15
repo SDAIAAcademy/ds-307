@@ -23,18 +23,34 @@
     <div class="row"><span>Reproducibility</span><div class="bar c-amber" style="--w:40%"></div><span class="val">10%</span></div>
   </div>
   <div class="callout tip mt"><b>Show results from at least two measured runs.</b> A claim without a number is a plan, not a result.</div>
-  <aside class="notes">Walk through each criterion with one example of what full marks look like.</aside>
+  <aside class="notes">Walk through each criterion with one example of what full marks look like: for the model, 15 or more independent test queries passing and the Restricted fields enforced by a role; for the agent, accuracy by type with an interval and a decision per type. The brief is labs/capstone/README.md.</aside>
 </section>
 
 <section class="slide" id="format" data-label="Format">
   <div class="kicker">Format</div>
-  <h2>10 minutes for each presentation</h2>
+  <h2>Ten minutes each: six of walk-through, four of live trace</h2>
   <div class="cols cols-3">
-    <div class="card c-teal"><h4>1 · The problem</h4><p class="small mb0">Who, what, why now. One slide.</p></div>
-    <div class="card c-cyan"><h4>2 · What you built</h4><p class="small mb0">Design, decisions, trade-offs. Then the live demo.</p></div>
-    <div class="card c-coral"><h4>3 · What you measured</h4><p class="small mb0">Baseline, improvement, failures found, what comes next.</p></div>
+    <div class="card c-teal"><h4>1 · The decision</h4><p class="small mb0">Yasmeen's question, the catalogue and the model. One slide each.</p></div>
+    <div class="card c-cyan"><h4>2 · What you measured</h4><p class="small mb0">Test queries passed, load time, agent accuracy by type.</p></div>
+    <div class="card c-coral"><h4>3 · The live trace</h4><p class="small mb0">The assessor picks a dashboard figure; you reconcile it to source rows.</p></div>
   </div>
-  <div class="callout note mt"><b>Peer feedback.</b> After each talk, everyone writes one strength, one question and one suggestion.</div>
+  <div class="callout note mt"><b>Peer feedback.</b> After each review, everyone writes one strength, one question and one suggestion.</div>
+  <aside class="notes"><p>The walk-through is six minutes, strictly. The trace is the assessment of authorship: the participant opens their repository, finds the metric in the model, runs its compiled SQL and a hand-written count from the warehouse, and shows they agree. Pick figures that cross a join or a calendar, such as concession passes in a Hijri month.</p></aside>
+</section>
+
+<section class="slide" id="live-trace" data-label="The live trace">
+  <div class="kicker">The live trace</div>
+  <h2>From a figure on the dashboard to the rows behind it</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>1 · Figure</b>the assessor points at one number</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>2 · Metric</b>its definition in the catalogue and the model</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>3 · SQL</b>the compiled query, run live</div>
+    <div class="arrow">→</div>
+    <div class="step c-purple"><b>4 · Rows</b>an independent count that agrees</div>
+  </div>
+  <aside class="notes"><p>Four minutes. A participant who cannot find the metric's definition in their own model within a minute loses most of this part; one who finds a difference and explains it honestly keeps most of it. The rubric weight is the 20% of the live review in the course assessment.</p></aside>
 </section>
 
 <section class="slide order" id="running-order" data-label="Running order">
@@ -66,9 +82,10 @@
   <div class="kicker center">Now presenting</div>
   <div class="center"><input placeholder="Presenter · project"></div>
   <div class="timers mt">
-    <div><h3>Talk and demo</h3><div class="timer" data-minutes="10"></div></div>
+    <div><h3>Walk-through</h3><div class="timer" data-minutes="6"></div></div>
+    <div><h3>Live trace</h3><div class="timer" data-minutes="4"></div></div>
   </div>
-  <aside class="notes">Type the presenter's name and press T to start the timer. Reuse this slide for every presenter.</aside>
+  <aside class="notes">Type the presenter's name and press T to start the walk-through timer, then the trace timer. Reuse this slide for every presenter.</aside>
 </section>
 
 <section class="slide" id="review" data-label="Trainer review">
@@ -87,7 +104,8 @@
   <h2>Keep going</h2>
   <ul class="bullets">
     <li><b>Your project stays yours:</b> keep it reproducible and add the next improvement you named today</li>
-    <li><b>Next Academy course:</b> REPLACE: the course that follows this one</li>
+    <li><b>Follow-up task:</b> three governed definitions and ten certified questions for a measure your own team reports (<code>labs/followup/README.md</code>)</li>
+    <li><b>Next Academy course:</b> DS-408 Analytics Products: Semantic Layers and Conversational Analytics</li>
   </ul>
 </section>
 

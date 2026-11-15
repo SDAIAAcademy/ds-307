@@ -36,6 +36,12 @@ RAW_TABLES = ["fct_trip", "fct_timepoint", "fct_boarding", "fct_complaint", "dim
 def _env_key() -> str | None:
     """OPENROUTER_API_KEY from the environment or from labs/.env (never printed)."""
     key = os.environ.get("OPENROUTER_API_KEY")
+    if not key:
+        try:  # Colab: the Secrets panel
+            from google.colab import userdata  # type: ignore
+            key = userdata.get("OPENROUTER_API_KEY")
+        except Exception:
+            pass
     env = LABS / ".env"
     if not key and env.exists():
         for line in env.read_text(encoding="utf-8").splitlines():
@@ -72,7 +78,7 @@ class KeyRejected(Exception):
 
 class Agent:
     def __init__(self, config: str, con, model=None, llm: str | None = None, log: Path | None = None,
-                 live: bool | None = None):
+                 live: bool | None = None, script: Path | None = None):
         if config not in ("raw", "semantic"):
             raise ValueError("config is 'raw' or 'semantic'")
         if config == "semantic" and model is None:
@@ -85,7 +91,7 @@ class Agent:
         self._key = key
         self.mode = "live" if self.live else "stand-in"
         self.log = Path(log) if log else None
-        self._script = None
+        self._script, self._script_path = None, Path(script) if script else AGENT / "stand_in.yaml"
         if config == "raw":
             self.system = SYSTEM_RAW.format(schema=schema_text(con))
         else:
@@ -96,7 +102,7 @@ class Agent:
     def _stand_in(self, qid: str | None) -> dict:
         if self._script is None:
             import yaml
-            self._script = yaml.safe_load((AGENT / "stand_in.yaml").read_text(encoding="utf-8"))["answers"]
+            self._script = yaml.safe_load(self._script_path.read_text(encoding="utf-8"))["answers"]
         entry = self._script.get(qid or "", {}).get(self.config)
         if entry is None:
             return {"refuse": "the stand-in knows only the certified questions; set OPENROUTER_API_KEY for free text"}

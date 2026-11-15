@@ -7,18 +7,18 @@
       "type": "single",
       "prompt": "Two reports on the same month agree on everything except one rule: report A leaves cancelled trips out, report B counts them as late. 3% of trips were cancelled. Which statement is true?",
       "options": [
-        "Report B is higher, because it counts more trips",
         "Report A is higher, because its denominator has no cancelled trips and none of them can fail",
+        "Report B is higher, because it counts more trips",
         "The two figures are equal, because cancelled trips have no delay",
         "The reports cannot be compared, because they use different data"
       ],
       "correct": [
-        1
+        0
       ],
       "explanation": "Counting a cancelled trip as late adds trips that can never be on time, so report B is lower than A.",
       "misconceptions": [
-        "A larger denominator lowers a share when the added rows all fail",
         "",
+        "A larger denominator lowers a share when the added rows all fail",
         "A cancelled trip has no delay, but B still counts it in the denominator",
         "Both reports read the same rows; only the rule differs"
       ],
@@ -36,20 +36,20 @@
       "type": "single",
       "prompt": "The board pack labels its figure \"September\" but reports Rabi al-Thani 1448, which runs from 12 September to 11 October 2026. A manager compares it with a September figure from another report. What kind of difference is this?",
       "options": [
-        "A period difference",
+        "A data quality difference",
         "A grain difference",
         "A tolerance difference",
-        "A data quality difference"
+        "A period difference"
       ],
       "correct": [
-        0
+        3
       ],
       "explanation": "The two figures cover different dates, so the period differs even before any rule is compared.",
       "misconceptions": [
-        "",
+        "The rows are correct; they are simply selected by another calendar",
         "The grain is what one counted row is; both count trips",
         "Tolerance is how early or late counts as on time, not which dates are included",
-        "The rows are correct; they are simply selected by another calendar"
+        ""
       ],
       "lo": [
         "LO1"
@@ -65,20 +65,20 @@
       "type": "single",
       "prompt": "Two dashboards show 81% and 66% on-time for the same week. Before you open the data, what do you compare first?",
       "options": [
-        "The SQL engines the two dashboards run on",
-        "The number of users of each dashboard",
         "The colours and chart types of the two dashboards",
-        "The written rules: grain, where measured, tolerance, filters and period"
+        "The number of users of each dashboard",
+        "The written rules: grain, where measured, tolerance, filters and period",
+        "The SQL engines the two dashboards run on"
       ],
       "correct": [
-        3
+        2
       ],
       "explanation": "Most disagreements between figures on one warehouse are definitional; the rules locate the cause before any debugging.",
       "misconceptions": [
-        "Two engines return the same answer to the same query; the queries differ",
-        "Popularity says nothing about which rule was used",
         "The presentation does not change the number",
-        ""
+        "Popularity says nothing about which rule was used",
+        "",
+        "Two engines return the same answer to the same query; the queries differ"
       ],
       "lo": [
         "LO1"
@@ -95,18 +95,18 @@
       "prompt": "Two analysts walk from the operations figure to the board figure, changing one rule at a time, in different orders. Their step sizes differ but both walks end on the board figure. What does this show?",
       "options": [
         "One of the two analysts made an error",
-        "The board figure is not reproducible",
         "The rules interact, so the size of each step depends on the order of the walk",
+        "The board figure is not reproducible",
         "The walk should be done on a smaller sample"
       ],
       "correct": [
-        2
+        1
       ],
       "explanation": "Rules such as the tolerance and the point measured interact, so each step depends on the steps before it; state the order with the walk.",
       "misconceptions": [
         "Both walks reach the same end point, so neither is wrong",
-        "Both walks reproduce it exactly",
         "",
+        "Both walks reproduce it exactly",
         "Sampling would add noise; it does not remove the interaction"
       ],
       "lo": [
@@ -240,18 +240,18 @@
       "prompt": "The network tree is taps = scheduled trips × (1 − cancellation rate) × taps per departed trip. Planning wants to raise taps per departed trip by cutting frequency on busy routes. Which metric should the review watch as a guardrail?",
       "options": [
         "Scheduled trips",
-        "Complaints per 10,000 taps",
         "Taps",
+        "Complaints per 10,000 taps",
         "The cancellation rate"
       ],
       "correct": [
-        1
+        2
       ],
       "explanation": "Crowding more riders onto fewer buses can raise taps per trip while riders suffer; complaints per 10,000 taps watches for that harm.",
       "misconceptions": [
         "It is a driver of the tree, and the plan lowers it on purpose",
-        "",
         "It is the goal itself, not a check on harm",
+        "",
         "Cutting frequency does not cancel trips; the rate need not move"
       ],
       "lo": [
@@ -327,18 +327,18 @@
       "prompt": "dim_route has 13 rows for 12 route_id values, because R07 has two versions. Which column should a relationship from a fact to dim_route use?",
       "options": [
         "route_id, because riders use it",
-        "route_name_en, because it differs between the versions",
         "route_key, the key of one version, found with the service date",
+        "route_name_en, because it differs between the versions",
         "depot, because it never changes"
       ],
       "correct": [
-        2
+        1
       ],
       "explanation": "route_key identifies one version; facts reach it through an as-of join on the service date, so each fact row meets exactly one dimension row.",
       "misconceptions": [
         "A natural key with history is not unique: R07 rows would double",
-        "Names can repeat and can change without a new version",
         "",
+        "Names can repeat and can change without a new version",
         "A depot is shared by four routes: not a key"
       ],
       "lo": [
@@ -356,18 +356,18 @@
       "prompt": "A route moves from the North depot to the Central depot on 1 November. How should the dimension record the change?",
       "options": [
         "Overwrite the depot on the existing row",
-        "Add a new row with a new key, valid from 1 November, and close the old row on 31 October",
         "Delete the route and create a new route_id",
+        "Add a new row with a new key, valid from 1 November, and close the old row on 31 October",
         "Store the depot in the trips table only"
       ],
       "correct": [
-        1
+        2
       ],
       "explanation": "A real change that past figures must not inherit is type 2: a new version with its own validity dates.",
       "misconceptions": [
         "Type 1 rewrites history: North would lose its past trips",
-        "",
         "A new route_id breaks every comparison over time for the same route",
+        "",
         "Moves a dimension attribute into the fact, repeated on every trip"
       ],
       "lo": [
@@ -443,18 +443,18 @@
       "prompt": "A query joins trips to taps and to timepoints in one statement and counts taps per route. The total is 3.98 times the source. What explains the factor?",
       "options": [
         "Cancelled trips were counted",
-        "The taps table has duplicate rows",
         "Each tap is repeated by the number of timepoints its trip reached",
+        "The taps table has duplicate rows",
         "The date filter was applied twice"
       ],
       "correct": [
-        2
+        1
       ],
       "explanation": "Two many sides met through one trip, so every tap is paired with every timepoint of its trip: four, or two for a partial trip.",
       "misconceptions": [
         "Cancelled trips have no taps and no timepoints",
-        "Duplicates would not follow the number of timepoints",
         "",
+        "Duplicates would not follow the number of timepoints",
         "Applying a filter twice changes nothing"
       ],
       "lo": [
@@ -471,18 +471,18 @@
       "type": "single",
       "prompt": "Which test would have caught the inflated route report before it was published?",
       "options": [
-        "Check that every route appears in the report",
         "Check that the sum of taps in the report equals a count of taps taken directly from fct_boarding for the same period",
+        "Check that every route appears in the report",
         "Check that the report runs in under a second",
         "Check that the punctuality column is between 0 and 1"
       ],
       "correct": [
-        1
+        0
       ],
       "explanation": "A reconciliation test compares a report total with the source counted another way; the inflated report fails it at once.",
       "misconceptions": [
-        "All routes appear in the inflated report too",
         "",
+        "All routes appear in the inflated report too",
         "Speed says nothing about correctness",
         "The inflated punctuality is still between 0 and 1"
       ],
@@ -500,20 +500,20 @@
       "type": "single",
       "prompt": "In an Apache Ossie document, where does on_time_rate = on-time departures divided by departed trips belong?",
       "options": [
-        "At the model root, written as AGG(trips.on_time_departures) / AGG(trips.departed_trips)",
+        "In the routes dataset, because it is reported by route",
         "In the trips dataset, written as AVG(on_time)",
-        "In each dashboard that shows it",
-        "In the routes dataset, because it is reported by route"
+        "At the model root, written as AGG(trips.on_time_departures) / AGG(trips.departed_trips)",
+        "In each dashboard that shows it"
       ],
       "correct": [
-        0
+        2
       ],
       "explanation": "A metric that combines aggregated dataset metrics is model-scoped and reads them with AGG(), so the division happens after aggregation.",
       "misconceptions": [
-        "",
+        "Grouping by route does not move a trip metric into the route dataset",
         "A mean of a per-trip flag hides the governed parts and does not generalise to other ratios",
-        "Copies the definition into every consumer",
-        "Grouping by route does not move a trip metric into the route dataset"
+        "",
+        "Copies the definition into every consumer"
       ],
       "lo": [
         "LO3"
@@ -529,20 +529,20 @@
       "type": "single",
       "prompt": "The model's roles and field classifications are stored under nonportable_extensions. What happens when another tool imports the file?",
       "options": [
-        "The file fails validation in other tools",
         "Ossie enforces the rules in every tool that reads the file",
+        "The tool must enforce the same rules, because Ossie carries the extension without interpreting it",
         "The rules are converted to SQL grants automatically",
-        "The tool must enforce the same rules, because Ossie carries the extension without interpreting it"
+        "The file fails validation in other tools"
       ],
       "correct": [
-        3
+        1
       ],
       "explanation": "The specification defines no access rules; vendor extensions travel with the model but each consumer must implement them.",
       "misconceptions": [
-        "Extensions are valid Ossie; other tools simply ignore them",
         "Ossie is a file format, not an engine that enforces anything",
+        "",
         "No converter turns a vendor extension into grants by itself",
-        ""
+        "Extensions are valid Ossie; other tools simply ignore them"
       ],
       "lo": [
         "LO3"
@@ -560,18 +560,18 @@
       "options": [
         "That the model is correct",
         "That the warehouse is complete",
-        "Only that the model has not changed since last week",
-        "That the model is fast enough"
+        "That the model is fast enough",
+        "Only that the model has not changed since last week"
       ],
       "correct": [
-        2
+        3
       ],
       "explanation": "A reference produced by the system under test proves only agreement with itself; references must come from independent SQL.",
       "misconceptions": [
         "Agreement with an earlier run of itself cannot detect a definition that was wrong from the start",
         "Tests on a model say nothing about missing source rows",
-        "",
-        "Correctness tests do not measure speed"
+        "Correctness tests do not measure speed",
+        ""
       ],
       "lo": [
         "LO3"
@@ -588,18 +588,18 @@
       "prompt": "A depot manager asks for \"a dashboard for operations\". What should you establish before choosing any panel?",
       "options": [
         "Which chart library the team already uses",
-        "Who will use it, which decision it serves and how often",
         "Every metric the warehouse can compute",
+        "Who will use it, which decision it serves and how often",
         "The colour palette of the organisation"
       ],
       "correct": [
-        1
+        2
       ],
       "explanation": "Audience, decision and cadence decide which questions belong; without them every question qualifies and the page fills up.",
       "misconceptions": [
         "Tools follow the design; they do not decide what to show",
-        "",
         "Showing everything the warehouse holds is a report, not a decision dashboard",
+        "",
         "Colours matter later; they do not choose panels"
       ],
       "lo": [
@@ -616,20 +616,20 @@
       "type": "single",
       "prompt": "A panel shows \"R11: 76% of departures on time\". The director must decide whether R11 gets a reserve bus next week. Which comparison helps most?",
       "options": [
-        "R11's own level over the four weeks before",
+        "The on-time rate of the whole year",
         "The number of stops on R11",
         "None: the figure speaks for itself",
-        "The on-time rate of the whole year"
+        "R11's own level over the four weeks before"
       ],
       "correct": [
-        0
+        3
       ],
       "explanation": "A reserve bus fixes an unusual week; R11's usual level (86%) shows that last week was unusual for this route.",
       "misconceptions": [
-        "",
+        "A yearly figure mixes seasons and timetable changes and moves too slowly to flag one week",
         "Stops explain a timetable, not whether last week was unusual",
         "A number alone does not say whether to act",
-        "A yearly figure mixes seasons and timetable changes and moves too slowly to flag one week"
+        ""
       ],
       "lo": [
         "LO5"
@@ -645,20 +645,20 @@
       "type": "single",
       "prompt": "The brief allows six panels. A seventh is proposed: the ten cards that tapped most last week. What do you do?",
       "options": [
-        "Add it, because it is interesting",
+        "Leave it out: it does not serve the decision, and card numbers are Restricted",
         "Replace the on-time panel with it",
         "Add it with the card numbers shortened",
-        "Leave it out: it does not serve the decision, and card numbers are Restricted"
+        "Add it, because it is interesting"
       ],
       "correct": [
-        3
+        0
       ],
       "explanation": "The panel serves no part of the reserve-bus decision, and grouping by card number exposes a Restricted field.",
       "misconceptions": [
-        "Interest is not a reason to take space from the decision",
+        "",
         "The on-time panel is a direct input of the decision",
         "Shortened card numbers are still personal data grouped and shown",
-        ""
+        "Interest is not a reason to take space from the decision"
       ],
       "lo": [
         "LO5"
@@ -675,18 +675,18 @@
       "prompt": "You build the Arabic version of a horizontal bar panel. Which change is required besides translating the text?",
       "options": [
         "Sort the bars in the opposite order of values",
-        "Convert every digit to Eastern Arabic numerals",
         "Mirror the panel: labels on the right and bars growing from the right",
+        "Convert every digit to Eastern Arabic numerals",
         "Use a different colour for each bar"
       ],
       "correct": [
-        2
+        1
       ],
       "explanation": "A right-to-left reader starts at the right; labels and the start of each bar belong there.",
       "misconceptions": [
         "The order of values carries meaning and does not depend on the language",
-        "The Academy keeps Western digits in Arabic material; digits are not the layout problem",
         "",
+        "The Academy keeps Western digits in Arabic material; digits are not the layout problem",
         "Colour does not set the reading direction"
       ],
       "lo": [
@@ -703,18 +703,18 @@
       "type": "single",
       "prompt": "A weekly panel shows complaints by subject. Accessibility has 3 complaints. The chart hides the bar, but the page embeds the full data. What is wrong?",
       "options": [
-        "Nothing: the bar is hidden",
         "The count can still be read from the page source; it must be removed from the data itself",
+        "Nothing: the bar is hidden",
         "The threshold of 10 is too high for complaints",
         "Accessibility complaints should be merged into another subject"
       ],
       "correct": [
-        1
+        0
       ],
       "explanation": "A dashboard page ships its data; suppression must remove the value from the data, not only from the drawing.",
       "misconceptions": [
-        "Hiding the mark leaves the value readable in the embedded specification",
         "",
+        "Hiding the mark leaves the value readable in the embedded specification",
         "The threshold is set by the model's owner; the problem is where the value still lives",
         "Merging subjects changes the meaning of the panel to hide a number"
       ],
@@ -732,20 +732,20 @@
       "type": "single",
       "prompt": "A dashboard of 336 tiles sends one query per tile and takes 25 seconds. Each query takes about the same time. What will most reduce the load time?",
       "options": [
-        "One grouped query that computes every tile, ideally from a table built at refresh time",
+        "Caching each tile's result after it is first viewed",
         "Fewer decimal places in each tile",
         "A faster laptop",
-        "Caching each tile's result after it is first viewed"
+        "One grouped query that computes every tile, ideally from a table built at refresh time"
       ],
       "correct": [
-        0
+        3
       ],
       "explanation": "The cost is in repeating the same work 336 times; one grouped query does it once, and a refresh-time table moves it out of view time.",
       "misconceptions": [
-        "",
+        "The first view of every tile is still slow, and every refresh starts again",
         "Formatting is not where the time goes",
         "A faster machine shrinks each query a little but keeps all 336",
-        "The first view of every tile is still slow, and every refresh starts again"
+        ""
       ],
       "lo": [
         "LO5"
@@ -761,20 +761,20 @@
       "type": "single",
       "prompt": "A route-day table feeds weekly and depot views of the on-time rate. Which columns must it store?",
       "options": [
-        "The daily on-time rate",
-        "The average delay of the day",
         "The weekly on-time rate",
-        "On-time departures and departed trips"
+        "The average delay of the day",
+        "On-time departures and departed trips",
+        "The daily on-time rate"
       ],
       "correct": [
-        3
+        2
       ],
       "explanation": "The two counts add across days, routes and depots, so any grouping is a ratio of sums; a stored rate cannot be re-aggregated.",
       "misconceptions": [
-        "Averaging daily rates gives light days the same weight as busy ones",
-        "An average delay is a different metric from the on-time rate",
         "A weekly figure cannot serve daily or depot views",
-        ""
+        "An average delay is a different metric from the on-time rate",
+        "",
+        "Averaging daily rates gives light days the same weight as busy ones"
       ],
       "lo": [
         "LO5"
@@ -791,18 +791,18 @@
       "prompt": "The new dashboard is 3,000 times faster, but 16 of 336 tiles show \"empty\" where the old one showed 0. What should happen before release?",
       "options": [
         "Release: 95% of the tiles agree",
-        "Release, and note the difference in the footer",
         "Fix the table so those route-days hold 0, and repeat the equality test",
+        "Release, and note the difference in the footer",
         "Go back to the slow dashboard for good"
       ],
       "correct": [
-        2
+        1
       ],
       "explanation": "A faster dashboard must show the same numbers; the difference has a cause (no tap with a route) and a fix (store 0).",
       "misconceptions": [
         "A partial match still shows wrong figures on some tiles",
-        "A footer note leaves the wrong tiles in front of the reader",
         "",
+        "A footer note leaves the wrong tiles in front of the reader",
         "The fix is small; the speed gain is kept once the tiles agree"
       ],
       "lo": [
@@ -820,19 +820,19 @@
       "prompt": "Route taps fell 17% in one week while all taps rose 2.5%. What is the best first conclusion?",
       "options": [
         "Riders left the network",
-        "Some taps lost their route attribution that week",
+        "Ridership moved to the weekend",
         "The 17% figure was computed wrongly",
-        "Ridership moved to the weekend"
+        "Some taps lost their route attribution that week"
       ],
       "correct": [
-        1
+        3
       ],
       "explanation": "The taps exist; they are missing only from the count grouped by route, so attribution, not ridership, changed.",
       "misconceptions": [
         "If riders had left, all taps would fall too",
-        "",
+        "A shift between days changes neither weekly count",
         "The 17% is correct for taps with a route; it measures something else",
-        "A shift between days changes neither weekly count"
+        ""
       ],
       "lo": [
         "LO4"
@@ -848,20 +848,20 @@
       "type": "single",
       "prompt": "On four days, every fare type on East buses lost its route in exactly the same share. What does this point to?",
       "options": [
+        "A road closure on one route",
         "A recording fault on the East equipment",
-        "A change in student travel",
         "A fare increase for adults",
-        "A road closure on one route"
+        "A change in student travel"
       ],
       "correct": [
-        0
+        1
       ],
       "explanation": "A real change in demand hits segments unevenly; an equal loss across all of them points at the equipment.",
       "misconceptions": [
+        "A road closure affects one route, not every bus of a depot",
         "",
-        "Students alone would move, not every fare type",
         "A fare change would hit one fare type and would reduce taps, not routes",
-        "A road closure affects one route, not every bus of a depot"
+        "Students alone would move, not every fare type"
       ],
       "lo": [
         "LO4"
@@ -877,20 +877,20 @@
       "type": "single",
       "prompt": "You restate missing routes with an as-of join from each tap to the last trip of its bus. What should you do before publishing the restated week?",
       "options": [
-        "Nothing: the join is exact by construction",
-        "Ask the depot to confirm the total by phone",
         "Compare the restated week with the same week last year",
-        "Run the same join on days where the trip is recorded and check it finds the recorded trip"
+        "Ask the depot to confirm the total by phone",
+        "Run the same join on days where the trip is recorded and check it finds the recorded trip",
+        "Nothing: the join is exact by construction"
       ],
       "correct": [
-        3
+        2
       ],
       "explanation": "A restatement is a model of missing data; it is trusted once it reproduces data you already have.",
       "misconceptions": [
-        "An early tap or a delayed trip can attach a tap to the wrong trip",
-        "A phoned total is not evidence about each tap",
         "Last year's week differs for many reasons and cannot validate the join",
-        ""
+        "A phoned total is not evidence about each tap",
+        "",
+        "An early tap or a delayed trip can attach a tap to the wrong trip"
       ],
       "lo": [
         "LO4"
@@ -906,19 +906,19 @@
       "type": "single",
       "prompt": "Which line belongs in an anomaly note about the October drop?",
       "options": [
-        "The East depot team failed to check the validators",
-        "Ridership data cannot be trusted",
         "Route taps fell 17% because of the validator update; restated, the week rose 2.5%",
+        "Ridership data cannot be trusted",
+        "The East depot team failed to check the validators",
         "The drop may be due to many factors"
       ],
       "correct": [
-        2
+        0
       ],
       "explanation": "A note states what was seen, the cause, the size and the change, with numbers and without blame.",
       "misconceptions": [
-        "Blame does not prevent the next fault; a test does",
-        "A general distrust gives the reader nothing to act on",
         "",
+        "A general distrust gives the reader nothing to act on",
+        "Blame does not prevent the next fault; a test does",
         "A vague cause is not a finding"
       ],
       "lo": [
@@ -935,18 +935,18 @@
       "type": "single",
       "prompt": "An agent's SQL runs without an error and returns 60.7% for September punctuality. The certified figure is 80.7%. What does the clean run show?",
       "options": [
-        "That the agent's answer is right",
         "Only that the SQL is valid; it may compute another measure",
+        "That the agent's answer is right",
         "That the certified figure is out of date",
         "That the warehouse has missing rows"
       ],
       "correct": [
-        1
+        0
       ],
       "explanation": "Valid SQL can measure another event, period or grain; only the comparison with the certified figure tells right from wrong.",
       "misconceptions": [
-        "Confuses a query that runs with a query that answers the governed question",
         "",
+        "Confuses a query that runs with a query that answers the governed question",
         "The certified figure was computed from the same warehouse with the governed definition",
         "Missing rows would show in both figures, not only in the agent's"
       ],
@@ -964,20 +964,20 @@
       "type": "single",
       "prompt": "You will score an agent on 40 questions. Which record of each answer lets you diagnose its errors afterwards?",
       "options": [
-        "The query it ran, the configuration, the model or stand-in, and the value",
+        "The time each answer took",
         "The final sentence the agent wrote",
-        "A screenshot of the chat",
-        "The time each answer took"
+        "The query it ran, the configuration, the model or stand-in, and the value",
+        "A screenshot of the chat"
       ],
       "correct": [
-        0
+        2
       ],
       "explanation": "The query shows which definition, period and grain were used; the mode and configuration say how the answer was produced.",
       "misconceptions": [
-        "",
+        "Timing says nothing about correctness",
         "A sentence hides the definition the query used",
-        "A screenshot cannot be scored or searched",
-        "Timing says nothing about correctness"
+        "",
+        "A screenshot cannot be scored or searched"
       ],
       "lo": [
         "LO6"
@@ -993,20 +993,20 @@
       "type": "single",
       "prompt": "Which entry is a complete certified answer?",
       "options": [
-        "\"Taps per trip on R01, week of 13 September: about 16\"",
         "\"15.82 taps per trip\" with the analyst's name",
+        "Value 15.816327, the query that produced it, Sunday 13 to Saturday 19 September, tolerance 0.001",
         "The semantic layer's answer to the same question",
-        "Value 15.816327, the query that produced it, Sunday 13 to Saturday 19 September, tolerance 0.001"
+        "\"Taps per trip on R01, week of 13 September: about 16\""
       ],
       "correct": [
-        3
+        1
       ],
       "explanation": "A certified answer can be rerun and judged: value, query, time logic and a tolerance set in advance.",
       "misconceptions": [
-        "\"About\" is not a value an agent can be scored against",
         "A name does not let anyone rerun or check the figure",
+        "",
         "An answer from the system under test cannot certify that system",
-        ""
+        "\"About\" is not a value an agent can be scored against"
       ],
       "lo": [
         "LO6"
@@ -1024,18 +1024,18 @@
       "options": [
         "The count from a text search of complaint_text",
         "The count of accessibility complaints",
-        "A refusal: answering requires reading the Restricted complaint text",
-        "Zero, because no metric exists"
+        "Zero, because no metric exists",
+        "A refusal: answering requires reading the Restricted complaint text"
       ],
       "correct": [
-        2
+        3
       ],
       "explanation": "The question can only be answered by reading Restricted text, so the right behaviour is to decline and say why.",
       "misconceptions": [
         "Reads Restricted text to produce a count",
         "Answers a different question than the one asked",
-        "",
-        "Inventing a figure is wrong even when it is zero"
+        "Inventing a figure is wrong even when it is zero",
+        ""
       ],
       "lo": [
         "LO6"
@@ -1051,18 +1051,18 @@
       "type": "single",
       "prompt": "With the semantic layer, Nabih answered \"the week of Sunday 20 September\" by filtering week_start = 21 September and returned 0 taps. What kind of error is it?",
       "options": [
-        "A definition error the layer should have prevented",
         "A period error in reading the question, which the layer cannot catch by itself",
+        "A definition error the layer should have prevented",
         "A join error",
         "A leak"
       ],
       "correct": [
-        1
+        0
       ],
       "explanation": "The layer governs metrics, joins and access; the agent still reads the period, and here read it wrongly.",
       "misconceptions": [
-        "The metric used was the governed one",
         "",
+        "The metric used was the governed one",
         "No join repeated rows: the filter matched no week",
         "No Restricted field was involved"
       ],
@@ -1080,20 +1080,20 @@
       "type": "single",
       "prompt": "Two wrong answers: 5,394 complaints per 10,000 taps (certified 27.0) and 67.1% trunk punctuality (certified 67.0%). Which is more dangerous, and why?",
       "options": [
-        "The second, because a reader would believe it and act on it",
+        "Neither, because both would be caught in review",
         "The first, because it is further from the truth",
         "Both equally, because both are wrong",
-        "Neither, because both would be caught in review"
+        "The second, because a reader would believe it and act on it"
       ],
       "correct": [
-        0
+        3
       ],
       "explanation": "An absurd figure is caught by any reader; a plausible one passes into decisions unnoticed.",
       "misconceptions": [
-        "",
+        "Review is the decision being made; it cannot be assumed",
         "Distance from the truth matters less than whether anyone notices",
         "Wrong answers differ in the harm they do",
-        "Review is the decision being made; it cannot be assumed"
+        ""
       ],
       "lo": [
         "LO6"
@@ -1109,20 +1109,20 @@
       "type": "single",
       "prompt": "Ratio questions were 8 of 8 right with the semantic layer. The tolerance is 95% right without review. What should the memo say?",
       "options": [
-        "The agent is 100% accurate on ratios",
-        "Refuse ratio questions until the model improves",
         "Review every ratio answer forever",
-        "Answer provisionally: 8 of 8 is consistent with an accuracy as low as 75%; grow the set to 30 and re-test"
+        "Refuse ratio questions until the model improves",
+        "Answer provisionally: 8 of 8 is consistent with an accuracy as low as 75%; grow the set to 30 and re-test",
+        "The agent is 100% accurate on ratios"
       ],
       "correct": [
-        3
+        2
       ],
       "explanation": "Eight questions cannot prove 95%; the decision stands while a larger test confirms or withdraws it.",
       "misconceptions": [
-        "Reports a sample result as a certainty",
-        "Closes a type that showed no error",
         "Ignores the evidence that the type performed well",
-        ""
+        "Closes a type that showed no error",
+        "",
+        "Reports a sample result as a certainty"
       ],
       "lo": [
         "LO6"
@@ -1139,24 +1139,140 @@
       "prompt": "The raw configuration got 18 of 40 right and leaked Restricted text in four answers. What does the memo decide for it?",
       "options": [
         "Use it for count questions, where it scored 6 of 8",
-        "Use it with a stronger instruction",
         "Do not use it: the leaks break the zero tolerance for Restricted data, whatever its accuracy",
+        "Use it with a stronger instruction",
         "Use it for questions the semantic layer cannot answer"
       ],
       "correct": [
-        2
+        1
       ],
       "explanation": "Restricted data has a zero tolerance; a configuration that leaked cannot be used for any type.",
       "misconceptions": [
         "6 of 8 is also below the 95% tolerance, and the leaks remain",
-        "An instruction is a request to the model, not an enforced rule",
         "",
+        "An instruction is a request to the model, not an enforced rule",
         "Questions outside the layer are the ones most likely to be invented or leaked"
       ],
       "lo": [
         "LO6"
       ],
       "day": "day4",
+      "session": 4,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d1-x-timepoint-grain",
+      "type": "single",
+      "prompt": "Operations measures punctuality on departures from the first timepoint; planning on every timepoint arrival. Planning's figure is lower. What explains most of the gap?",
+      "options": [
+        "Planning uses a different database",
+        "Planning rounds its percentages down",
+        "Delays build up along the route, so later timepoints are late more often",
+        "Operations leaves out weekends"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "The two figures count different events: an arrival at the fourth timepoint carries the delay gathered on the way, a departure does not.",
+      "misconceptions": [
+        "Both read the same warehouse; the difference is in the definition",
+        "Rounding cannot move a figure by many points",
+        "",
+        "Nothing in the operations definition removes weekends"
+      ],
+      "lo": [
+        "LO1"
+      ],
+      "day": "day1",
+      "session": 1,
+      "level": "understand",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d1-x-calendar",
+      "type": "single",
+      "prompt": "The board report gives on-time for Rabi al-Thani 1448; operations gives it for September 2026. Before comparing the two numbers, what must the reconciliation state?",
+      "options": [
+        "That the two periods cover different days, so one must be restated in the other calendar",
+        "Nothing: both are about a month",
+        "That the Hijri month is always shorter",
+        "That the board report is wrong"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A Hijri month and a Gregorian month overlap only in part; the comparison is fair only on the same days.",
+      "misconceptions": [
+        "",
+        "Two \"months\" in different calendars are different periods",
+        "Hijri months have 29 or 30 days, and the length is not the issue",
+        "A different period does not make a report wrong; it makes it a different figure"
+      ],
+      "lo": [
+        "LO1"
+      ],
+      "day": "day1",
+      "session": 1,
+      "level": "analyze",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d3-x-mix-first",
+      "type": "single",
+      "prompt": "The network on-time rate rose from August to September while every route type got less punctual. What do you check first?",
+      "options": [
+        "Whether the data for August is complete",
+        "The punctuality of each driver",
+        "Whether the target changed",
+        "How the number of trips of each route type changed between the two months"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "When every part falls and the total rises, the weights changed: here express trips doubled and trunk trips were cut.",
+      "misconceptions": [
+        "Incomplete data would not make every type fall while the total rises",
+        "Drivers are below the level at which the paradox happens",
+        "A target does not change the measured rate",
+        ""
+      ],
+      "lo": [
+        "LO4"
+      ],
+      "day": "day3",
+      "session": 4,
+      "level": "analyze",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d3-x-confirm-definition",
+      "type": "single",
+      "prompt": "A network pack shows a 17% drop in weekly ridership. Before drilling down, which check comes first?",
+      "options": [
+        "Which depot fell most",
+        "Whether the pack's count is the governed metric, and whether another count of the same taps agrees",
+        "Last year's figure for the same week",
+        "The weather of that week"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Confirming the measure first avoids investigating a change that exists only in one way of counting.",
+      "misconceptions": [
+        "Drilling before confirming may chase an artefact of the count",
+        "",
+        "Last year differs for many reasons and does not confirm this week's figure",
+        "Weather explains demand only once the drop is shown to be real"
+      ],
+      "lo": [
+        "LO4"
+      ],
+      "day": "day3",
       "session": 4,
       "level": "apply",
       "pool": "practice",

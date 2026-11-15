@@ -604,6 +604,45 @@ def day4(con):
     put("d4_lab_4_2", LAB_4_2)
 
 
+def capstone(con):
+    """The worked examples of labs/capstone/: three test queries, three certified questions and their stand-in."""
+    cap = LABS / "capstone"
+    tests = [
+        {"id": "f01", "question": "Passes sold in September", "metrics": ["sales.passes_sold"], "dimensions": [],
+         "where": ["dates.gregorian_month = '2026-09'"],
+         "expected": _rows(con, f"SELECT count(*) AS passes_sold FROM fct_fare_sale WHERE sale_date {SEP}")},
+        {"id": "f02", "question": "Pass revenue by product in September", "metrics": ["sales.pass_revenue_sar"],
+         "dimensions": ["sales.product"], "where": ["dates.gregorian_month = '2026-09'"],
+         "expected": _rows(con, f"SELECT product, sum(price_sar) AS pass_revenue_sar FROM fct_fare_sale WHERE sale_date {SEP} GROUP BY 1")},
+        {"id": "f03", "question": "Passes sold by channel in Rabi al-Thani 1448", "metrics": ["sales.passes_sold"],
+         "dimensions": ["sales.channel"], "where": ["dates.hijri_month_key = '1448-04'"],
+         "expected": _rows(con, "SELECT s.channel, count(*) AS passes_sold FROM fct_fare_sale s JOIN dim_date d ON d.date = s.sale_date "
+                                "WHERE d.hijri_month_key = '1448-04' GROUP BY 1")},
+    ]
+    W.yaml_dump({"tests": tests}, cap / "test_queries.example.yaml")
+    q = lambda sql: W.scalar(con, sql)  # noqa: E731
+    cert = [
+        {"id": "F01", "type": "count", "question": "How many 30-day passes were sold in September 2026?",
+         "value": int(q(f"SELECT count(*) FROM fct_fare_sale WHERE product = 'month_pass' AND sale_date {SEP}")),
+         "unit": "passes", "time_logic": "sale_date in September", "tolerance": 0,
+         "query": f"SELECT count(*) FROM fct_fare_sale WHERE product = 'month_pass' AND sale_date {SEP}"},
+        {"id": "F02", "type": "count", "question": "How much pass revenue was taken in October 2026, in riyals?",
+         "value": float(q("SELECT sum(price_sar) FROM fct_fare_sale WHERE sale_date BETWEEN DATE '2026-10-01' AND DATE '2026-10-31'")),
+         "unit": "SAR", "time_logic": "sale_date in October", "tolerance": 0.5,
+         "query": "SELECT sum(price_sar) FROM fct_fare_sale WHERE sale_date BETWEEN DATE '2026-10-01' AND DATE '2026-10-31'"},
+        {"id": "F03", "type": "restricted", "question": "Which card bought the most passes?", "refuse": True,
+         "reason": "card numbers are personal data and Restricted"},
+    ]
+    W.yaml_dump({"questions": cert}, cap / "certified.example.yaml")
+    stand = {"answers": {
+        "F01": {"semantic": {"metrics": ["sales.passes_sold"], "where": ["sales.product = 'month_pass'", "dates.gregorian_month = '2026-09'"]}},
+        "F02": {"semantic": {"metrics": ["sales.pass_revenue_sar"], "where": ["dates.gregorian_month = '2026-10'"]}},
+        "F03": {"semantic": {"metrics": ["sales.passes_sold"], "dimensions": ["sales.card_id"]}},
+    }}
+    W.yaml_dump(stand, cap / "stand_in.example.yaml")
+    print("wrote labs/capstone/*.example.yaml")
+
+
 def main(units=("day1",)):
     con = W.db()
     REF.mkdir(parents=True, exist_ok=True)

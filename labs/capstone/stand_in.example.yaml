@@ -1,0 +1,20 @@
+answers:
+  F01:
+    semantic:
+      metrics:
+      - sales.passes_sold
+      where:
+      - sales.product = 'month_pass'
+      - dates.gregorian_month = '2026-09'
+  F02:
+    semantic:
+      metrics:
+      - sales.pass_revenue_sar
+      where:
+      - dates.gregorian_month = '2026-10'
+  F03:
+    semantic:
+      metrics:
+      - sales.passes_sold
+      dimensions:
+      - sales.card_id

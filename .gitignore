@@ -37,3 +37,6 @@ Thumbs.db
 
 # Lab run outputs (delete labs/artifacts before "academy check": it reports ignored files under labs/)
 labs/artifacts/
+
+# Capstone starter outputs (a participant commits them in their own repository)
+labs/capstone/results/

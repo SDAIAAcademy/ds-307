@@ -1,0 +1,60 @@
+# The starter model of the capstone: fares and concessions, as an Apache Ossie document (spec 0.3.0.dev0).
+# It validates and answers two questions. You add the datasets, relationships, metrics and access rules your
+# catalogue needs. Search for CAPSTONE: below.
+version: 0.3.0.dev0
+name: wadi_noor_fares
+description: Pass sales of Wadi Noor Transit, January to October 2026 (synthetic). CAPSTONE - extend to single fares and taps.
+ai_context:
+  instructions: >-
+    Answer with the metrics defined here; never compute a metric from raw columns. "Month" means the Gregorian month
+    unless the question names a Hijri month. Refuse any request for a Restricted field.
+datasets:
+  - name: sales
+    description: One row per pass sold (day pass or 30-day pass). Grain - sale_id. Single fares are paid at the validator (fct_boarding.fare_sar).
+    source: fct_fare_sale
+    primary_key: [sale_id]
+    fields:
+      - {name: sale_id, expression: {sql: sale_id}, datatype: Integer}
+      - {name: sale_date, expression: {sql: sale_date}, datatype: Date, dimension: {is_time: false}}
+      - {name: product, expression: {sql: product}, datatype: String, dimension: {}}
+      - {name: fare_type, expression: {sql: fare_type}, datatype: String, dimension: {}}
+      - {name: channel, expression: {sql: channel}, datatype: String, dimension: {}}
+      - {name: price_sar, expression: {sql: price_sar}, datatype: Decimal}
+      - name: card_id
+        expression: {sql: card_id}
+        datatype: Integer
+        description: Pseudonymous card number. Personal data; never grouped, filtered or shown.
+        nonportable_extensions:
+          - {vendor_name: WADI_NOOR, data: {classification: Restricted}}
+    metrics:
+      - name: passes_sold
+        expression: {sql: COUNT(sale_id)}
+        description: Passes sold, of every product and fare type
+        datatype: Integer
+      - name: pass_revenue_sar
+        expression: {sql: SUM(price_sar)}
+        description: Revenue from pass sales in riyals; concession passes are free
+        datatype: Decimal
+      # CAPSTONE: free concession passes, concession share, revenue per tap, average price per pass ...
+  - name: dates
+    description: One row per calendar day, with the Gregorian and the Umm al-Qura Hijri calendars. Weeks start on Sunday.
+    source: dim_date
+    primary_key: [date]
+    fields:
+      - {name: date, expression: {sql: date}, datatype: Date, dimension: {is_time: true}}
+      - {name: week_start, expression: {sql: week_start}, datatype: Date, dimension: {is_time: true}}
+      - {name: gregorian_month, expression: {sql: gregorian_month}, datatype: String, dimension: {is_time: true}}
+      - {name: hijri_month_key, expression: {sql: hijri_month_key}, datatype: String, dimension: {is_time: true}}
+relationships:
+  - {name: sales_to_dates, from: sales, to: dates, from_columns: [sale_date], to_columns: [date]}
+  # CAPSTONE: products (dim_fare_product), fare types (dim_fare_type), boardings (fct_boarding) ...
+metrics: []
+  # CAPSTONE: model-scoped metrics with AGG(), for example revenue per tap across sales and boardings
+nonportable_extensions:
+  - vendor_name: WADI_NOOR
+    data:
+      owner: Yasmeen Al-Jaafari, strategy and finance
+      roles:
+        fares_analyst: {clearance: Public}
+      small_count_threshold: 10
+      # CAPSTONE: decide how senior and disability fares (Restricted at card level in dim_fare_type) may be counted
