@@ -7,7 +7,7 @@
       "type": "single",
       "prompt": "Two reports on the same month agree on everything except one rule: report A leaves cancelled trips out, report B counts them as late. 3% of trips were cancelled. Which statement is true?",
       "options": [
-        "Report A is higher, because its denominator has no cancelled trips and none of them can fail",
+        "Report A is higher, because the cancelled trips, which can never be on time, are left out of its denominator",
         "Report B is higher, because it counts more trips",
         "The two figures are equal, because cancelled trips have no delay",
         "The reports cannot be compared, because they use different data"
@@ -1136,7 +1136,7 @@
     {
       "id": "d4-raw-config",
       "type": "single",
-      "prompt": "The raw configuration got 18 of 40 right and leaked Restricted text in four answers. What does the memo decide for it?",
+      "prompt": "The raw configuration got 18 of 40 right and answered four Restricted questions from Restricted fields, twice showing complaint text with phone numbers. What does the memo decide for it?",
       "options": [
         "Use it for count questions, where it scored 6 of 8",
         "Do not use it: the leaks break the zero tolerance for Restricted data, whatever its accuracy",

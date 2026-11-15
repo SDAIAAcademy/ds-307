@@ -151,7 +151,7 @@ FROM fct_timepoint;</code></pre>
     <div class="card c-coral"><h4>Type 2: add a version</h4><p class="small mb0">A new row with its own key and validity dates. Right for real changes: a longer route, a new depot.</p></div>
   </div>
   <div class="callout warn mt"><b>The test.</b> Would a January figure be wrong if it used the June value? Then it is type 2.</div>
-  <aside class="notes"><p>Other types exist (keeping a previous value in a column, separate history tables). Type 1 and type 2 cover most needs and are the two the catalog entry asks for. FN-104 met the same idea as courier stints.</p></aside>
+  <aside class="notes"><p>Other types exist (keeping a previous value in a column, separate history tables). Type 1 and type 2 cover most needs and are the two this course uses. FN-104 met the same idea as courier stints.</p></aside>
 </section>
 
 <section class="slide" id="as-of-join" data-lo="LO3">
@@ -432,7 +432,7 @@ relationships:
     <li>They cover ratios, distinct counts, Hijri months, the R07 versions, holidays and the October week</li>
     <li>25 of 25 is the evidence for the third course outcome</li>
   </ul>
-  <aside class="notes"><p>The reference queries live in labs/_tools/make_reference.py, which is not published with the labs. A test whose reference was produced by the system under test proves only that the system agrees with itself. The capstone asks for the same on the fares area.</p></aside>
+  <aside class="notes"><p>The reference queries live in labs/_tools/make_reference.py, written in plain SQL over the warehouse and never through wnt_semantic.py; participants receive only the expected rows in data/semantic/test_queries.yaml. A test whose reference was produced by the system under test proves only that the system agrees with itself. The capstone asks for the same on the fares area.</p></aside>
 </section>
 
 <section class="slide" id="checkpoint-4" data-lo="LO3">
