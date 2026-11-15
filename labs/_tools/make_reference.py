@@ -169,6 +169,11 @@ TESTS = [
 ]
 
 
+def _sorted_rows(con, sql):
+    """_rows in a fixed order, for results whose SQL has no ORDER BY (GROUP BY order is not stable)."""
+    return sorted(_rows(con, sql), key=lambda r: [str(v) for v in r.values()])
+
+
 def _rows(con, sql):
     df = con.sql(sql).df()
     df = df.astype(object).where(df.notna(), None)
@@ -209,7 +214,7 @@ def day2(con):
     tests = []
     for tid, question, metrics, dims, where, sql in TESTS:
         tests.append({"id": tid, "question": question, "metrics": metrics, "dimensions": dims, "where": where,
-                      "expected": _rows(con, sql)})
+                      "expected": _sorted_rows(con, sql)})
     W.yaml_dump({"tests": tests}, LABS / "data" / "semantic" / "test_queries.yaml")
     print("wrote data/semantic/test_queries.yaml")
     # The starter model of Lab 2.4: the reference model without the five metrics the lab adds
@@ -610,13 +615,13 @@ def capstone(con):
     tests = [
         {"id": "f01", "question": "Passes sold in September", "metrics": ["sales.passes_sold"], "dimensions": [],
          "where": ["dates.gregorian_month = '2026-09'"],
-         "expected": _rows(con, f"SELECT count(*) AS passes_sold FROM fct_fare_sale WHERE sale_date {SEP}")},
+         "expected": _sorted_rows(con, f"SELECT count(*) AS passes_sold FROM fct_fare_sale WHERE sale_date {SEP}")},
         {"id": "f02", "question": "Pass revenue by product in September", "metrics": ["sales.pass_revenue_sar"],
          "dimensions": ["sales.product"], "where": ["dates.gregorian_month = '2026-09'"],
-         "expected": _rows(con, f"SELECT product, sum(price_sar) AS pass_revenue_sar FROM fct_fare_sale WHERE sale_date {SEP} GROUP BY 1")},
+         "expected": _sorted_rows(con, f"SELECT product, sum(price_sar) AS pass_revenue_sar FROM fct_fare_sale WHERE sale_date {SEP} GROUP BY 1")},
         {"id": "f03", "question": "Passes sold by channel in Rabi al-Thani 1448", "metrics": ["sales.passes_sold"],
          "dimensions": ["sales.channel"], "where": ["dates.hijri_month_key = '1448-04'"],
-         "expected": _rows(con, "SELECT s.channel, count(*) AS passes_sold FROM fct_fare_sale s JOIN dim_date d ON d.date = s.sale_date "
+         "expected": _sorted_rows(con, "SELECT s.channel, count(*) AS passes_sold FROM fct_fare_sale s JOIN dim_date d ON d.date = s.sale_date "
                                 "WHERE d.hijri_month_key = '1448-04' GROUP BY 1")},
     ]
     W.yaml_dump({"tests": tests}, cap / "test_queries.example.yaml")

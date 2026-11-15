@@ -17,10 +17,10 @@ tests:
   where:
   - dates.gregorian_month = '2026-09'
   expected:
-  - product: month_pass
-    pass_revenue_sar: 979200.0
   - product: day_pass
     pass_revenue_sar: 23300.0
+  - product: month_pass
+    pass_revenue_sar: 979200.0
 - id: f03
   question: Passes sold by channel in Rabi al-Thani 1448
   metrics:
@@ -30,9 +30,9 @@ tests:
   where:
   - dates.hijri_month_key = '1448-04'
   expected:
-  - channel: kiosk
-    passes_sold: 3429
   - channel: app
     passes_sold: 7240
   - channel: driver
     passes_sold: 589
+  - channel: kiosk
+    passes_sold: 3429
