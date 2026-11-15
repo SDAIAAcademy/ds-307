@@ -68,7 +68,7 @@
   ],
   "case_study": {
     "name": "Wadi Noor Transit",
-    "summary": "A fictional city bus operator with twelve routes from three depots, whose operations, planning and board reports give three different on-time figures for the same month. A synthetic warehouse (January to October 2026, fixed seed) holds about 48,500 trips, 188,000 timepoint arrivals, 467,000 card taps, complaints and fare sales, with planted problems for every session."
+    "summary": "A fictional city bus operator with twelve routes from three depots, whose operations, planning and board reports give three different on-time figures for the same month. A synthetic warehouse (January to October 2026, fixed seed) holds about 85,000 trips, 329,000 timepoint arrivals, 849,000 card taps, 2,400 complaints and 121,000 fare sales, with planted problems for every session."
   },
   "format": "intensive",
   "format_note": "Intensive: 4 teaching days of four sessions and a capstone day, with guided pre-work and a tracked follow-up task",
@@ -794,6 +794,100 @@
       "examples": [
         "a locally served open-weight model",
         "a free hosted open-weight model"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "group": "National references",
+      "items": [
+        {
+          "title": "NDMO Data Management and Personal Data Protection Standards (Business Intelligence and Analytics domain)",
+          "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/DataManagementPersonalDataProtectionStandards.pdf"
+        },
+        {
+          "title": "NDMO Data Classification Policy",
+          "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/DataClassificationPolicy.pdf"
+        },
+        {
+          "title": "Personal Data Protection Law",
+          "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/PersonalDataProtectionLaw.pdf"
+        },
+        {
+          "title": "Implementing Regulation of the Personal Data Protection Law",
+          "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/ImplementingRegulationPersonalDataProtectionLaw.pdf"
+        },
+        {
+          "title": "SDAIA Generative AI Guidelines for Government",
+          "url": "https://sdaia.gov.sa/en/SDAIA/about/Files/GenAIGuidelinesForGovernmentENCompressed.pdf"
+        }
+      ]
+    },
+    {
+      "group": "Semantic layers and metric definitions",
+      "items": [
+        {
+          "title": "Apache Ossie (Incubating): the new name for Open Semantic Interchange",
+          "url": "https://ossie.apache.org/updates/ossie-enters-apache-incubator/"
+        },
+        {
+          "title": "Apache Ossie core specification (spec.md) and JSON Schema",
+          "url": "https://github.com/apache/ossie/blob/main/core-spec/spec.md"
+        },
+        {
+          "title": "Apache Ossie converters (dbt, Cube, Snowflake, Polaris and others)",
+          "url": "https://github.com/apache/ossie-converters"
+        },
+        {
+          "title": "MetricFlow",
+          "url": "https://github.com/dbt-labs/metricflow"
+        },
+        {
+          "title": "Cube Core",
+          "url": "https://github.com/cube-js/cube"
+        }
+      ]
+    },
+    {
+      "group": "Engines, dashboards and libraries",
+      "items": [
+        {
+          "title": "DuckDB on PyPI",
+          "url": "https://pypi.org/project/duckdb/"
+        },
+        {
+          "title": "DuckDB documentation: window functions",
+          "url": "https://duckdb.org/docs/stable/sql/functions/window_functions"
+        },
+        {
+          "title": "Apache Superset",
+          "url": "https://github.com/apache/superset"
+        },
+        {
+          "title": "Metabase",
+          "url": "https://github.com/metabase/metabase"
+        },
+        {
+          "title": "Vega-Altair",
+          "url": "https://altair-viz.github.io/"
+        },
+        {
+          "title": "hijridate: Hijri and Gregorian dates on the Umm al-Qura calendar",
+          "url": "https://pypi.org/project/hijridate/"
+        }
+      ]
+    },
+    {
+      "group": "Conversational analytics",
+      "items": [
+        {
+          "title": "Lei et al., Spider 2.0: Evaluating Language Models on Real-World Enterprise Text-to-SQL Workflows (ICLR 2025)",
+          "url": "https://arxiv.org/abs/2411.07763"
+        },
+        {
+          "title": "OpenRouter: the list of models, with the free ones",
+          "url": "https://openrouter.ai/models?max_price=0"
+        }
       ]
     }
   ]

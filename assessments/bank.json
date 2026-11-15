@@ -3,24 +3,82 @@
   "version": 1,
   "questions": [
     {
-      "id": "q-example-1",
+      "id": "d1-ontime-cancelled",
       "type": "single",
-      "prompt": "REPLACE: a practice question on LO1, as a short scenario",
+      "prompt": "Two reports on the same month agree on everything except one rule: report A leaves cancelled trips out, report B counts them as late. 3% of trips were cancelled. Which statement is true?",
       "options": [
-        "REPLACE: a wrong option that a common misconception makes tempting",
-        "REPLACE: the right answer",
-        "REPLACE: a wrong option that a common misconception makes tempting",
-        "REPLACE: a wrong option that a common misconception makes tempting"
+        "Report B is higher, because it counts more trips",
+        "Report A is higher, because its denominator has no cancelled trips and none of them can fail",
+        "The two figures are equal, because cancelled trips have no delay",
+        "The reports cannot be compared, because they use different data"
       ],
       "correct": [
         1
       ],
-      "explanation": "REPLACE: why the right answer is right, in one sentence",
+      "explanation": "Counting a cancelled trip as late adds trips that can never be on time, so report B is lower than A.",
       "misconceptions": [
-        "REPLACE: the misconception behind this option",
+        "A larger denominator lowers a share when the added rows all fail",
         "",
-        "REPLACE: the misconception behind this option",
-        "REPLACE: the misconception behind this option"
+        "A cancelled trip has no delay, but B still counts it in the denominator",
+        "Both reports read the same rows; only the rule differs"
+      ],
+      "lo": [
+        "LO1"
+      ],
+      "day": "day1",
+      "session": 1,
+      "level": "analyze",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d1-hijri-period",
+      "type": "single",
+      "prompt": "The board pack labels its figure \"September\" but reports Rabi al-Thani 1448, which runs from 12 September to 11 October 2026. A manager compares it with a September figure from another report. What kind of difference is this?",
+      "options": [
+        "A period difference",
+        "A grain difference",
+        "A tolerance difference",
+        "A data quality difference"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The two figures cover different dates, so the period differs even before any rule is compared.",
+      "misconceptions": [
+        "",
+        "The grain is what one counted row is; both count trips",
+        "Tolerance is how early or late counts as on time, not which dates are included",
+        "The rows are correct; they are simply selected by another calendar"
+      ],
+      "lo": [
+        "LO1"
+      ],
+      "day": "day1",
+      "session": 1,
+      "level": "understand",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d1-first-question",
+      "type": "single",
+      "prompt": "Two dashboards show 81% and 66% on-time for the same week. Before you open the data, what do you compare first?",
+      "options": [
+        "The SQL engines the two dashboards run on",
+        "The number of users of each dashboard",
+        "The colours and chart types of the two dashboards",
+        "The written rules: grain, where measured, tolerance, filters and period"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Most disagreements between figures on one warehouse are definitional; the rules locate the cause before any debugging.",
+      "misconceptions": [
+        "Two engines return the same answer to the same query; the queries differ",
+        "Popularity says nothing about which rule was used",
+        "The presentation does not change the number",
+        ""
       ],
       "lo": [
         "LO1"
@@ -32,134 +90,204 @@
       "weight": 1
     },
     {
-      "id": "q-example-2",
-      "type": "tf",
-      "prompt": "REPLACE: a statement on LO2 that is true",
+      "id": "d1-walk-order",
+      "type": "single",
+      "prompt": "Two analysts walk from the operations figure to the board figure, changing one rule at a time, in different orders. Their step sizes differ but both walks end on the board figure. What does this show?",
       "options": [
-        "True",
-        "False"
+        "One of the two analysts made an error",
+        "The board figure is not reproducible",
+        "The rules interact, so the size of each step depends on the order of the walk",
+        "The walk should be done on a smaller sample"
       ],
       "correct": [
-        0
+        2
       ],
-      "explanation": "REPLACE: why the right answer is right, in one sentence",
+      "explanation": "Rules such as the tolerance and the point measured interact, so each step depends on the steps before it; state the order with the walk.",
       "misconceptions": [
+        "Both walks reach the same end point, so neither is wrong",
+        "Both walks reproduce it exactly",
         "",
-        "REPLACE: the misconception behind this option"
+        "Sampling would add noise; it does not remove the interaction"
+      ],
+      "lo": [
+        "LO1"
+      ],
+      "day": "day1",
+      "session": 1,
+      "level": "evaluate",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d1-definition-parts",
+      "type": "single",
+      "prompt": "A draft definition reads: \"Weekly riders: COUNT(DISTINCT card_id), owner Planning.\" What must be added before it enters the catalogue?",
+      "options": [
+        "A chart type and a colour",
+        "The table and grain, the filters, the time logic with the week start, the unit, a named owner and the limits",
+        "A target value for next year",
+        "The SQL engine that will compute it"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "A colleague must be able to compute the same number from the definition alone: grain, filters, time logic, unit, a person as owner and limits.",
+      "misconceptions": [
+        "Presentation belongs to the dashboard, not to the metric",
+        "",
+        "A target is a decision about the metric, not part of its meaning",
+        "The definition must give the same number on any engine"
       ],
       "lo": [
         "LO2"
       ],
       "day": "day1",
-      "session": 1,
-      "level": "understand",
-      "pool": "practice",
-      "weight": 1
-    },
-    {
-      "id": "q-example-3",
-      "type": "single",
-      "prompt": "REPLACE: a practice question on LO3, as a short scenario",
-      "options": [
-        "REPLACE: a wrong option that a common misconception makes tempting",
-        "REPLACE: the right answer",
-        "REPLACE: a wrong option that a common misconception makes tempting",
-        "REPLACE: a wrong option that a common misconception makes tempting"
-      ],
-      "correct": [
-        1
-      ],
-      "explanation": "REPLACE: why the right answer is right, in one sentence",
-      "misconceptions": [
-        "REPLACE: the misconception behind this option",
-        "",
-        "REPLACE: the misconception behind this option",
-        "REPLACE: the misconception behind this option"
-      ],
-      "lo": [
-        "LO3"
-      ],
-      "day": "day1",
-      "session": 1,
+      "session": 2,
       "level": "apply",
       "pool": "practice",
       "weight": 1
     },
     {
-      "id": "q-example-4",
-      "type": "tf",
-      "prompt": "REPLACE: a statement on LO4 that is true",
+      "id": "d1-taps-vs-cards",
+      "type": "single",
+      "prompt": "In the week of 13 September the network recorded 19,826 taps and 9,864 distinct cards. A press officer writes \"nearly 20,000 riders last week\". What is wrong?",
       "options": [
-        "True",
-        "False"
+        "Taps count boardings: a rider who changes bus or returns taps several times",
+        "Nothing: taps and riders are the same thing",
+        "The figure should be rounded to 19,000",
+        "Distinct cards should be multiplied by two"
       ],
       "correct": [
         0
       ],
-      "explanation": "REPLACE: why the right answer is right, in one sentence",
+      "explanation": "A tap is a boarding; one person makes several in a week, so taps overstate people. Unique cards is the nearest count, and a card is still not a person.",
       "misconceptions": [
         "",
-        "REPLACE: the misconception behind this option"
+        "Confuses the counting unit (a boarding) with a person",
+        "Rounding does not fix a wrong unit",
+        "There is no fixed number of taps per rider"
       ],
       "lo": [
-        "LO4"
+        "LO2"
       ],
       "day": "day1",
-      "session": 1,
+      "session": 2,
       "level": "understand",
       "pool": "practice",
       "weight": 1
     },
     {
-      "id": "q-example-5",
+      "id": "d1-ratio-of-sums",
       "type": "single",
-      "prompt": "REPLACE: a practice question on LO5, as a short scenario",
+      "prompt": "Route A ran 100 trips with 90 on time; route B ran 10 with 5 on time. What is the on-time rate of the two routes together?",
       "options": [
-        "REPLACE: a wrong option that a common misconception makes tempting",
-        "REPLACE: the right answer",
-        "REPLACE: a wrong option that a common misconception makes tempting",
-        "REPLACE: a wrong option that a common misconception makes tempting"
+        "70%",
+        "95 trips",
+        "90%",
+        "86.4%"
       ],
       "correct": [
-        1
+        3
       ],
-      "explanation": "REPLACE: why the right answer is right, in one sentence",
+      "explanation": "The network rate is a ratio of sums: 95 on-time trips over 110 departed trips, 86.4%.",
       "misconceptions": [
-        "REPLACE: the misconception behind this option",
-        "",
-        "REPLACE: the misconception behind this option",
-        "REPLACE: the misconception behind this option"
+        "Averages the two route rates, giving the small route the weight of the large one",
+        "A count of trips is not a rate",
+        "Takes the larger route only",
+        ""
       ],
       "lo": [
-        "LO5"
+        "LO2"
       ],
       "day": "day1",
-      "session": 1,
+      "session": 3,
       "level": "apply",
       "pool": "practice",
       "weight": 1
     },
     {
-      "id": "q-example-6",
-      "type": "tf",
-      "prompt": "REPLACE: a statement on LO6 that is true",
+      "id": "d1-distinct-weeks",
+      "type": "single",
+      "prompt": "Weekly distinct cards for four weeks are 9,909, 9,864, 9,257 and 9,734. Which number is a valid count of distinct cards for the four weeks together?",
       "options": [
-        "True",
-        "False"
+        "38,764, the sum of the weeks",
+        "9,909, the largest week",
+        "A new distinct count over the four weeks of taps",
+        "9,691, the mean of the weeks"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Distinct counts are not additive across periods; the count must be computed again over the whole period (22,962 in the lab).",
+      "misconceptions": [
+        "Cards that travel every week are counted once per week",
+        "Cards seen only in other weeks are missed",
+        "",
+        "A mean is a typical week, not the period"
+      ],
+      "lo": [
+        "LO2"
+      ],
+      "day": "day1",
+      "session": 3,
+      "level": "analyze",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d1-tree-guardrail",
+      "type": "single",
+      "prompt": "The network tree is taps = scheduled trips × (1 − cancellation rate) × taps per departed trip. Planning wants to raise taps per departed trip by cutting frequency on busy routes. Which metric should the review watch as a guardrail?",
+      "options": [
+        "Scheduled trips",
+        "Complaints per 10,000 taps",
+        "Taps",
+        "The cancellation rate"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Crowding more riders onto fewer buses can raise taps per trip while riders suffer; complaints per 10,000 taps watches for that harm.",
+      "misconceptions": [
+        "It is a driver of the tree, and the plan lowers it on purpose",
+        "",
+        "It is the goal itself, not a check on harm",
+        "Cutting frequency does not cancel trips; the rate need not move"
+      ],
+      "lo": [
+        "LO2"
+      ],
+      "day": "day1",
+      "session": 4,
+      "level": "evaluate",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d1-snapshot",
+      "type": "single",
+      "prompt": "Active 30-day passes is a snapshot metric. How should its monthly value be defined?",
+      "options": [
+        "The value on a stated day, such as the last day of the month, or the mean of the daily values",
+        "The sum of the daily values",
+        "The largest daily value",
+        "The number of passes sold in the month"
       ],
       "correct": [
         0
       ],
-      "explanation": "REPLACE: why the right answer is right, in one sentence",
+      "explanation": "A snapshot is a state on a date; it is never summed over days, so the time logic must name the day or the averaging.",
       "misconceptions": [
         "",
-        "REPLACE: the misconception behind this option"
+        "Summing a state over days counts each pass once per day it is active",
+        "The peak is a different metric with its own name",
+        "Sales are a flow, a different metric"
       ],
       "lo": [
-        "LO6"
+        "LO2"
       ],
       "day": "day1",
-      "session": 1,
+      "session": 3,
       "level": "understand",
       "pool": "practice",
       "weight": 1

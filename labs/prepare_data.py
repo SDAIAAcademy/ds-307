@@ -119,7 +119,7 @@ def trips_per_day(rtype, d, cal):
     n = TYPE_TRIPS[rtype]
     if d >= EXPRESS_UP:
         n = {"express": 36, "trunk": 24}.get(rtype, n)
-    if cal["holiday_en"]:
+    if isinstance(cal["holiday_en"], str):
         n = n // 2
     elif d.weekday() == 4:
         n = n // 2
@@ -168,7 +168,7 @@ def build(rng):
     sep = (t.service_date >= EXPRESS_UP).to_numpy()
     east = (t.depot == "East").to_numpy()
     sd = t.route_type.map(TYPE_SD).to_numpy()
-    dep = base + 1.2 * peak + sep * t.route_type.map({"trunk": 0.12, "feeder": 0.25, "express": 0.0}).to_numpy() + 0.6 * east + rng.normal(0, 1, n) * sd
+    dep = base + 1.2 * peak + sep * t.route_type.map({"trunk": 0.12, "feeder": 0.45, "express": 0.0}).to_numpy() + 0.6 * east + rng.normal(0, 1, n) * sd
     express = (t.route_type == "express").to_numpy()
     early = 0.04 + 0.025 * (sep & express)      # the new express timetable runs early
     dep = np.where(rng.random(n) < early, rng.uniform(-3.5, -1.2, n), dep)       # some leave early

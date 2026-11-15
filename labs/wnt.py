@@ -116,6 +116,49 @@ def pct(x, digits: int = 1) -> str:
     return f"{100 * x:.{digits}f}%"
 
 
+DEFINITION_KEYS = ["name", "question", "formula", "table", "grain", "filters", "time_logic", "unit", "owner", "limits"]
+
+
+def lint(defn: dict) -> list[str]:
+    """The peer checklist of a metric definition. An empty list is a pass."""
+    import re
+
+    probs = [f"missing: {k}" for k in DEFINITION_KEYS if not str(defn.get(k) or "").strip()]
+    if probs:
+        return probs
+    if not re.fullmatch(r"[a-z][a-z0-9_]*", defn["name"]):
+        probs.append("name: lower case, digits and underscores")
+    if not defn["question"].strip().endswith("?"):
+        probs.append("question: a question a person asks, ending with '?'")
+    if not re.search(r"\b(COUNT|SUM|AVG|MIN|MAX)\b|/", defn["formula"], re.I):
+        probs.append("formula: name the aggregate (COUNT, SUM ...) or the ratio")
+    if "one " not in defn["grain"].lower():
+        probs.append("grain: say what one row is ('one card tap ...')")
+    if not re.search(r"date|week|month|day", defn["time_logic"], re.I):
+        probs.append("time_logic: name the date that places a row in a period, and the calendar")
+    if "," not in defn["owner"]:
+        probs.append("owner: a person and their role ('Name, role')")
+    if len(defn["limits"].split()) < 4:
+        probs.append("limits: say what the number does not tell")
+    return probs
+
+
+def linked_view(con):
+    """boarding_linked: fct_boarding with journey_start = 1 when the card made no tap in the 60 minutes before."""
+    con.execute("""CREATE OR REPLACE VIEW boarding_linked AS
+        SELECT *, CASE WHEN lag(tap_ts) OVER (PARTITION BY card_id ORDER BY tap_ts) >= tap_ts - INTERVAL 60 MINUTE
+                       THEN 0 ELSE 1 END AS journey_start
+        FROM fct_boarding""")
+
+
+def measure(con, defn: dict, start: str, end: str, date_col: str = "service_date"):
+    """A one-table definition computed for service dates start..end (inclusive)."""
+    if defn.get("table") == "boarding_linked":
+        linked_view(con)
+    return scalar(con, f"SELECT {defn['formula']} FROM {defn['table']} "
+                       f"WHERE {date_col} BETWEEN DATE '{start}' AND DATE '{end}'")
+
+
 def close(a, b, tol: float = 1e-6) -> bool:
     try:
         return abs(float(a) - float(b)) <= tol

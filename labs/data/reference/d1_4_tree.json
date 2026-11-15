@@ -1,0 +1,16 @@
+{
+ "2026-09-13": {
+  "taps": 19826,
+  "scheduled_trips": 1950,
+  "cancellation_rate": 0.030256410256410255,
+  "taps_per_departed_trip": 10.484399788471707,
+  "complaints_per_10k_taps": 27.74134974276203
+ },
+ "2026-09-20": {
+  "taps": 18146,
+  "scheduled_trips": 1794,
+  "cancellation_rate": 0.022853957636566332,
+  "taps_per_departed_trip": 10.351397604107245,
+  "complaints_per_10k_taps": 23.145596825746722
+ }
+}
