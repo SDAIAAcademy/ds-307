@@ -100,7 +100,7 @@
             "title": "Trace three on-time figures to their definitions (AI-off)",
             "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
             "minutes": 25,
-            "href": "D1_1_trace_three_time.ipynb"
+            "href": "D1_1_three_on_time.ipynb"
           }
         },
         {
@@ -116,7 +116,7 @@
             "title": "Define four ridership metrics with grain, filters and owner",
             "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
             "minutes": 25,
-            "href": "D1_2_define_four_ridership.ipynb"
+            "href": "D1_2_ridership_metrics.ipynb"
           }
         },
         {
@@ -132,7 +132,7 @@
             "title": "Implement two ratio metrics and test them against hand-computed values",
             "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
             "minutes": 25,
-            "href": "D1_3_implement_two_ratio.ipynb"
+            "href": "D1_3_ratio_metrics.ipynb"
           }
         },
         {
@@ -148,7 +148,7 @@
             "title": "Build a metric tree from the network goal to three drivers and a guardrail",
             "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
             "minutes": 25,
-            "href": "D1_4_build_metric_tree.ipynb"
+            "href": "D1_4_metric_tree.ipynb"
           }
         }
       ]
@@ -172,7 +172,7 @@
             "title": "Model trips and boardings as facts and dimensions and check each grain",
             "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
             "minutes": 25,
-            "href": "D2_1_model_trips_boardings.ipynb"
+            "href": "D2_1_star_schema.ipynb"
           }
         },
         {
@@ -188,7 +188,7 @@
             "title": "Query a re-routed line through a type 2 route dimension and a dual-calendar date table",
             "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
             "minutes": 25,
-            "href": "D2_2_query_re_routed.ipynb"
+            "href": "D2_2_route_history.ipynb"
           }
         },
         {
@@ -204,7 +204,7 @@
             "title": "Find a double-counting join and fix it with a reconciliation test",
             "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
             "minutes": 25,
-            "href": "D2_3_find_double_counting.ipynb"
+            "href": "D2_3_fan_out.ipynb"
           }
         },
         {
@@ -220,7 +220,7 @@
             "title": "Express five catalogue metrics in the semantic layer and run the test queries",
             "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
             "minutes": 25,
-            "href": "D2_4_express_five_catalogue.ipynb"
+            "href": "D2_4_semantic_layer.ipynb"
           }
         }
       ]
@@ -244,7 +244,7 @@
             "title": "Wireframe the operations director's dashboard from the brief",
             "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
             "minutes": 25,
-            "href": "D3_1_wireframe_operations_director.ipynb"
+            "href": "D3_1_wireframe.ipynb"
           }
         },
         {
@@ -260,7 +260,7 @@
             "title": "Build three panels with targets and prior periods in Arabic and English",
             "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
             "minutes": 25,
-            "href": "D3_2_build_three_panels.ipynb"
+            "href": "D3_2_bilingual_panels.ipynb"
           }
         },
         {
@@ -276,7 +276,7 @@
             "title": "Bring a slow dashboard under three seconds and record timings",
             "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
             "minutes": 25,
-            "href": "D3_3_bring_slow_dashboard.ipynb"
+            "href": "D3_3_load_time.ipynb"
           }
         },
         {
@@ -292,7 +292,7 @@
             "title": "Drill into the seeded ridership drop and write the anomaly note",
             "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
             "minutes": 25,
-            "href": "D3_4_drill_into_seeded.ipynb"
+            "href": "D3_4_ridership_drop.ipynb"
           }
         }
       ]
@@ -316,7 +316,7 @@
             "title": "Run an agent on ten questions against the raw schema and log its SQL",
             "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
             "minutes": 25,
-            "href": "D4_1_run_agent_ten.ipynb"
+            "href": "D4_1_agent_raw.ipynb"
           }
         },
         {
@@ -332,7 +332,7 @@
             "title": "Write certified answers for ten questions, two of which the agent should refuse",
             "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
             "minutes": 25,
-            "href": "D4_2_write_certified_answers.ipynb"
+            "href": "D4_2_certified_answers.ipynb"
           }
         },
         {
@@ -348,7 +348,7 @@
             "title": "Score batch-run answers to 40 questions in both configurations and classify the errors",
             "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
             "minutes": 25,
-            "href": "D4_3_score_batch_run.ipynb"
+            "href": "D4_3_score_configs.ipynb"
           }
         },
         {
@@ -364,7 +364,7 @@
             "title": "Draft the go or no-go memo from a supplied scoring table",
             "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
             "minutes": 25,
-            "href": "D4_4_draft_go_or.ipynb"
+            "href": "D4_4_go_no_go.ipynb"
           }
         }
       ]
