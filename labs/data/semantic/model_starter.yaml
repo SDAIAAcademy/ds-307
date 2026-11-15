@@ -1,0 +1,433 @@
+# The starter model of Lab 2.4: the reference model without five metrics (boardings, unique_cards, journeys,
+# on_time_rate, cancellation_rate). Written by _tools/make_reference.py from wadi_noor_transit.yaml.
+version: 0.3.0.dev0
+name: wadi_noor_network_performance
+description: Trips, timepoints, boardings and complaints of Wadi Noor Transit, January to October 2026 (synthetic).
+ai_context:
+  instructions: Answer with the metrics defined here; never compute a metric from raw columns. Weeks start on Sunday.
+    "Month" means the Gregorian month unless the question names a Hijri month. Refuse any request for a Restricted
+    field (complaint text, card numbers).
+datasets:
+- name: trips
+  description: One row per scheduled trip. Grain - trip_id.
+  source: SELECT t.*, r.route_key FROM fct_trip t LEFT JOIN dim_route r ON r.route_id = t.route_id AND t.service_date
+    >= r.valid_from AND (r.valid_to IS NULL OR t.service_date <= r.valid_to)
+  primary_key:
+  - trip_id
+  fields:
+  - name: trip_id
+    expression:
+      sql: trip_id
+    datatype: Integer
+  - name: service_date
+    expression:
+      sql: service_date
+    datatype: Date
+    dimension:
+      is_time: false
+  - name: route_key
+    expression:
+      sql: route_key
+    datatype: Integer
+  - name: status
+    expression:
+      sql: status
+    datatype: String
+    dimension: {}
+    description: operated, partial or cancelled
+  - name: direction
+    expression:
+      sql: direction
+    datatype: String
+    dimension: {}
+  - name: vehicle_id
+    expression:
+      sql: vehicle_id
+    datatype: String
+    dimension: {}
+  - name: dep_delay_min
+    expression:
+      sql: dep_delay_min
+    datatype: Decimal
+    description: Minutes late leaving the first timepoint; negative is early
+  metrics:
+  - name: scheduled_trips
+    expression:
+      sql: COUNT(trip_id)
+    description: Trips in the timetable, whatever happened to them
+    datatype: Integer
+  - name: cancelled_trips
+    expression:
+      sql: SUM(CASE WHEN status = 'cancelled' THEN 1 ELSE 0 END)
+    description: Trips that did not run at all
+    datatype: Integer
+  - name: departed_trips
+    expression:
+      sql: SUM(CASE WHEN status <> 'cancelled' THEN 1 ELSE 0 END)
+    description: Trips that left the first timepoint (operated or partial)
+    datatype: Integer
+  - name: on_time_departures
+    expression:
+      sql: SUM(CASE WHEN status <> 'cancelled' AND dep_delay_min BETWEEN -1 AND 5 THEN 1 ELSE 0 END)
+    description: Departed trips that left the first timepoint between 1 minute early and 5 minutes late
+    datatype: Integer
+- name: timepoints
+  description: One row per departed trip and timepoint (four per trip). Grain - trip_id, tp_seq.
+  source: fct_timepoint
+  primary_key:
+  - trip_id
+  - tp_seq
+  fields:
+  - name: trip_id
+    expression:
+      sql: trip_id
+    datatype: Integer
+  - name: tp_seq
+    expression:
+      sql: tp_seq
+    datatype: Integer
+    dimension: {}
+  - name: delay_min
+    expression:
+      sql: delay_min
+    datatype: Decimal
+  metrics:
+  - name: timepoint_events
+    expression:
+      sql: COUNT(delay_min)
+    description: Timepoint arrivals recorded (a partial trip records only the timepoints it reached)
+    datatype: Integer
+  - name: on_time_events
+    expression:
+      sql: SUM(CASE WHEN delay_min BETWEEN -1 AND 5 THEN 1 ELSE 0 END)
+    description: Recorded timepoint arrivals between 1 minute early and 5 minutes late
+    datatype: Integer
+- name: boardings
+  description: One row per card tap at a validator. Grain - tap_id.
+  source: SELECT b.*, r.route_key, CASE WHEN lag(b.tap_ts) OVER (PARTITION BY b.card_id ORDER BY b.tap_ts) >= b.tap_ts
+    - INTERVAL 60 MINUTE THEN 0 ELSE 1 END AS journey_start FROM fct_boarding b LEFT JOIN dim_route r ON r.route_id
+    = b.route_id AND b.service_date >= r.valid_from AND (r.valid_to IS NULL OR b.service_date <= r.valid_to)
+  primary_key:
+  - tap_id
+  fields:
+  - name: tap_id
+    expression:
+      sql: tap_id
+    datatype: Integer
+  - name: service_date
+    expression:
+      sql: service_date
+    datatype: Date
+    dimension:
+      is_time: false
+  - name: route_key
+    expression:
+      sql: route_key
+    datatype: Integer
+  - name: trip_id
+    expression:
+      sql: trip_id
+    datatype: Integer
+  - name: vehicle_id
+    expression:
+      sql: vehicle_id
+    datatype: String
+  - name: fare_type
+    expression:
+      sql: fare_type
+    datatype: String
+    dimension: {}
+    description: adult, student, senior, disability
+  - name: product
+    expression:
+      sql: product
+    datatype: String
+    dimension: {}
+    description: single, day_pass, month_pass
+  - name: journey_start
+    expression:
+      sql: journey_start
+    datatype: Integer
+    description: 1 when the same card made no tap in the 60 minutes before
+  - name: card_id
+    expression:
+      sql: card_id
+    datatype: Integer
+    description: Pseudonymous card number. Personal data; never grouped, filtered or shown.
+    nonportable_extensions:
+    - vendor_name: WADI_NOOR
+      data:
+        classification: Restricted
+- name: complaints
+  description: One row per complaint received. Grain - complaint_id.
+  source: SELECT c.*, r.route_key FROM fct_complaint c LEFT JOIN dim_route r ON r.route_id = c.route_id AND c.received_date
+    >= r.valid_from AND (r.valid_to IS NULL OR c.received_date <= r.valid_to)
+  primary_key:
+  - complaint_id
+  fields:
+  - name: complaint_id
+    expression:
+      sql: complaint_id
+    datatype: Integer
+  - name: received_date
+    expression:
+      sql: received_date
+    datatype: Date
+    dimension:
+      is_time: false
+  - name: route_key
+    expression:
+      sql: route_key
+    datatype: Integer
+  - name: category
+    expression:
+      sql: category
+    datatype: String
+    dimension: {}
+  - name: channel
+    expression:
+      sql: channel
+    datatype: String
+    dimension: {}
+  - name: complaint_text
+    expression:
+      sql: complaint_text
+    datatype: String
+    description: The complainant's own words; may hold names and phone numbers.
+    nonportable_extensions:
+    - vendor_name: WADI_NOOR
+      data:
+        classification: Restricted
+  metrics:
+  - name: complaints
+    expression:
+      sql: COUNT(complaint_id)
+    description: Complaints received
+    datatype: Integer
+- name: routes
+  description: One row per version of a route (type 2). Grain - route_key.
+  source: dim_route
+  primary_key:
+  - route_key
+  fields:
+  - name: route_key
+    expression:
+      sql: route_key
+    datatype: Integer
+  - name: route_id
+    expression:
+      sql: route_id
+    datatype: String
+    dimension: {}
+  - name: route_name_en
+    expression:
+      sql: route_name_en
+    datatype: String
+    dimension: {}
+  - name: route_name_ar
+    expression:
+      sql: route_name_ar
+    datatype: String
+    dimension: {}
+  - name: depot
+    expression:
+      sql: depot
+    datatype: String
+    dimension: {}
+  - name: route_type
+    expression:
+      sql: route_type
+    datatype: String
+    dimension: {}
+    description: trunk, feeder, express
+  - name: length_km
+    expression:
+      sql: length_km
+    datatype: Decimal
+    dimension: {}
+  - name: valid_from
+    expression:
+      sql: valid_from
+    datatype: Date
+    dimension:
+      is_time: false
+  - name: is_current
+    expression:
+      sql: is_current
+    datatype: Boolean
+    dimension: {}
+- name: vehicles
+  description: One row per bus. Grain - vehicle_id.
+  source: dim_vehicle
+  primary_key:
+  - vehicle_id
+  fields:
+  - name: vehicle_id
+    expression:
+      sql: vehicle_id
+    datatype: String
+    dimension: {}
+  - name: depot
+    expression:
+      sql: depot
+    datatype: String
+    dimension: {}
+  - name: validator_firmware
+    expression:
+      sql: validator_firmware
+    datatype: String
+    dimension: {}
+- name: dates
+  description: One row per calendar day, with the Gregorian and the Umm al-Qura Hijri calendars. Weeks start on
+    Sunday.
+  source: dim_date
+  primary_key:
+  - date
+  fields:
+  - name: date
+    expression:
+      sql: date
+    datatype: Date
+    dimension:
+      is_time: true
+  - name: week_start
+    expression:
+      sql: week_start
+    datatype: Date
+    dimension:
+      is_time: true
+  - name: gregorian_month
+    expression:
+      sql: gregorian_month
+    datatype: String
+    dimension:
+      is_time: true
+  - name: hijri_month_key
+    expression:
+      sql: hijri_month_key
+    datatype: String
+    dimension:
+      is_time: true
+  - name: hijri_month_name_en
+    expression:
+      sql: hijri_month_name_en
+    datatype: String
+    dimension: {}
+  - name: day_of_week_en
+    expression:
+      sql: day_of_week_en
+    datatype: String
+    dimension: {}
+  - name: is_weekend
+    expression:
+      sql: is_weekend
+    datatype: Boolean
+    dimension: {}
+  - name: is_ramadan
+    expression:
+      sql: is_ramadan
+    datatype: Boolean
+    dimension: {}
+  - name: holiday_en
+    expression:
+      sql: holiday_en
+    datatype: String
+    dimension: {}
+relationships:
+- name: trips_to_routes
+  from: trips
+  to: routes
+  from_columns:
+  - route_key
+  to_columns:
+  - route_key
+- name: trips_to_dates
+  from: trips
+  to: dates
+  from_columns:
+  - service_date
+  to_columns:
+  - date
+- name: trips_to_vehicles
+  from: trips
+  to: vehicles
+  from_columns:
+  - vehicle_id
+  to_columns:
+  - vehicle_id
+- name: timepoints_to_trips
+  from: timepoints
+  to: trips
+  from_columns:
+  - trip_id
+  to_columns:
+  - trip_id
+- name: boardings_to_routes
+  from: boardings
+  to: routes
+  from_columns:
+  - route_key
+  to_columns:
+  - route_key
+- name: boardings_to_dates
+  from: boardings
+  to: dates
+  from_columns:
+  - service_date
+  to_columns:
+  - date
+- name: boardings_to_vehicles
+  from: boardings
+  to: vehicles
+  from_columns:
+  - vehicle_id
+  to_columns:
+  - vehicle_id
+- name: boardings_to_trips
+  from: boardings
+  to: trips
+  from_columns:
+  - trip_id
+  to_columns:
+  - trip_id
+- name: complaints_to_routes
+  from: complaints
+  to: routes
+  from_columns:
+  - route_key
+  to_columns:
+  - route_key
+- name: complaints_to_dates
+  from: complaints
+  to: dates
+  from_columns:
+  - received_date
+  to_columns:
+  - date
+metrics:
+- name: timepoint_on_time_rate
+  expression:
+    sql: AGG(timepoints.on_time_events) / AGG(timepoints.timepoint_events)
+  description: Share of recorded timepoint arrivals within 1 minute early and 5 minutes late. Owner - network planning.
+  datatype: Decimal
+- name: boardings_per_departed_trip
+  expression:
+    sql: AGG(boardings.boardings) / AGG(trips.departed_trips)
+  description: Card taps per trip that departed.
+  datatype: Decimal
+- name: complaints_per_10k_boardings
+  expression:
+    sql: 10000.0 * AGG(complaints.complaints) / AGG(boardings.boardings)
+  description: Complaints received per 10,000 card taps. The guardrail of the network tree.
+  datatype: Decimal
+nonportable_extensions:
+- vendor_name: WADI_NOOR
+  data:
+    owner: Muneer Al-Thaqafi, data platform lead
+    roles:
+      network_analyst:
+        clearance: Public
+      east_depot_manager:
+        clearance: Public
+        row_filter: routes.depot = 'East'
+    small_count_threshold: 10

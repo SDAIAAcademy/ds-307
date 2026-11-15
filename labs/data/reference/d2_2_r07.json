@@ -1,0 +1,14 @@
+[
+ {
+  "route_name_en": "Al-Rawdah Feeder",
+  "length_km": 11.4,
+  "departed_trips": 3068,
+  "taps": 22716
+ },
+ {
+  "route_name_en": "Al-Rawdah Hospital Feeder",
+  "length_km": 15.8,
+  "departed_trips": 3187,
+  "taps": 33513
+ }
+]

@@ -291,6 +291,296 @@
       "level": "understand",
       "pool": "practice",
       "weight": 1
+    },
+    {
+      "id": "d2-grain-boardings",
+      "type": "single",
+      "prompt": "fct_boarding has one row per card tap and a trip_id column. A colleague sums sched_minutes after joining trips to taps. What does the sum count?",
+      "options": [
+        "Each trip's minutes once",
+        "The minutes of the taps",
+        "Only the minutes of trips without taps",
+        "Each trip's minutes once per tap on it"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "After the join each trip appears once per tap, so a trip column summed over the joined rows is repeated by the number of taps.",
+      "misconceptions": [
+        "Forgets that joining to the many side repeats the one side",
+        "Taps have no duration; the minutes belong to trips",
+        "An inner join drops trips without taps rather than keeping only them",
+        ""
+      ],
+      "lo": [
+        "LO3"
+      ],
+      "day": "day2",
+      "session": 1,
+      "level": "understand",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d2-surrogate-key",
+      "type": "single",
+      "prompt": "dim_route has 13 rows for 12 route_id values, because R07 has two versions. Which column should a relationship from a fact to dim_route use?",
+      "options": [
+        "route_id, because riders use it",
+        "route_name_en, because it differs between the versions",
+        "route_key, the key of one version, found with the service date",
+        "depot, because it never changes"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "route_key identifies one version; facts reach it through an as-of join on the service date, so each fact row meets exactly one dimension row.",
+      "misconceptions": [
+        "A natural key with history is not unique: R07 rows would double",
+        "Names can repeat and can change without a new version",
+        "",
+        "A depot is shared by four routes: not a key"
+      ],
+      "lo": [
+        "LO3"
+      ],
+      "day": "day2",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d2-type2",
+      "type": "single",
+      "prompt": "A route moves from the North depot to the Central depot on 1 November. How should the dimension record the change?",
+      "options": [
+        "Overwrite the depot on the existing row",
+        "Add a new row with a new key, valid from 1 November, and close the old row on 31 October",
+        "Delete the route and create a new route_id",
+        "Store the depot in the trips table only"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "A real change that past figures must not inherit is type 2: a new version with its own validity dates.",
+      "misconceptions": [
+        "Type 1 rewrites history: North would lose its past trips",
+        "",
+        "A new route_id breaks every comparison over time for the same route",
+        "Moves a dimension attribute into the fact, repeated on every trip"
+      ],
+      "lo": [
+        "LO3"
+      ],
+      "day": "day2",
+      "session": 2,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d2-asof-null",
+      "type": "single",
+      "prompt": "An as-of join reads \"service_date BETWEEN valid_from AND valid_to\". After it, every trip of the current versions has disappeared. Why?",
+      "options": [
+        "The current versions have an empty valid_to, and BETWEEN with an empty bound is never true",
+        "BETWEEN excludes its end dates",
+        "The service dates are stored as text",
+        "The current versions have no valid_from"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "An open valid_to means \"still valid\"; the condition needs \"valid_to IS NULL OR service_date <= valid_to\".",
+      "misconceptions": [
+        "",
+        "BETWEEN includes both ends in SQL",
+        "Text dates would fail differently, for all versions alike",
+        "Every version has a start date"
+      ],
+      "lo": [
+        "LO3"
+      ],
+      "day": "day2",
+      "session": 2,
+      "level": "analyze",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d2-hijri-compare",
+      "type": "single",
+      "prompt": "Planning wants to compare ridership in Ramadan 1447 with Ramadan of the year before. Which approach is right?",
+      "options": [
+        "Compare March 2026 with March 2025",
+        "Compare the first 30 days of each year",
+        "Compare the totals of the two Gregorian quarters that contain Ramadan",
+        "Compare taps per service day in the Hijri month Ramadan of each year, from the date dimension"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Ramadan moves about eleven days earlier each Gregorian year; the Hijri month in the date dimension selects the same period, and per-day figures remove month length.",
+      "misconceptions": [
+        "March of each year holds different parts of Ramadan, or none",
+        "The start of the year is unrelated to Ramadan",
+        "A quarter mixes Ramadan with ordinary weeks",
+        ""
+      ],
+      "lo": [
+        "LO3"
+      ],
+      "day": "day2",
+      "session": 2,
+      "level": "evaluate",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d2-fan-trap",
+      "type": "single",
+      "prompt": "A query joins trips to taps and to timepoints in one statement and counts taps per route. The total is 3.98 times the source. What explains the factor?",
+      "options": [
+        "Cancelled trips were counted",
+        "The taps table has duplicate rows",
+        "Each tap is repeated by the number of timepoints its trip reached",
+        "The date filter was applied twice"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Two many sides met through one trip, so every tap is paired with every timepoint of its trip: four, or two for a partial trip.",
+      "misconceptions": [
+        "Cancelled trips have no taps and no timepoints",
+        "Duplicates would not follow the number of timepoints",
+        "",
+        "Applying a filter twice changes nothing"
+      ],
+      "lo": [
+        "LO3"
+      ],
+      "day": "day2",
+      "session": 3,
+      "level": "analyze",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d2-reconcile",
+      "type": "single",
+      "prompt": "Which test would have caught the inflated route report before it was published?",
+      "options": [
+        "Check that every route appears in the report",
+        "Check that the sum of taps in the report equals a count of taps taken directly from fct_boarding for the same period",
+        "Check that the report runs in under a second",
+        "Check that the punctuality column is between 0 and 1"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "A reconciliation test compares a report total with the source counted another way; the inflated report fails it at once.",
+      "misconceptions": [
+        "All routes appear in the inflated report too",
+        "",
+        "Speed says nothing about correctness",
+        "The inflated punctuality is still between 0 and 1"
+      ],
+      "lo": [
+        "LO3"
+      ],
+      "day": "day2",
+      "session": 3,
+      "level": "evaluate",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d2-model-scope",
+      "type": "single",
+      "prompt": "In an Apache Ossie document, where does on_time_rate = on-time departures divided by departed trips belong?",
+      "options": [
+        "At the model root, written as AGG(trips.on_time_departures) / AGG(trips.departed_trips)",
+        "In the trips dataset, written as AVG(on_time)",
+        "In each dashboard that shows it",
+        "In the routes dataset, because it is reported by route"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A metric that combines aggregated dataset metrics is model-scoped and reads them with AGG(), so the division happens after aggregation.",
+      "misconceptions": [
+        "",
+        "A mean of a per-trip flag hides the governed parts and does not generalise to other ratios",
+        "Copies the definition into every consumer",
+        "Grouping by route does not move a trip metric into the route dataset"
+      ],
+      "lo": [
+        "LO3"
+      ],
+      "day": "day2",
+      "session": 4,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d2-extension",
+      "type": "single",
+      "prompt": "The model's roles and field classifications are stored under nonportable_extensions. What happens when another tool imports the file?",
+      "options": [
+        "The file fails validation in other tools",
+        "Ossie enforces the rules in every tool that reads the file",
+        "The rules are converted to SQL grants automatically",
+        "The tool must enforce the same rules, because Ossie carries the extension without interpreting it"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "The specification defines no access rules; vendor extensions travel with the model but each consumer must implement them.",
+      "misconceptions": [
+        "Extensions are valid Ossie; other tools simply ignore them",
+        "Ossie is a file format, not an engine that enforces anything",
+        "No converter turns a vendor extension into grants by itself",
+        ""
+      ],
+      "lo": [
+        "LO3"
+      ],
+      "day": "day2",
+      "session": 4,
+      "level": "understand",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d2-independent-reference",
+      "type": "single",
+      "prompt": "Your 25 test queries all pass. Their expected values were produced by running the same semantic model last week. What does the result show?",
+      "options": [
+        "That the model is correct",
+        "That the warehouse is complete",
+        "Only that the model has not changed since last week",
+        "That the model is fast enough"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A reference produced by the system under test proves only agreement with itself; references must come from independent SQL.",
+      "misconceptions": [
+        "Agreement with an earlier run of itself cannot detect a definition that was wrong from the start",
+        "Tests on a model say nothing about missing source rows",
+        "",
+        "Correctness tests do not measure speed"
+      ],
+      "lo": [
+        "LO3"
+      ],
+      "day": "day2",
+      "session": 4,
+      "level": "evaluate",
+      "pool": "practice",
+      "weight": 1
     }
   ]
 }

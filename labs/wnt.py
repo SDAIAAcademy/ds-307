@@ -98,7 +98,7 @@ def yaml_dump(obj, path=None) -> str:
 
     text = yaml.safe_dump(obj, sort_keys=False, allow_unicode=True, width=110)
     if path:
-        Path(path).write_text(text, encoding="utf-8")
+        Path(path).write_text(text, encoding="utf-8", newline="\n")
     return text
 
 

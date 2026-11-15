@@ -285,3 +285,41 @@ class Model:
     def value(self, metric, where=()):
         """One number: a metric with no dimension."""
         return self.query([metric], [], where).iloc[0, 0]
+
+
+def _same(a, b, rel=1e-9):
+    if a is None or b is None or a != a or b != b:
+        return (a is None or a != a) and (b is None or b != b)
+    if isinstance(a, (int, float)) or isinstance(b, (int, float)):
+        try:
+            return abs(float(a) - float(b)) <= rel * max(1.0, abs(float(b)))
+        except (TypeError, ValueError):
+            return False
+    return str(a) == str(b)
+
+
+def run_tests(model, tests, verbose=True):
+    """Run test queries ({id, metrics, dimensions, where, expected}) and compare with their reference rows.
+    Returns a data frame with one row per test: passed or the first difference."""
+    import pandas as pd
+
+    out = []
+    for t in tests:
+        try:
+            got = model.query(t["metrics"], t.get("dimensions", []), t.get("where", []))
+            got = got.astype(object).where(got.notna(), None).to_dict("records")
+            exp = t["expected"]
+            keys = [d.split(".", 1)[1] for d in t.get("dimensions", [])]
+            srt = lambda rows: sorted(rows, key=lambda r: tuple(str(r.get(k)) for k in keys))
+            got, exp = srt(got), srt(exp)
+            if len(got) != len(exp):
+                ok, why = False, f"{len(got)} rows, expected {len(exp)}"
+            else:
+                bad = [(k, g.get(k), e[k]) for g, e in zip(got, exp) for k in e if not _same(g.get(k), e[k])]
+                ok, why = not bad, ("" if not bad else f"{bad[0][0]}: got {bad[0][1]}, expected {bad[0][2]}")
+        except Exception as e:  # a refusal or an error is a failed test, with its message
+            ok, why = False, f"{type(e).__name__}: {str(e)[:120]}"
+        out.append({"test": t["id"], "passed": ok, "detail": why})
+        if verbose:
+            print(("✅ " if ok else "❌ ") + f"{t['id']:4s} {t.get('question', '')[:70]}" + ("" if ok else f"  [{why}]"))
+    return pd.DataFrame(out)

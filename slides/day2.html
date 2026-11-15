@@ -1,158 +1,474 @@
+<!-- ======================= OPENING ======================= -->
 <section class="slide title" id="title" data-auto="title">
-  <aside class="notes">REPLACE: welcome; introduce yourself; one question to the room that calibrates the pace; the rhythm of the day</aside>
+  <aside class="notes"><p>Welcome back. Yesterday the numbers got definitions; today they get a model, so that each one is computed in one place. Ask: who has seen the same metric computed in two dashboards with two different SQL queries? That is the problem a semantic model removes.</p></aside>
 </section>
 
 <section class="slide" id="agenda" data-auto="agenda"></section>
 
-<!-- Session 1 -->
-
-<section class="slide section" id="s1" data-auto="section" data-session="1"></section>
-
-<section class="slide" id="s1-idea" data-lo="LO3">
-  <div class="kicker">REPLACE: the question this slide answers</div>
-  <h2>REPLACE: one idea, stated as a sentence</h2>
-  <div class="cols cols-2">
-    <ul class="bullets">
-      <li>REPLACE: at most six bullets, each a complete thought</li>
-      <li>REPLACE: bold the key phrase; numbers come from the lab run, not from memory</li>
-    </ul>
-    <div class="card c-teal"><h4>In the case study</h4><p class="small mb0">REPLACE: tie the idea to the case study and its data</p></div>
+<section class="slide" id="review-day1" data-lo="LO2">
+  <div class="kicker">Review of Day 1</div>
+  <h2>Which part of the definition is missing?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2">
+    <p class="lead">"journeys: SUM(journey_start) on boarding_linked; one card tap; filters none; unit journeys; owner Dhuha Al-Rowais, planning; limits: a quick return counts as a transfer." Which of the eight parts is missing?</p>
+    <div class="opts">
+      <div class="opt" data-why="The grain is there: one card tap">The grain</div>
+      <div class="opt" data-why="The owner is a named person with a role">The owner</div>
+      <div class="opt" data-ok>The time logic</div>
+      <div class="opt" data-why="The limits line names a known undercount">The limits</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> Nothing says which date places a tap in a period, or which week and calendar apply, so two analysts could still report two numbers for "last week".</div>
   </div>
-  <div class="callout warn mt"><b>What goes wrong.</b> REPLACE: the failure participants will hit, and how to recognise it</div>
-  <aside class="notes">REPLACE: what to say, the demo to run, the question to ask the room, the common failure and its fix</aside>
+  <aside class="notes"><p>Answer: C. The catalogue entry says "service_date of the tap; the 60-minute look-back crosses midnight". If the room hesitates between options, read the eight parts aloud from yesterday's slide.</p></aside>
 </section>
 
-<section class="slide" id="s1-steps" data-lo="LO3">
-  <div class="kicker">Step by step</div>
-  <h2>REPLACE: a process, shown one step per key press</h2>
+<!-- ======================= SESSION 1 ======================= -->
+<section class="slide section" id="s1" data-auto="section" data-session="1"></section>
+
+<section class="slide" id="why-a-model" data-lo="LO3">
+  <div class="kicker">From catalogue to model</div>
+  <h2>A definition says what a number means; a model computes it the same way everywhere</h2>
   <div class="flow">
-    <div class="step c-teal"><b>1 · REPLACE: name</b>REPLACE: what happens first</div>
-    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · REPLACE: name</b>REPLACE: the next piece</div>
-    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · REPLACE: name</b>REPLACE: the result</div>
+    <div class="step c-teal"><b>Catalogue</b>meaning, owner, limits (Day 1)</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>Star schema</b>facts at a grain, dimensions to slice by</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>Semantic model</b>each metric written once, joins decided once</div>
+    <div class="arrow">→</div>
+    <div class="step c-purple"><b>Every consumer</b>dashboard, notebook, agent</div>
   </div>
-  <div class="callout tip mt frag"><b>Takeaway.</b> REPLACE: the one sentence to remember</div>
-  <aside class="notes">Press once per step and say what each step adds before the next one appears. REPLACE: the example to walk through</aside>
+  <aside class="notes"><p>The order of the day: Session 1 the star, Session 2 the history and the calendars, Session 3 the joins that go wrong, Session 4 the model written as an open document. Platform-scale semantic layers across many business areas are DS-408; here it is one area, network performance.</p></aside>
+</section>
+
+<section class="slide" id="facts-and-dimensions" data-lo="LO3">
+  <div class="kicker">Two kinds of table</div>
+  <h2>Facts record events at a grain; dimensions describe them</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>Facts</h4><p class="small mb0">Trips, timepoint arrivals, taps, complaints. Many rows, numeric columns to aggregate, foreign keys to dimensions.</p></div>
+    <div class="card c-cyan"><h4>Dimensions</h4><p class="small mb0">Routes, dates, vehicles, depots. Few rows, descriptive columns to group and filter by, one key each.</p></div>
+  </div>
+  <div class="callout tip mt"><b>Ask of every column:</b> do I add it up, or do I slice by it? The answer places it in a fact or in a dimension.</div>
+  <aside class="notes"><p>A quick exercise: call out columns and ask the room to say "fact" or "dimension": arr_delay_min (fact measure), depot (dimension), fare_type (an attribute of the tap kept on the fact, a degenerate dimension), route_name_ar (dimension).</p></aside>
+</section>
+
+<section class="slide" id="star-of-wadi-noor" data-lo="LO3" data-read="scaled">
+  <div class="kicker">The star</div>
+  <h2>Four facts share dates, routes and vehicles</h2>
+  <div class="figure">
+    <svg viewBox="0 0 900 360" role="img" aria-label="Star schema: fct_trip, fct_boarding, fct_timepoint and fct_complaint around dim_date, dim_route and dim_vehicle; taps and timepoints also point to trips">
+      <g font-family="IBM Plex Sans, sans-serif" font-size="17" text-anchor="middle">
+        <rect x="360" y="140" width="180" height="60" rx="10" fill="#e6f4f1" stroke="#0f766e"/><text x="450" y="176">fct_trip</text>
+        <rect x="80" y="40" width="180" height="60" rx="10" fill="#e6f4f1" stroke="#0f766e"/><text x="170" y="76">fct_boarding</text>
+        <rect x="640" y="40" width="180" height="60" rx="10" fill="#e6f4f1" stroke="#0f766e"/><text x="730" y="76">fct_timepoint</text>
+        <rect x="80" y="260" width="180" height="60" rx="10" fill="#e6f4f1" stroke="#0f766e"/><text x="170" y="296">fct_complaint</text>
+        <rect x="360" y="20" width="180" height="56" rx="28" fill="#fdf0ea" stroke="#c2410c"/><text x="450" y="54">dim_route</text>
+        <rect x="360" y="280" width="180" height="56" rx="28" fill="#fdf0ea" stroke="#c2410c"/><text x="450" y="314">dim_date</text>
+        <rect x="640" y="260" width="180" height="56" rx="28" fill="#fdf0ea" stroke="#c2410c"/><text x="730" y="294">dim_vehicle</text>
+        <g stroke="#475569" stroke-width="2">
+          <line x1="260" y1="70" x2="360" y2="48"/><line x1="260" y1="90" x2="360" y2="290"/><line x1="260" y1="80" x2="370" y2="150"/>
+          <line x1="640" y1="80" x2="530" y2="150"/><line x1="450" y1="140" x2="450" y2="76"/><line x1="450" y1="200" x2="450" y2="280"/>
+          <line x1="540" y1="190" x2="640" y2="280"/><line x1="260" y1="290" x2="360" y2="300"/><line x1="260" y1="280" x2="380" y2="76"/>
+        </g>
+      </g>
+    </svg>
+    <div class="caption">Facts are rectangles, dimensions rounded. Every line is many-to-one, from the fact to what it points at.</div>
+  </div>
+  <aside class="notes"><p>This is the star participants draw in Lab 2.1, task 3. Point out the two lines that go from a fact to another fact: taps and timepoints both point to trips. That makes trips a dimension of taps (one trip, many taps), which is how the semantic model treats it, and it is why the fan-out of Session 3 is possible.</p></aside>
+</section>
+
+<section class="slide" id="grain-recap" data-lo="LO3">
+  <div class="kicker">Recap from FN-104</div>
+  <h2>A grain is a sentence; a key test proves it</h2>
+  <div class="cols cols-2">
+    <pre class="code s" data-file="Lab 2.1 · key_test"><code class="language-sql">SELECT count(*)                         AS rows,
+       count(DISTINCT (trip_id, tp_seq)) AS keys,
+       count(*) FILTER (WHERE trip_id IS NULL
+                         OR tp_seq IS NULL) AS empty
+FROM fct_timepoint;</code></pre>
+    <ul class="bullets small">
+      <li><code>fct_timepoint</code>: one departed trip at one timepoint</li>
+      <li>329,188 rows, 329,188 keys, none empty: the grain holds</li>
+      <li>Grain, keys and orphans were taught in FN-104, Day 1; today they are the input of a model</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>One slide only: FN-104 is the prerequisite and taught key tests and anti joins in full. If several participants struggle with the counting, pair them with someone who passed FN-104 recently. Numbers from Lab 2.1.</p></aside>
+</section>
+
+<section class="slide" id="natural-key-fails" data-lo="LO3">
+  <div class="kicker">The planted surprise</div>
+  <h2>dim_route has 13 rows for 12 routes</h2>
+  <table class="t small">
+    <tr><th>route_key</th><th>route_id</th><th>route_name_en</th><th class="num">length_km</th><th>valid_from</th><th>valid_to</th></tr>
+    <tr><td>7</td><td>R07</td><td>Al-Rawdah Feeder</td><td class="num">11.4</td><td><time>2026-01-01</time></td><td><time>2026-05-31</time></td></tr>
+    <tr class="hl"><td>8</td><td>R07</td><td>Al-Rawdah Hospital Feeder</td><td class="num">15.8</td><td><time>2026-06-01</time></td><td>(open)</td></tr>
+  </table>
+  <ul class="bullets small mt-s">
+    <li><code>route_id</code> is the natural key riders use; <code>route_key</code> identifies one version</li>
+    <li>A join on <code>route_id</code> returns <b>91,418 rows for 85,010 trips</b>: every R07 trip twice</li>
+  </ul>
+  <aside class="notes"><p>From Lab 2.1, task 4. R07 was extended to Al-Rawdah Hospital on 1 June 2026. Ask: which version should a January trip join? Session 2 answers with the as-of join.</p></aside>
+</section>
+
+<section class="slide" id="conformed-dimensions" data-lo="LO3">
+  <div class="kicker">Conformed dimensions</div>
+  <h2>One date table and one route table serve every fact</h2>
+  <ul class="bullets">
+    <li>Trips and taps grouped by the same <code>dim_date.week_start</code> mean the same week</li>
+    <li>A second date table with Monday weeks would bring back yesterday's disagreement</li>
+    <li>Conformed means: <b>same keys, same attributes, same meaning</b> for every fact</li>
+    <li>Lab 2.1's stretch checks that every service date of every fact is a row of <code>dim_date</code></li>
+  </ul>
+  <aside class="notes"><p>Conformed dimensions are what lets the dashboard on Day 3 put trips and taps on one chart by week without a second argument. In a platform with many subject areas this becomes a design discipline of its own (DS-408).</p></aside>
+</section>
+
+<section class="slide" id="checkpoint-1" data-lo="LO3">
+  <div class="kicker">Checkpoint</div>
+  <h2>What is the grain of the timepoint table?</h2>
+  <div class="quiz" data-type="single" data-lo="LO3">
+    <p class="lead"><code>fct_timepoint</code> has 329,188 rows, 82,000 distinct <code>trip_id</code> values and <code>tp_seq</code> from 1 to 4. What does one row mean?</p>
+    <div class="opts">
+      <div class="opt" data-why="Trusts the trip_id column over the row count: there are four times more rows than trips">One trip</div>
+      <div class="opt" data-why="Timepoints are fixed places on a route; the table records arrivals, not places">One timepoint of a route</div>
+      <div class="opt" data-why="Arrivals are per trip, not per scheduled minute">One scheduled minute of a trip</div>
+      <div class="opt" data-ok>One departed trip at one timepoint</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The key is (trip_id, tp_seq): rows equal distinct pairs, so one row is a trip's arrival at one of its four timepoints.</div>
+  </div>
+  <aside class="notes"><p>Answer: D. The figure of 82,000 trips is rounded on purpose; the exact count of departed trips is in the lab. If many pick A, return to the key-test slide.</p></aside>
 </section>
 
 <section class="slide lab" id="lab-2-1" data-auto="lab" data-lab="2.1">
-  <aside class="notes">REPLACE: what to watch for while participants work, the typical problems, and the fallback for anyone who did not finish an earlier lab</aside>
+  <aside class="notes"><p>AI-off. The common error is to write route_id as the key of dim_route and stop when the test fails: the task asks them to find out why. Point participants who finish early to the stretch (conformed dates). The safety nets supply the reference keys.</p></aside>
 </section>
 
-<!-- Session 2 -->
-
+<!-- ======================= SESSION 2 ======================= -->
 <section class="slide section" id="s2" data-auto="section" data-session="2"></section>
 
-<section class="slide" id="s2-idea" data-lo="LO3">
-  <div class="kicker">REPLACE: the question this slide answers</div>
-  <h2>REPLACE: one idea, stated as a sentence</h2>
+<section class="slide" id="dimensions-change" data-lo="LO3">
+  <div class="kicker">Slowly changing dimensions</div>
+  <h2>When a route changes, decide whether history changes with it</h2>
   <div class="cols cols-2">
-    <ul class="bullets">
-      <li>REPLACE: at most six bullets, each a complete thought</li>
-      <li>REPLACE: bold the key phrase; numbers come from the lab run, not from memory</li>
-    </ul>
-    <div class="card c-teal"><h4>In the case study</h4><p class="small mb0">REPLACE: tie the idea to the case study and its data</p></div>
+    <div class="card c-teal"><h4>Type 1: overwrite</h4><p class="small mb0">The new value replaces the old everywhere, past included. Right for corrections: a misspelt name.</p></div>
+    <div class="card c-coral"><h4>Type 2: add a version</h4><p class="small mb0">A new row with its own key and validity dates. Right for real changes: a longer route, a new depot.</p></div>
   </div>
-  <div class="callout warn mt"><b>What goes wrong.</b> REPLACE: the failure participants will hit, and how to recognise it</div>
-  <aside class="notes">REPLACE: what to say, the demo to run, the question to ask the room, the common failure and its fix</aside>
+  <div class="callout warn mt"><b>The test.</b> Would a January figure be wrong if it used the June value? Then it is type 2.</div>
+  <aside class="notes"><p>Other types exist (keeping a previous value in a column, separate history tables). Type 1 and type 2 cover most needs and are the two the catalog entry asks for. FN-104 met the same idea as courier stints.</p></aside>
 </section>
 
-<section class="slide" id="s2-steps" data-lo="LO3">
-  <div class="kicker">Step by step</div>
-  <h2>REPLACE: a process, shown one step per key press</h2>
-  <div class="flow">
-    <div class="step c-teal"><b>1 · REPLACE: name</b>REPLACE: what happens first</div>
-    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · REPLACE: name</b>REPLACE: the next piece</div>
-    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · REPLACE: name</b>REPLACE: the result</div>
+<section class="slide" id="as-of-join" data-lo="LO3">
+  <div class="kicker">The as-of join</div>
+  <h2>Join each fact row to the version valid on its date</h2>
+  <pre class="code" data-file="Lab 2.2 · trips_with_version"><code class="language-sql">SELECT t.*, r.route_key, r.route_name_en, r.length_km
+FROM fct_trip t
+JOIN dim_route r
+  ON r.route_id = t.route_id
+ AND t.service_date &gt;= r.valid_from
+ AND (r.valid_to IS NULL OR t.service_date &lt;= r.valid_to)</code></pre>
+  <p class="small mt-s">85,010 trips in, 85,010 rows out. The open <code>valid_to</code> means "still valid".</p>
+  <aside class="notes"><p>Walk through the three conditions. Common errors: forgetting the IS NULL branch, which drops every trip of the current version; using BETWEEN with a NULL end. A warehouse often stores the surrogate key on the fact at load time instead; here the semantic model's dataset source does the as-of join, so the rule lives in one place.</p></aside>
+</section>
+
+<section class="slide" id="r07-before-after" data-lo="LO3">
+  <div class="kicker">Why the version matters</div>
+  <h2>Per kilometre, R07 barely changed; per trip, it jumped</h2>
+  <table class="t">
+    <tr><th>Version</th><th class="num">Length</th><th class="num">Departed trips</th><th class="num">Taps</th><th class="num">Taps per trip-km</th></tr>
+    <tr><td>Al-Rawdah Feeder (Jan to May)</td><td class="num">11.4</td><td class="num">3,068</td><td class="num">22,716</td><td class="num">0.649</td></tr>
+    <tr><td>Al-Rawdah Hospital Feeder (Jun to Oct)</td><td class="num">15.8</td><td class="num">3,187</td><td class="num">33,513</td><td class="num">0.666</td></tr>
+  </table>
+  <div class="callout warn mt"><b>With the current row for every date</b> the first five months show 0.469 taps per km: a fall that never happened.</div>
+  <aside class="notes"><p>From Lab 2.2. Taps per trip went from 7.4 to 10.5 because the route got longer and reaches a hospital. Per kilometre, demand density is almost unchanged. Which number goes to planning depends on the question; either way it must use the right version.</p></aside>
+</section>
+
+<section class="slide" id="dual-calendar" data-lo="LO3">
+  <div class="kicker">Two calendars, one table</div>
+  <h2>The date dimension carries the Gregorian and the Hijri calendar</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Column</th><th>Example for 23 Sep 2026</th></tr>
+      <tr><td><code>gregorian_month</code></td><td>2026-09</td></tr>
+      <tr><td><code>hijri_date</code></td><td>1448-04-12</td></tr>
+      <tr><td><code>hijri_month_name_ar</code></td><td class="ar">ربيع الآخر</td></tr>
+      <tr><td><code>week_start</code></td><td>Sunday 20 Sep</td></tr>
+      <tr><td><code>holiday_en</code></td><td>National Day</td></tr>
+    </table>
+    <ul class="bullets small">
+      <li>Built once with the Umm al-Qura calendar (<code>hijridate</code>)</li>
+      <li>Every report picks a column, never a conversion of its own</li>
+      <li>Ramadan, the Eids and school terms are flags, not guesses</li>
+    </ul>
   </div>
-  <div class="callout tip mt frag"><b>Takeaway.</b> REPLACE: the one sentence to remember</div>
-  <aside class="notes">Press once per step and say what each step adds before the next one appears. REPLACE: the example to walk through</aside>
+  <aside class="notes"><p>FN-104 taught the conversion itself; here the point is that it is done once, in the dimension. The Hijri date of 23 September 2026 in the generated table is 1448-04-12; check it live in Lab 2.2 if someone asks. Ramadan 1447 ran from 18 February to 19 March 2026 in this table.</p></aside>
+</section>
+
+<section class="slide" id="ramadan-per-day" data-lo="LO3">
+  <div class="kicker">Like with like</div>
+  <h2>Compare months per service day: Ramadan ran at 2,186 taps a day</h2>
+  <div class="bars">
+    <div class="row"><span>Shaban 1447</span><div class="bar c-teal" style="--w:94%"></div><span class="val">2,855</span></div>
+    <div class="row"><span>Ramadan 1447</span><div class="bar c-coral" style="--w:72%"></div><span class="val">2,186</span></div>
+    <div class="row"><span>Shawwal 1447</span><div class="bar c-cyan" style="--w:87%"></div><span class="val">2,642</span></div>
+    <div class="row"><span>Muharram 1448</span><div class="bar c-purple" style="--w:100%"></div><span class="val">3,029</span></div>
+  </div>
+  <p class="small mt-s">Taps per service day by Hijri month, Lab 2.2. Shawwal includes Eid al-Fitr.</p>
+  <aside class="notes"><p>Months differ in length (29 or 30 days in the Hijri calendar, 28 to 31 in the Gregorian), so totals mislead. Ramadan's service runs later in the day in this case; demand per day was lower. Next year Ramadan starts about eleven days earlier in the Gregorian calendar: a year-on-year comparison by Gregorian month would compare Ramadan with ordinary weeks.</p></aside>
+</section>
+
+<section class="slide" id="checkpoint-2" data-lo="LO3">
+  <div class="kicker">Checkpoint</div>
+  <h2>Which change is type 2?</h2>
+  <div class="quiz" data-type="single" data-lo="LO3">
+    <p class="lead">Three changes reach the route dimension this month. Which one needs a new version row?</p>
+    <div class="opts">
+      <div class="opt" data-ok>Route R03 moves from the North to the Central depot</div>
+      <div class="opt" data-why="A spelling fix should correct history too: old reports never meant the misspelt name">A typo in the Arabic name of R06 is corrected</div>
+      <div class="opt" data-why="A colour on a map is presentation, not an attribute any figure is grouped by">The map colour of R10 changes</div>
+      <div class="opt" data-why="Treats the timetable, a fact, as an attribute of the route">The number of trips on R11 changes</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> Past R03 trips belonged to North. If the depot is overwritten, North's history loses them and Central's gains them: a type 2 version keeps each trip with the depot it really had.</div>
+  </div>
+  <aside class="notes"><p>Answer: A. The trips option is a good discussion: trip counts live in the fact table, so they change without touching the dimension.</p></aside>
 </section>
 
 <section class="slide lab" id="lab-2-2" data-auto="lab" data-lab="2.2">
-  <aside class="notes">REPLACE: what to watch for while participants work, the typical problems, and the fallback for anyone who did not finish an earlier lab</aside>
+  <aside class="notes"><p>AI-tutor. The check on "one row per trip" catches the missing IS NULL branch at once. Taps per kilometre is per departed-trip kilometre; some participants divide by the route length only. The safety nets supply the reference rows for R07 and the Hijri months.</p></aside>
 </section>
 
-<!-- Session 3 -->
-
+<!-- ======================= SESSION 3 ======================= -->
 <section class="slide section" id="s3" data-auto="section" data-session="3"></section>
 
-<section class="slide" id="s3-idea" data-lo="LO3">
-  <div class="kicker">REPLACE: the question this slide answers</div>
-  <h2>REPLACE: one idea, stated as a sentence</h2>
-  <div class="cols cols-2">
-    <ul class="bullets">
-      <li>REPLACE: at most six bullets, each a complete thought</li>
-      <li>REPLACE: bold the key phrase; numbers come from the lab run, not from memory</li>
-    </ul>
-    <div class="card c-teal"><h4>In the case study</h4><p class="small mb0">REPLACE: tie the idea to the case study and its data</p></div>
-  </div>
-  <div class="callout warn mt"><b>What goes wrong.</b> REPLACE: the failure participants will hit, and how to recognise it</div>
-  <aside class="notes">REPLACE: what to say, the demo to run, the question to ask the room, the common failure and its fix</aside>
+<section class="slide" id="report-four-times" data-lo="LO3">
+  <div class="kicker">A report that adds up wrong</div>
+  <h2>Yasmeen's route report counts 334,786 taps in a month of 84,063</h2>
+  <pre class="code s" data-file="the route report, as written"><code class="language-sql">SELECT t.route_id, count(b.tap_id) AS taps,
+       avg(CASE WHEN p.delay_min BETWEEN -1 AND 5 THEN 1.0 ELSE 0.0 END)
+FROM fct_trip t
+JOIN fct_boarding  b ON b.trip_id = t.trip_id
+JOIN fct_timepoint p ON p.trip_id = t.trip_id
+WHERE t.service_date BETWEEN ... GROUP BY t.route_id</code></pre>
+  <aside class="notes"><p>From Lab 2.3. Ask the room to find the fault before the next slide. Nothing in the SQL is invalid; every join condition is right. The fault is that two "many" sides meet at one trip.</p></aside>
 </section>
 
-<section class="slide" id="s3-steps" data-lo="LO3">
-  <div class="kicker">Step by step</div>
-  <h2>REPLACE: a process, shown one step per key press</h2>
+<section class="slide" id="fan-trap" data-lo="LO3">
+  <div class="kicker">The fan trap</div>
+  <h2>Joining two "many" sides through one row multiplies both</h2>
   <div class="flow">
-    <div class="step c-teal"><b>1 · REPLACE: name</b>REPLACE: what happens first</div>
-    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · REPLACE: name</b>REPLACE: the next piece</div>
-    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · REPLACE: name</b>REPLACE: the result</div>
+    <div class="step c-teal"><b>8,268 trips</b>September</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>84,063 rows</b>each trip once per tap</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>334,786 rows</b>each tap once per timepoint</div>
   </div>
-  <div class="callout tip mt frag"><b>Takeaway.</b> REPLACE: the one sentence to remember</div>
-  <aside class="notes">Press once per step and say what each step adds before the next one appears. REPLACE: the example to walk through</aside>
+  <div class="callout warn mt"><b>3.98 times.</b> Every tap is repeated by the number of timepoints its trip reached: four, or two for a partial trip.</div>
+  <aside class="notes"><p>Row counts from Lab 2.3, task 2. Counting rows after each join is the fastest diagnosis there is. The general rule: a join is safe for a measure when it goes to the "one" side of that measure's fact.</p></aside>
+</section>
+
+<section class="slide" id="chasm-weighting" data-lo="LO3">
+  <div class="kicker">The quieter error</div>
+  <h2>The punctuality column is wrong too, and nothing looks odd</h2>
+  <div class="cols cols-2">
+    <div class="stat center"><div class="big">49.0%</div><div class="lbl">R01 timepoint punctuality in the report</div></div>
+    <div class="stat center"><div class="big">51.1%</div><div class="lbl">R01 timepoint punctuality, computed alone</div></div>
+  </div>
+  <p class="lead mt">After the join each arrival is weighted by the taps of its trip: busy, late trips count more.</p>
+  <aside class="notes"><p>This is the chasm trap: two facts (taps, timepoints) related only through a shared dimension (trips). The tap total is obviously wrong; the punctuality is only slightly wrong, so nobody notices it. That is why reconciliation tests check totals, and why the model aggregates each fact separately.</p></aside>
+</section>
+
+<section class="slide" id="reconciliation-test" data-lo="LO3">
+  <div class="kicker">The test that catches it</div>
+  <h2>A reconciliation test compares the report with the source counted another way</h2>
+  <pre class="code s" data-file="Lab 2.3 · reconciles"><code class="language-python">def reconciles(df) -&gt; bool:
+    source = W.scalar(con, """SELECT count(*) FROM fct_boarding
+                              WHERE service_date BETWEEN ... AND trip_id IS NOT NULL""")
+    return int(df.taps.sum()) == int(source)</code></pre>
+  <ul class="bullets small mt-s">
+    <li>Write it first and watch it <b>fail on the faulty report</b></li>
+    <li>Then fix the query, and watch it pass</li>
+  </ul>
+  <aside class="notes"><p>A test that has never failed has not shown it can catch anything. This is the same habit as the toy test of Lab 1.3. In a pipeline these tests run on every load; dbt and similar tools call them data tests.</p></aside>
+</section>
+
+<section class="slide" id="aggregate-then-join" data-lo="LO3">
+  <div class="kicker">The fix</div>
+  <h2>Aggregate each fact to the shared grain, then join</h2>
+  <pre class="code s" data-file="Lab 2.3 · fixed_report"><code class="language-sql">WITH taps  AS (SELECT t.route_id, count(*) AS taps
+               FROM fct_boarding b JOIN fct_trip t USING (trip_id) ... GROUP BY 1),
+     punct AS (SELECT t.route_id, avg(...) AS timepoint_on_time
+               FROM fct_timepoint p JOIN fct_trip t USING (trip_id) ... GROUP BY 1)
+SELECT route_id, taps, timepoint_on_time
+FROM taps JOIN punct USING (route_id)</code></pre>
+  <p class="small mt-s">Each fact joins only "up" to trips, which is many-to-one; the two results meet at one row per route.</p>
+  <aside class="notes"><p>Point at the direction of each join: taps to trips, timepoints to trips, both many-to-one. The final join is one-to-one on route_id. This is exactly the shape of the SQL the semantic layer generates in Session 4.</p></aside>
+</section>
+
+<section class="slide" id="join-paths-rule" data-lo="LO3">
+  <div class="kicker">The rule a model enforces</div>
+  <h2>A semantic model joins only towards the "one" side</h2>
+  <ul class="bullets">
+    <li>Every relationship is declared <b>from</b> the many side <b>to</b> the one side</li>
+    <li>A metric is aggregated in its own dataset, joining only along those arrows</li>
+    <li>A grouping that needs a "many" side is <b>refused</b>, not computed</li>
+    <li>Two metrics of two facts are aggregated apart, then joined on the dimensions asked for</li>
+  </ul>
+  <div class="trace s mt-s">
+    <div class="ev user"><b>request</b>boardings by timepoints.tp_seq</div>
+    <div class="ev error"><b>refused</b>no many-to-one path from boardings to timepoints: grouping would repeat rows</div>
+  </div>
+  <aside class="notes"><p>The refusal text is the real message of the course compiler, from the stretch of Lab 2.3. MetricFlow and Cube enforce the same idea with entities and join types. A refusal is a feature: it is the model saying "this question has no single answer at this grain".</p></aside>
+</section>
+
+<section class="slide" id="checkpoint-3" data-lo="LO3">
+  <div class="kicker">Checkpoint</div>
+  <h2>Where does the report go wrong?</h2>
+  <div class="quiz" data-type="single" data-lo="LO3">
+    <p class="lead">A report joins complaints and taps to routes in one query and counts both per route. Complaints come out about 7,000 times too high. What happened?</p>
+    <div class="opts">
+      <div class="opt" data-why="Duplicates in the source would inflate both counts by a small factor, not by thousands">The complaints table has duplicate rows</div>
+      <div class="opt" data-ok>Each complaint was repeated once per tap of its route: two facts met through one dimension</div>
+      <div class="opt" data-why="A missing filter changes which rows are counted, not how many times each one is">The date filter was left out</div>
+      <div class="opt" data-why="An inner join can drop rows; it cannot multiply them by thousands">The join should have been a left join</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> Routes are the "one" side of both facts. Joining both to the same route row pairs every complaint with every tap of that route. Aggregate each per route, then join.</div>
+  </div>
+  <aside class="notes"><p>Answer: B. The size of the inflation (thousands) points at a many-to-many pairing; a duplicate would give a factor of 2 or 3. Ask how a reconciliation test would have caught it.</p></aside>
 </section>
 
 <section class="slide lab" id="lab-2-3" data-auto="lab" data-lab="2.3">
-  <aside class="notes">REPLACE: what to watch for while participants work, the typical problems, and the fallback for anyone who did not finish an earlier lab</aside>
+  <aside class="notes"><p>AI-tutor. Insist that the test is written and seen to fail before the fix. Participants who fix the taps but keep the punctuality from the joined query miss the chasm weighting: compare their R01 punctuality with 51.1%. The stretch shows the semantic layer refusing the same grouping.</p></aside>
 </section>
 
-<!-- Session 4 -->
-
+<!-- ======================= SESSION 4 ======================= -->
 <section class="slide section" id="s4" data-auto="section" data-session="4"></section>
 
-<section class="slide" id="s4-idea" data-lo="LO3">
-  <div class="kicker">REPLACE: the question this slide answers</div>
-  <h2>REPLACE: one idea, stated as a sentence</h2>
+<section class="slide" id="define-once" data-lo="LO3">
+  <div class="kicker">The point of a semantic layer</div>
+  <h2>Write each metric once; every tool asks for it by name</h2>
   <div class="cols cols-2">
-    <ul class="bullets">
-      <li>REPLACE: at most six bullets, each a complete thought</li>
-      <li>REPLACE: bold the key phrase; numbers come from the lab run, not from memory</li>
-    </ul>
-    <div class="card c-teal"><h4>In the case study</h4><p class="small mb0">REPLACE: tie the idea to the case study and its data</p></div>
+    <div class="card c-coral"><h4>Without it</h4><p class="small mb0">Each dashboard, notebook and agent writes its own SQL for "on-time rate". Three teams, three queries, three numbers.</p></div>
+    <div class="card c-teal"><h4>With it</h4><p class="small mb0">The model holds datasets, joins and metrics. A tool asks for <code>on_time_rate</code> by route type; the layer writes the SQL.</p></div>
   </div>
-  <div class="callout warn mt"><b>What goes wrong.</b> REPLACE: the failure participants will hit, and how to recognise it</div>
-  <aside class="notes">REPLACE: what to say, the demo to run, the question to ask the room, the common failure and its fix</aside>
+  <div class="tools mt"><span>MetricFlow</span><span>Cube Core</span><span>Apache Ossie files</span></div>
+  <aside class="notes"><p>Tool names are examples, not endorsements: MetricFlow (dbt Labs, Apache-2.0), Cube Core (Cube's open semantic layer), and Apache Ossie as the interchange format. This course writes the model as an Ossie document and compiles it with a small course module, so that it runs anywhere in a few seconds; the converters project translates Ossie to dbt MetricFlow, Cube and others. Sources: github.com/dbt-labs/metricflow, github.com/cube-js/cube, github.com/apache/ossie-converters.</p></aside>
 </section>
 
-<section class="slide" id="s4-steps" data-lo="LO3">
-  <div class="kicker">Step by step</div>
-  <h2>REPLACE: a process, shown one step per key press</h2>
-  <div class="flow">
-    <div class="step c-teal"><b>1 · REPLACE: name</b>REPLACE: what happens first</div>
-    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · REPLACE: name</b>REPLACE: the next piece</div>
-    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · REPLACE: name</b>REPLACE: the result</div>
+<section class="slide" id="ossie-is" data-lo="LO3">
+  <div class="kicker">An open specification</div>
+  <h2>Apache Ossie is a vendor-neutral file format for semantic models</h2>
+  <ul class="bullets">
+    <li>Formerly <b>Open Semantic Interchange</b> (OSI); renamed on entering the Apache Incubator in 2026</li>
+    <li>One YAML or JSON document per model: datasets, fields, relationships, metrics</li>
+    <li>A JSON Schema checks the document; converters move it between tools</li>
+    <li>The version in this course, <b>0.3.0.dev0</b>, is still in development: re-check before each cohort</li>
+  </ul>
+  <aside class="notes"><p>The project's announcement says the name changed and the specification did not. Its README lists converters for dbt, Cube, Snowflake, Polaris and others. Status is perishable: the catalog marks "the status of Apache Ossie" as a refresh item. Sources: ossie.apache.org/updates/ossie-enters-apache-incubator/ and github.com/apache/ossie, core-spec/spec.md (version history).</p></aside>
+</section>
+
+<section class="slide" id="ossie-document" data-lo="LO3">
+  <div class="kicker">What the file holds</div>
+  <h2>Datasets with fields, relationships from many to one, metrics</h2>
+  <pre class="code s" data-file="labs/data/semantic/wadi_noor_transit.yaml (excerpt)"><code class="language-yaml">datasets:
+  - name: trips
+    source: SELECT t.*, r.route_key FROM fct_trip t LEFT JOIN dim_route r ON ...
+    primary_key: [trip_id]
+    fields:
+      - {name: status, expression: {sql: status}, dimension: {}}
+    metrics:
+      - name: departed_trips
+        expression: {sql: "SUM(CASE WHEN status &lt;&gt; 'cancelled' THEN 1 ELSE 0 END)"}
+relationships:
+  - {name: trips_to_routes, from: trips, to: routes, from_columns: [route_key], to_columns: [route_key]}</code></pre>
+  <aside class="notes"><p>Point at three things: the dataset's source is the as-of join of Session 2, so the version rule lives once; a field is an expression over the source; a relationship goes from the many side to the one side. The full file has seven datasets and ten relationships.</p></aside>
+</section>
+
+<section class="slide" id="two-scopes" data-lo="LO3">
+  <div class="kicker">Two places for a metric</div>
+  <h2>Dataset metrics aggregate one dataset; model metrics combine them</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>Dataset-scoped</h4><p class="small mb0"><code>boardings.unique_cards</code>: <code>COUNT(DISTINCT card_id)</code>, bare field names of its own dataset.</p></div>
+    <div class="card c-cyan"><h4>Model-scoped</h4><p class="small mb0"><code>on_time_rate</code>: <code>AGG(trips.on_time_departures) / AGG(trips.departed_trips)</code>, each part aggregated first.</p></div>
   </div>
-  <div class="callout tip mt frag"><b>Takeaway.</b> REPLACE: the one sentence to remember</div>
-  <aside class="notes">Press once per step and say what each step adds before the next one appears. REPLACE: the example to walk through</aside>
+  <div class="callout tip mt"><b>AGG() is the ratio of sums.</b> The division happens after both parts are aggregated, so the layer cannot average ratios by mistake.</div>
+  <aside class="notes"><p>The specification allows a model-scoped metric to read a dataset metric only through AGG(dataset.metric). That rule is how Day 1's ratio-of-sums discipline is enforced by the file itself. Cross-fact ratios such as complaints per 10,000 taps use the same form, and the layer aggregates the two facts separately, as in Session 3.</p></aside>
+</section>
+
+<section class="slide" id="compiled-sql" data-lo="LO3">
+  <div class="kicker">What the layer generates</div>
+  <h2>One request, compiled to the SQL of Session 3</h2>
+  <div class="trace s">
+    <div class="ev user"><b>request</b>on_time_rate by routes.route_type, where dates.gregorian_month = '2026-09'</div>
+    <div class="ev model"><b>datasets</b>one common table expression each for trips, routes, dates</div>
+    <div class="ev call"><b>aggregate</b>trips joined to routes and dates (many-to-one), summed by route type</div>
+    <div class="ev final"><b>divide</b>on_time_departures / departed_trips: express 89.3%, feeder 82.8%, trunk 67.0%</div>
+  </div>
+  <aside class="notes"><p>Show the real compiled SQL with m.compile(...) in Lab 2.4, task 3; participants read it there. The numbers are September from the test queries. The trunk routes' low figure returns on Day 3, in the Simpson reversal.</p></aside>
+</section>
+
+<section class="slide" id="labels-and-roles" data-lo="LO3">
+  <div class="kicker">What the interchange does not carry</div>
+  <h2>Access rules ride in an extension that other tools may ignore</h2>
+  <div class="cols cols-2">
+    <pre class="code s" data-file="the model's extension"><code class="language-yaml">nonportable_extensions:
+  - vendor_name: WADI_NOOR
+    data:
+      roles:
+        network_analyst: {clearance: Public}
+        east_depot_manager:
+          clearance: Public
+          row_filter: "routes.depot = 'East'"</code></pre>
+    <ul class="bullets small">
+      <li>Fields carry a classification: <code>card_id</code> and <code>complaint_text</code> are Restricted</li>
+      <li>A role may count a Restricted field, never group, filter or show it</li>
+      <li>Ossie defines no access rules: <b>every consumer must enforce them again</b></li>
+    </ul>
+  </div>
+  <aside class="notes"><p>The specification says plainly that non-portable extensions are vendor state Ossie carries and does not interpret. That is a design fact worth stating to a governance officer: moving a model between tools can silently drop its access rules. Access across many roles and areas is DS-408; here there are two roles. Source: Ossie core spec, "Non-portable Extensions".</p></aside>
+</section>
+
+<section class="slide" id="test-queries" data-lo="LO3">
+  <div class="kicker">Proving the model</div>
+  <h2>25 test queries, each with a reference computed without the model</h2>
+  <ul class="bullets">
+    <li>Each test is a request (metrics, dimensions, filters) and its expected rows</li>
+    <li>The expected rows come from <b>independent SQL</b>, written by hand, not from the layer</li>
+    <li>They cover ratios, distinct counts, Hijri months, the R07 versions, holidays and the October week</li>
+    <li>25 of 25 is the evidence for the third course outcome</li>
+  </ul>
+  <aside class="notes"><p>The reference queries live in labs/_tools/make_reference.py, which is not published with the labs. A test whose reference was produced by the system under test proves only that the system agrees with itself. The capstone asks for the same on the fares area.</p></aside>
+</section>
+
+<section class="slide" id="checkpoint-4" data-lo="LO3">
+  <div class="kicker">Checkpoint</div>
+  <h2>Where does the cancellation rate go?</h2>
+  <div class="quiz" data-type="single" data-lo="LO3">
+    <p class="lead">You add <code>cancellation_rate</code> to the model. The trips dataset already has <code>cancelled_trips</code> and <code>scheduled_trips</code>. What do you write?</p>
+    <div class="opts">
+      <div class="opt" data-why="A mean of a per-trip 0 or 1 works here only by accident, and the pattern breaks for any ratio of two different sums">A dataset metric AVG(status = 'cancelled') on trips, used by every ratio</div>
+      <div class="opt" data-why="Copies the formula into each report: the definition is no longer written once">A SQL snippet in each dashboard that needs it</div>
+      <div class="opt" data-why="Averages daily rates: days with few trips weigh as much as busy days">A model metric that averages a daily cancellation rate</div>
+      <div class="opt" data-ok>A model metric AGG(trips.cancelled_trips) / AGG(trips.scheduled_trips)</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> It reuses the two governed counts and divides after aggregating, so it is a ratio of sums for any grouping, written once.</div>
+  </div>
+  <aside class="notes"><p>Answer: D. Option A gives the right number for this particular metric and is a fair discussion point; the reason to prefer D is that the same pattern serves every ratio and keeps the parts governed.</p></aside>
 </section>
 
 <section class="slide lab" id="lab-2-4" data-auto="lab" data-lab="2.4">
-  <aside class="notes">REPLACE: what to watch for while participants work, the typical problems, and the fallback for anyone who did not finish an earlier lab</aside>
+  <aside class="notes"><p>AI-tutor. Typical errors: a qualified name in a dataset metric (boardings.card_id inside COUNT), which validation rejects with a clear message; a model metric without AGG(). Running the 25 tests takes about fifteen seconds on a laptop: the journeys metric computes a window over all taps. Anyone who did not finish still gets the reference model for Days 3 and 4.</p></aside>
 </section>
 
 <section class="slide" id="wrap-up">
   <div class="kicker">Day 2 · wrap-up</div>
   <h2>Three things to keep</h2>
   <div class="cols cols-3">
-    <div class="card c-teal"><h4>Remember</h4><p class="small mb0">REPLACE: one idea participants keep</p></div>
-    <div class="card c-coral"><h4>Remember</h4><p class="small mb0">REPLACE: one idea participants keep</p></div>
-    <div class="card c-purple"><h4>Remember</h4><p class="small mb0">REPLACE: one idea participants keep</p></div>
+    <div class="card c-teal"><h4>Grain and history</h4><p class="small mb0">Prove each grain; join a fact to the dimension version valid on its date.</p></div>
+    <div class="card c-coral"><h4>Aggregate, then join</h4><p class="small mb0">Count rows after each join; reconcile totals; never join two "many" sides.</p></div>
+    <div class="card c-purple"><h4>Define once</h4><p class="small mb0">One open document holds datasets, joins and metrics; 25 tests prove it.</p></div>
   </div>
+  <aside class="notes"><p>Ask which of the three participants would explain first to their own team. The model of today is the input of tomorrow's dashboard.</p></aside>
 </section>
 
 <section class="slide dark" id="next" data-label="Next">
   <div class="kicker">Next</div>
   <h2>Day 3: Show and investigate</h2>
-  <p class="lead">REPLACE: what participants prepare before then; unfinished labs can be finished at home</p>
-  <aside class="notes">REPLACE: accounts, installs or reading participants need before the next unit</aside>
+  <p class="lead">Tomorrow the model feeds a dashboard for the operations director, built in two languages and under three seconds, and you trace a drop in October ridership to its source.</p>
+  <aside class="notes"><p>Ask participants to bring one dashboard from their own work (a screenshot without sensitive data) for the first session's discussion. Day 3 starts from the reference model, so nobody depends on finishing Lab 2.4.</p></aside>
 </section>
