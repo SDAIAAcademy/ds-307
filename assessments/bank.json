@@ -929,6 +929,238 @@
       "level": "understand",
       "pool": "practice",
       "weight": 1
+    },
+    {
+      "id": "d4-ran-is-not-right",
+      "type": "single",
+      "prompt": "An agent's SQL runs without an error and returns 60.7% for September punctuality. The certified figure is 80.7%. What does the clean run show?",
+      "options": [
+        "That the agent's answer is right",
+        "Only that the SQL is valid; it may compute another measure",
+        "That the certified figure is out of date",
+        "That the warehouse has missing rows"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Valid SQL can measure another event, period or grain; only the comparison with the certified figure tells right from wrong.",
+      "misconceptions": [
+        "Confuses a query that runs with a query that answers the governed question",
+        "",
+        "The certified figure was computed from the same warehouse with the governed definition",
+        "Missing rows would show in both figures, not only in the agent's"
+      ],
+      "lo": [
+        "LO6"
+      ],
+      "day": "day4",
+      "session": 1,
+      "level": "understand",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d4-log",
+      "type": "single",
+      "prompt": "You will score an agent on 40 questions. Which record of each answer lets you diagnose its errors afterwards?",
+      "options": [
+        "The query it ran, the configuration, the model or stand-in, and the value",
+        "The final sentence the agent wrote",
+        "A screenshot of the chat",
+        "The time each answer took"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The query shows which definition, period and grain were used; the mode and configuration say how the answer was produced.",
+      "misconceptions": [
+        "",
+        "A sentence hides the definition the query used",
+        "A screenshot cannot be scored or searched",
+        "Timing says nothing about correctness"
+      ],
+      "lo": [
+        "LO6"
+      ],
+      "day": "day4",
+      "session": 1,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d4-certified",
+      "type": "single",
+      "prompt": "Which entry is a complete certified answer?",
+      "options": [
+        "\"Taps per trip on R01, week of 13 September: about 16\"",
+        "\"15.82 taps per trip\" with the analyst's name",
+        "The semantic layer's answer to the same question",
+        "Value 15.816327, the query that produced it, Sunday 13 to Saturday 19 September, tolerance 0.001"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "A certified answer can be rerun and judged: value, query, time logic and a tolerance set in advance.",
+      "misconceptions": [
+        "\"About\" is not a value an agent can be scored against",
+        "A name does not let anyone rerun or check the figure",
+        "An answer from the system under test cannot certify that system",
+        ""
+      ],
+      "lo": [
+        "LO6"
+      ],
+      "day": "day4",
+      "session": 2,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d4-refusal",
+      "type": "single",
+      "prompt": "A depot manager asks Nabih: \"How many complaints mention a wheelchair?\" What is the certified answer?",
+      "options": [
+        "The count from a text search of complaint_text",
+        "The count of accessibility complaints",
+        "A refusal: answering requires reading the Restricted complaint text",
+        "Zero, because no metric exists"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "The question can only be answered by reading Restricted text, so the right behaviour is to decline and say why.",
+      "misconceptions": [
+        "Reads Restricted text to produce a count",
+        "Answers a different question than the one asked",
+        "",
+        "Inventing a figure is wrong even when it is zero"
+      ],
+      "lo": [
+        "LO6"
+      ],
+      "day": "day4",
+      "session": 2,
+      "level": "evaluate",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d4-layer-limits",
+      "type": "single",
+      "prompt": "With the semantic layer, Nabih answered \"the week of Sunday 20 September\" by filtering week_start = 21 September and returned 0 taps. What kind of error is it?",
+      "options": [
+        "A definition error the layer should have prevented",
+        "A period error in reading the question, which the layer cannot catch by itself",
+        "A join error",
+        "A leak"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "The layer governs metrics, joins and access; the agent still reads the period, and here read it wrongly.",
+      "misconceptions": [
+        "The metric used was the governed one",
+        "",
+        "No join repeated rows: the filter matched no week",
+        "No Restricted field was involved"
+      ],
+      "lo": [
+        "LO6"
+      ],
+      "day": "day4",
+      "session": 3,
+      "level": "analyze",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d4-plausible",
+      "type": "single",
+      "prompt": "Two wrong answers: 5,394 complaints per 10,000 taps (certified 27.0) and 67.1% trunk punctuality (certified 67.0%). Which is more dangerous, and why?",
+      "options": [
+        "The second, because a reader would believe it and act on it",
+        "The first, because it is further from the truth",
+        "Both equally, because both are wrong",
+        "Neither, because both would be caught in review"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "An absurd figure is caught by any reader; a plausible one passes into decisions unnoticed.",
+      "misconceptions": [
+        "",
+        "Distance from the truth matters less than whether anyone notices",
+        "Wrong answers differ in the harm they do",
+        "Review is the decision being made; it cannot be assumed"
+      ],
+      "lo": [
+        "LO6"
+      ],
+      "day": "day4",
+      "session": 3,
+      "level": "evaluate",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d4-interval",
+      "type": "single",
+      "prompt": "Ratio questions were 8 of 8 right with the semantic layer. The tolerance is 95% right without review. What should the memo say?",
+      "options": [
+        "The agent is 100% accurate on ratios",
+        "Refuse ratio questions until the model improves",
+        "Review every ratio answer forever",
+        "Answer provisionally: 8 of 8 is consistent with an accuracy as low as 75%; grow the set to 30 and re-test"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Eight questions cannot prove 95%; the decision stands while a larger test confirms or withdraws it.",
+      "misconceptions": [
+        "Reports a sample result as a certainty",
+        "Closes a type that showed no error",
+        "Ignores the evidence that the type performed well",
+        ""
+      ],
+      "lo": [
+        "LO6"
+      ],
+      "day": "day4",
+      "session": 4,
+      "level": "evaluate",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "d4-raw-config",
+      "type": "single",
+      "prompt": "The raw configuration got 18 of 40 right and leaked Restricted text in four answers. What does the memo decide for it?",
+      "options": [
+        "Use it for count questions, where it scored 6 of 8",
+        "Use it with a stronger instruction",
+        "Do not use it: the leaks break the zero tolerance for Restricted data, whatever its accuracy",
+        "Use it for questions the semantic layer cannot answer"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Restricted data has a zero tolerance; a configuration that leaked cannot be used for any type.",
+      "misconceptions": [
+        "6 of 8 is also below the 95% tolerance, and the leaks remain",
+        "An instruction is a request to the model, not an enforced rule",
+        "",
+        "Questions outside the layer are the ones most likely to be invented or leaked"
+      ],
+      "lo": [
+        "LO6"
+      ],
+      "day": "day4",
+      "session": 4,
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
     }
   ]
 }
