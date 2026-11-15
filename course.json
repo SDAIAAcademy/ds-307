@@ -9,7 +9,7 @@
     "en": "Metrics, Semantic Models and Dashboards",
     "ar": "المقاييس والنماذج الدلالية ولوحات المعلومات"
   },
-  "tagline": "REPLACE: one line under the title: what participants can do after the course",
+  "tagline": "Define each number once, model it, show it to the person who decides, and test the agent that answers questions about it",
   "description": "Participants take over performance reporting for Wadi Noor Transit, a fictional bus operator whose three reports give three different on-time figures. On a synthetic warehouse of trips, boardings and routes they write governed metric definitions, build a semantic model that defines each metric once, design a dashboard for one decision within a load-time budget, trace an anomaly to its source, and test a conversational analytics agent on certified questions with and without the semantic layer. Platform-scale semantic layer design is DS-408.",
   "track": "data-science",
   "level": 300,
@@ -67,8 +67,8 @@
     }
   ],
   "case_study": {
-    "name": "REPLACE: the name of the fictional organisation every lab works on",
-    "summary": "REPLACE: two sentences on the case study and its synthetic data"
+    "name": "Wadi Noor Transit",
+    "summary": "A fictional city bus operator with twelve routes from three depots, whose operations, planning and board reports give three different on-time figures for the same month. A synthetic warehouse (January to October 2026, fixed seed) holds about 48,500 trips, 188,000 timepoint arrivals, 467,000 card taps, complaints and fare sales, with planted problems for every session."
   },
   "format": "intensive",
   "format_note": "Intensive: 4 teaching days of four sessions and a capstone day, with guided pre-work and a tracked follow-up task",
@@ -90,68 +90,157 @@
         {
           "title": "Why three reports disagree",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Name the four places two definitions of one measure can differ",
+            "Reproduce a published figure from its written rule",
+            "Explain a gap between two figures one rule at a time"
           ],
           "lo": [
             "LO1"
           ],
           "lab": {
             "id": "1.1",
-            "title": "Trace three on-time figures to their definitions (AI-off)",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Three on-time figures",
+            "summary": "Compute the operations, planning and board on-time figures for September from their written rules, walk from one to the next one rule at a time, and write the diagnosis.",
             "minutes": 25,
-            "href": "D1_1_three_on_time.ipynb"
-          }
+            "href": "D1_1_three_on_time.ipynb",
+            "steps": [
+              {
+                "text": "Compute the operations figure from its rule",
+                "minutes": 6
+              },
+              {
+                "text": "Compute the planning and board figures",
+                "minutes": 7
+              },
+              {
+                "text": "Walk from one figure to the next, one rule at a time",
+                "minutes": 8
+              },
+              {
+                "text": "Write the diagnosis: one cause per difference",
+                "minutes": 4
+              }
+            ],
+            "stretch": "Which figure answers the question the operations director asks every Sunday?"
+          },
+          "summary": "What makes three reports on one warehouse give three numbers"
         },
         {
           "title": "Anatomy of a metric definition",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Write a definition with formula, grain, filters, time logic, owner and limits",
+            "Tell taps, cards and journeys apart",
+            "Reconcile a definition to the source totals"
           ],
           "lo": [
             "LO2"
           ],
           "lab": {
             "id": "1.2",
-            "title": "Define four ridership metrics with grain, filters and owner",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Four ridership definitions",
+            "summary": "Count four ridership numbers for one week, write each as a governed definition, run the peer checklist and reconcile every definition to the source totals.",
             "minutes": 25,
-            "href": "D1_2_ridership_metrics.ipynb"
-          }
+            "href": "D1_2_ridership_metrics.ipynb",
+            "steps": [
+              {
+                "text": "Count four ridership numbers for one week",
+                "minutes": 6
+              },
+              {
+                "text": "Write the four definitions in the catalogue template",
+                "minutes": 8
+              },
+              {
+                "text": "Run the peer checklist",
+                "minutes": 5
+              },
+              {
+                "text": "Reconcile each definition to the source totals",
+                "minutes": 6
+              }
+            ],
+            "stretch": "Add the Arabic name and a limits line to each definition"
+          },
+          "summary": "The eight parts of a definition someone else can compute"
         },
         {
           "title": "Ratios, distinct counts and time logic",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Compute a ratio of sums and say why it differs from a mean of ratios",
+            "Explain why distinct counts do not add across periods",
+            "Test a metric against hand-computed values"
           ],
           "lo": [
             "LO2"
           ],
           "lab": {
             "id": "1.3",
-            "title": "Implement two ratio metrics and test them against hand-computed values",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Two ratio metrics, tested",
+            "summary": "Implement the on-time rate and the cancellation rate as functions and test them against hand-computed values and the network totals; see why weekly distinct cards do not add to a month.",
             "minutes": 25,
-            "href": "D1_3_ratio_metrics.ipynb"
-          }
+            "href": "D1_3_ratio_metrics.ipynb",
+            "steps": [
+              {
+                "text": "Hand-compute the on-time rate of a small example",
+                "minutes": 5
+              },
+              {
+                "text": "Implement the two ratio metrics",
+                "minutes": 8
+              },
+              {
+                "text": "Test them against the hand values and the network",
+                "minutes": 6
+              },
+              {
+                "text": "Show that weekly distinct cards do not add to a month",
+                "minutes": 6
+              }
+            ],
+            "stretch": "The same two metrics by Hijri month"
+          },
+          "summary": "Ratios, distinct counts and the calendar inside a metric"
         },
         {
           "title": "Metric trees",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Decompose a goal metric into drivers that multiply back to it",
+            "Add a guardrail that a driver could harm",
+            "Assign an owner to each node"
           ],
           "lo": [
             "LO2"
           ],
           "lab": {
             "id": "1.4",
-            "title": "Build a metric tree from the network goal to three drivers and a guardrail",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "A network metric tree",
+            "summary": "Build a tree from weekly boardings to three drivers and a guardrail, reconcile it for two weeks and say which driver moved.",
             "minutes": 25,
-            "href": "D1_4_metric_tree.ipynb"
-          }
+            "href": "D1_4_metric_tree.ipynb",
+            "steps": [
+              {
+                "text": "Choose the goal and its decomposition",
+                "minutes": 5
+              },
+              {
+                "text": "Compute the three drivers for two weeks",
+                "minutes": 8
+              },
+              {
+                "text": "Reconcile the tree to the goal",
+                "minutes": 6
+              },
+              {
+                "text": "Add the guardrail and the owners",
+                "minutes": 6
+              }
+            ],
+            "stretch": "Attribute the week-on-week change to each driver with log changes"
+          },
+          "summary": "From one goal metric to the drivers a team can move"
         }
-      ]
+      ],
+      "subtitle": "Three reports, one warehouse: definitions someone else can compute"
     },
     {
       "id": "day2",
@@ -162,68 +251,157 @@
         {
           "title": "Star schemas for analysis",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "State the grain of each fact table",
+            "Prove a key by counting",
+            "Draw the star of a subject area"
           ],
           "lo": [
             "LO3"
           ],
           "lab": {
             "id": "2.1",
-            "title": "Model trips and boardings as facts and dimensions and check each grain",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Facts, dimensions and their grain",
+            "summary": "Name the grain of each warehouse table, prove it with key tests, draw the star and find the dimension whose natural key is not unique.",
             "minutes": 25,
-            "href": "D2_1_star_schema.ipynb"
-          }
+            "href": "D2_1_star_schema.ipynb",
+            "steps": [
+              {
+                "text": "Name the grain of each table",
+                "minutes": 5
+              },
+              {
+                "text": "Prove the grains with key tests",
+                "minutes": 8
+              },
+              {
+                "text": "Draw the star: facts, dimensions, keys",
+                "minutes": 6
+              },
+              {
+                "text": "Find the dimension whose natural key fails",
+                "minutes": 6
+              }
+            ],
+            "stretch": "Check that dates conform across the two facts"
+          },
+          "summary": "Facts at a stated grain, dimensions that describe them"
         },
         {
           "title": "Changing dimensions and calendars",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Join a fact to the dimension version valid on its date",
+            "Compare a route before and after a change",
+            "Report by Hijri month and in Ramadan from one date table"
           ],
           "lo": [
             "LO3"
           ],
           "lab": {
             "id": "2.2",
-            "title": "Query a re-routed line through a type 2 route dimension and a dual-calendar date table",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "A re-routed line and two calendars",
+            "summary": "Query the re-routed R07 through the type 2 route dimension and report ridership by Hijri month and in Ramadan from the dual-calendar date table.",
             "minutes": 25,
-            "href": "D2_2_route_history.ipynb"
-          }
+            "href": "D2_2_route_history.ipynb",
+            "steps": [
+              {
+                "text": "Read the two versions of R07",
+                "minutes": 4
+              },
+              {
+                "text": "Join trips to the version valid on the service date",
+                "minutes": 8
+              },
+              {
+                "text": "Compare boardings per kilometre before and after",
+                "minutes": 6
+              },
+              {
+                "text": "Report ridership by Hijri month and in Ramadan",
+                "minutes": 7
+              }
+            ],
+            "stretch": "Eid days against ordinary Fridays"
+          },
+          "summary": "Type 2 history for a re-routed line, and two calendars in one date table"
         },
         {
           "title": "Fan-out and join paths",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Recognise a join that repeats rows",
+            "Write a reconciliation test against a source total",
+            "Aggregate each fact before joining"
           ],
           "lo": [
             "LO3"
           ],
           "lab": {
             "id": "2.3",
-            "title": "Find a double-counting join and fix it with a reconciliation test",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "The double-counting join",
+            "summary": "Find the join that inflates boardings in a route report, write a reconciliation test that fails on it, and fix the query by aggregating before joining.",
             "minutes": 25,
-            "href": "D2_3_fan_out.ipynb"
-          }
+            "href": "D2_3_fan_out.ipynb",
+            "steps": [
+              {
+                "text": "Run the route report as written",
+                "minutes": 5
+              },
+              {
+                "text": "Find the join that repeats rows",
+                "minutes": 6
+              },
+              {
+                "text": "Write a reconciliation test that fails on it",
+                "minutes": 6
+              },
+              {
+                "text": "Fix the query by aggregating before joining",
+                "minutes": 8
+              }
+            ],
+            "stretch": "Ask the semantic layer for the same report and read its refusal"
+          },
+          "summary": "Fan and chasm traps, and the test that catches them"
         },
         {
           "title": "Metrics in an open specification",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Write datasets, fields, relationships and metrics in an Apache Ossie document",
+            "Tell a dataset-scoped from a model-scoped metric",
+            "Validate a model and run test queries against it"
           ],
           "lo": [
             "LO3"
           ],
           "lab": {
             "id": "2.4",
-            "title": "Express five catalogue metrics in the semantic layer and run the test queries",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Five metrics in the semantic layer",
+            "summary": "Validate the starter model against the Ossie schema, add five catalogue metrics, and run the 25 test queries against their reference values.",
             "minutes": 25,
-            "href": "D2_4_semantic_layer.ipynb"
-          }
+            "href": "D2_4_semantic_layer.ipynb",
+            "steps": [
+              {
+                "text": "Validate the starter model",
+                "minutes": 4
+              },
+              {
+                "text": "Add the three boardings metrics",
+                "minutes": 7
+              },
+              {
+                "text": "Add the two model-level ratios",
+                "minutes": 6
+              },
+              {
+                "text": "Run the 25 test queries",
+                "minutes": 8
+              }
+            ],
+            "stretch": "Run the same queries as the East depot manager"
+          },
+          "summary": "A semantic model as an open document: datasets, relationships, metrics"
         }
-      ]
+      ],
+      "subtitle": "One semantic model in which each metric is defined once"
     },
     {
       "id": "day3",
@@ -234,68 +412,157 @@
         {
           "title": "Dashboards start from a decision",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Turn a brief into a decision, an audience and a cadence",
+            "Give every panel a comparison",
+            "Cut a dashboard to the panels the decision needs"
           ],
           "lo": [
             "LO5"
           ],
           "lab": {
             "id": "3.1",
-            "title": "Wireframe the operations director's dashboard from the brief",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "A wireframe from the brief",
+            "summary": "Turn the operations director's brief into a wireframe specification of at most six panels, each with its question, metric, comparison and owner, and run the brief checker.",
             "minutes": 25,
-            "href": "D3_1_wireframe.ipynb"
-          }
+            "href": "D3_1_wireframe.ipynb",
+            "steps": [
+              {
+                "text": "Read the brief: audience, decision, cadence",
+                "minutes": 5
+              },
+              {
+                "text": "Turn each question into a panel with a comparison",
+                "minutes": 10
+              },
+              {
+                "text": "Cut to six panels and order them",
+                "minutes": 5
+              },
+              {
+                "text": "Run the brief checker",
+                "minutes": 5
+              }
+            ],
+            "stretch": "One panel for a reader who reads Arabic only"
+          },
+          "summary": "One audience, one decision, few panels"
         },
         {
           "title": "Comparisons and bilingual layout",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Show a number against a target and a prior period",
+            "Lay out the same panel in Arabic and English",
+            "Suppress small counts before publishing"
           ],
           "lo": [
             "LO5"
           ],
           "lab": {
             "id": "3.2",
-            "title": "Build three panels with targets and prior periods in Arabic and English",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Three bilingual panels",
+            "summary": "Build three panels from the semantic layer with targets and prior periods, render them in Arabic and English, and suppress small counts.",
             "minutes": 25,
-            "href": "D3_2_bilingual_panels.ipynb"
-          }
+            "href": "D3_2_bilingual_panels.ipynb",
+            "steps": [
+              {
+                "text": "Query the three panels from the semantic layer",
+                "minutes": 6
+              },
+              {
+                "text": "Add a target and the prior period",
+                "minutes": 7
+              },
+              {
+                "text": "Render the panels in Arabic and English",
+                "minutes": 8
+              },
+              {
+                "text": "Suppress small counts and check the layout",
+                "minutes": 4
+              }
+            ],
+            "stretch": "Check the colours for colour-blind readers"
+          },
+          "summary": "Targets, prior periods and a layout that works in two directions"
         },
         {
           "title": "Load time is a design constraint",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Measure a dashboard panel by panel",
+            "Replace per-tile queries with one grouped query",
+            "Pre-aggregate to the grain the panels need"
           ],
           "lo": [
             "LO5"
           ],
           "lab": {
             "id": "3.3",
-            "title": "Bring a slow dashboard under three seconds and record timings",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Under three seconds",
+            "summary": "Time a slow dashboard panel by panel, find where the time goes, pre-aggregate a daily table and bring the whole page under the three-second budget.",
             "minutes": 25,
-            "href": "D3_3_load_time.ipynb"
-          }
+            "href": "D3_3_load_time.ipynb",
+            "steps": [
+              {
+                "text": "Time the slow dashboard, panel by panel",
+                "minutes": 5
+              },
+              {
+                "text": "Find where the time goes",
+                "minutes": 5
+              },
+              {
+                "text": "Pre-aggregate and rewrite the panels",
+                "minutes": 10
+              },
+              {
+                "text": "Time it again and record the result",
+                "minutes": 5
+              }
+            ],
+            "stretch": "Decide when the daily table must be rebuilt"
+          },
+          "summary": "Where the seconds go, and how to get them back"
         },
         {
           "title": "Investigating an anomaly",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Drill a change down a tree of segments",
+            "Tell a data fault from a change in demand",
+            "Write an anomaly note with cause, segments and correction"
           ],
           "lo": [
             "LO4"
           ],
           "lab": {
             "id": "3.4",
-            "title": "Drill into the seeded ridership drop and write the anomaly note",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "The October ridership drop",
+            "summary": "Drill into the seeded drop in weekly ridership, segment it by depot, route, day, fare type and vehicle, restate the week and write the anomaly note.",
             "minutes": 25,
-            "href": "D3_4_ridership_drop.ipynb"
-          }
+            "href": "D3_4_ridership_drop.ipynb",
+            "steps": [
+              {
+                "text": "Confirm the drop on the dashboard metric",
+                "minutes": 4
+              },
+              {
+                "text": "Drill down by depot, route and day",
+                "minutes": 7
+              },
+              {
+                "text": "Segment by fare type and vehicle",
+                "minutes": 6
+              },
+              {
+                "text": "Restate the week and write the note",
+                "minutes": 8
+              }
+            ],
+            "stretch": "The September on-time paradox by route type"
+          },
+          "summary": "Drill down, segment, and separate data from demand"
         }
-      ]
+      ],
+      "subtitle": "A dashboard for one decision, and an anomaly traced to its source"
     },
     {
       "id": "day4",
@@ -306,81 +573,170 @@
         {
           "title": "From question to query",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Describe the steps from a question to a query",
+            "Log every query an agent runs",
+            "Judge an answer against a governed figure"
           ],
           "lo": [
             "LO6"
           ],
           "lab": {
             "id": "4.1",
-            "title": "Run an agent on ten questions against the raw schema and log its SQL",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Ten questions, raw schema",
+            "summary": "Run Nabih on ten questions against the raw warehouse schema, log the SQL it writes, mark each answer against the governed figure and name each error.",
             "minutes": 25,
-            "href": "D4_1_agent_raw.ipynb"
-          }
+            "href": "D4_1_agent_raw.ipynb",
+            "steps": [
+              {
+                "text": "Read the schema the agent is given",
+                "minutes": 4
+              },
+              {
+                "text": "Run the agent on ten questions and log its SQL",
+                "minutes": 8
+              },
+              {
+                "text": "Mark each answer against the governed figure",
+                "minutes": 8
+              },
+              {
+                "text": "Name what went wrong in each wrong answer",
+                "minutes": 5
+              }
+            ],
+            "stretch": "Change one line of the instruction and run again"
+          },
+          "summary": "How an agent turns a question into SQL, and how to watch it"
         },
         {
           "title": "Certified questions",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Write a certified answer with value, query and tolerance",
+            "Write a refusal with its reason",
+            "Mark the fields an agent may never read"
           ],
           "lo": [
             "LO6"
           ],
           "lab": {
             "id": "4.2",
-            "title": "Write certified answers for ten questions, two of which the agent should refuse",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Ten certified answers",
+            "summary": "Write certified answers for ten questions: eight with value, query, time logic and tolerance, and two the agent should refuse, with the reason.",
             "minutes": 25,
-            "href": "D4_2_certified_answers.ipynb"
-          }
+            "href": "D4_2_certified_answers.ipynb",
+            "steps": [
+              {
+                "text": "Certify the metric questions",
+                "minutes": 10
+              },
+              {
+                "text": "Add tolerances and the time logic",
+                "minutes": 5
+              },
+              {
+                "text": "Write the two refusals",
+                "minutes": 5
+              },
+              {
+                "text": "Check your set against the supplied key",
+                "minutes": 5
+              }
+            ],
+            "stretch": "Three of the questions in Arabic"
+          },
+          "summary": "Answers you would sign, and questions the agent must refuse"
         },
         {
           "title": "With and without the semantic layer",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Score agent answers against certified ones",
+            "Classify wrong answers by error type",
+            "Compare accuracy by question type and configuration"
           ],
           "lo": [
             "LO6"
           ],
           "lab": {
             "id": "4.3",
-            "title": "Score batch-run answers to 40 questions in both configurations and classify the errors",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Forty questions, two configurations",
+            "summary": "Score a batch run of 40 certified questions in both configurations, classify every error and compare accuracy by question type.",
             "minutes": 25,
-            "href": "D4_3_score_configs.ipynb"
-          }
+            "href": "D4_3_score_configs.ipynb",
+            "steps": [
+              {
+                "text": "Load the batch run and the certified set",
+                "minutes": 3
+              },
+              {
+                "text": "Score each answer",
+                "minutes": 8
+              },
+              {
+                "text": "Classify each wrong answer by error type",
+                "minutes": 8
+              },
+              {
+                "text": "Accuracy by question type and configuration",
+                "minutes": 6
+              }
+            ],
+            "stretch": "Find the wrong answers a reader would believe"
+          },
+          "summary": "The same agent with the semantic layer as its tool"
         },
         {
           "title": "What the agent may answer",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Set a tolerance for wrong figures",
+            "Decide per question type: answer, review or refuse",
+            "Write the decision with its evidence"
           ],
           "lo": [
             "LO6"
           ],
           "lab": {
             "id": "4.4",
-            "title": "Draft the go or no-go memo from a supplied scoring table",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "The go or no-go memo",
+            "summary": "From a supplied scoring table, decide per question type whether the agent answers alone, with review, or not at all, and draft the memo.",
             "minutes": 25,
-            "href": "D4_4_go_no_go.ipynb"
-          }
+            "href": "D4_4_go_no_go.ipynb",
+            "steps": [
+              {
+                "text": "Read the scoring table and the tolerance",
+                "minutes": 4
+              },
+              {
+                "text": "Decide per question type",
+                "minutes": 8
+              },
+              {
+                "text": "Draft the memo with its evidence",
+                "minutes": 10
+              },
+              {
+                "text": "Check the memo against the checklist",
+                "minutes": 3
+              }
+            ],
+            "stretch": "Name the result that would change your decision"
+          },
+          "summary": "A go or no-go decision per question type"
         }
-      ]
+      ],
+      "subtitle": "A conversational agent tested on certified questions"
     },
     {
       "id": "capstone",
       "kind": "capstone",
-      "title": "Capstone project presentations",
+      "title": "Capstone: fares and concessions",
       "deck": "slides/capstone.html",
-      "subtitle": "REPLACE: the catalog gives 10 minutes for each presentation and nothing about questions; decide whether the questions are inside those minutes, set capstone.talk_minutes and capstone.qa_minutes in course.json and the timers of the now-presenting slide, and remove this line"
+      "subtitle": "Ten-minute reviews: a six-minute walk-through, then four minutes in which the assessor picks a dashboard figure and you trace it to source rows"
     }
   ],
   "capstone": {
     "summary": "Catalogue, semantic model, dashboard and agent memo for a second subject area (fares and concessions), in a public repository whose README reports measured query accuracy and load times, defended in a ten-minute review",
-    "submission": "REPLACE: what participants submit and how: a public repository link, or a shared folder for a course without code",
-    "talk_minutes": 10,
+    "submission": "A public GitHub repository for the fares and concessions area: the metric catalogue, the Apache Ossie model with its test queries, the dashboard with its one-page rationale, the agent memo, and a README that reports the measured query accuracy and the load times and says how to rerun them.",
+    "talk_minutes": 6,
     "rubric": [
       {
         "criterion": "Catalogue",
@@ -402,7 +758,8 @@
         "criterion": "Reproducibility",
         "weight": 10
       }
-    ]
+    ],
+    "qa_minutes": 4
   },
   "labs": {
     "kind": "notebooks",
