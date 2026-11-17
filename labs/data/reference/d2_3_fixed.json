@@ -1,0 +1,62 @@
+[
+ {
+  "route_id": "R01",
+  "taps": 10111,
+  "timepoint_on_time": 0.5112630732099759
+ },
+ {
+  "route_id": "R02",
+  "taps": 5062,
+  "timepoint_on_time": 0.6941510966693745
+ },
+ {
+  "route_id": "R03",
+  "taps": 5045,
+  "timepoint_on_time": 0.6750405186385737
+ },
+ {
+  "route_id": "R04",
+  "taps": 9179,
+  "timepoint_on_time": 0.7819206008583691
+ },
+ {
+  "route_id": "R05",
+  "taps": 9904,
+  "timepoint_on_time": 0.5474452554744526
+ },
+ {
+  "route_id": "R06",
+  "taps": 5081,
+  "timepoint_on_time": 0.7001627339300244
+ },
+ {
+  "route_id": "R07",
+  "taps": 6517,
+  "timepoint_on_time": 0.7131877022653722
+ },
+ {
+  "route_id": "R08",
+  "taps": 9015,
+  "timepoint_on_time": 0.7672086720867208
+ },
+ {
+  "route_id": "R09",
+  "taps": 9684,
+  "timepoint_on_time": 0.4535361842105263
+ },
+ {
+  "route_id": "R10",
+  "taps": 4856,
+  "timepoint_on_time": 0.635
+ },
+ {
+  "route_id": "R11",
+  "taps": 4770,
+  "timepoint_on_time": 0.651615575807788
+ },
+ {
+  "route_id": "R12",
+  "taps": 4839,
+  "timepoint_on_time": 0.6699916874480466
+ }
+]

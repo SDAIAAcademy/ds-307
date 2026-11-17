@@ -1,0 +1,54 @@
+[
+ {
+  "name": "taps",
+  "label_ar": "النقرات",
+  "question": "How many card taps did the network record in the period?",
+  "formula": "COUNT(tap_id)",
+  "table": "fct_boarding",
+  "grain": "one card tap at a validator (fct_boarding)",
+  "filters": "none; taps that could not be attributed to a route or trip are counted",
+  "time_logic": "service_date; weeks run Sunday to Saturday; months are Gregorian unless a Hijri month is named",
+  "unit": "taps",
+  "owner": "Muneer Al-Thaqafi, data platform lead",
+  "limits": "counts taps, not people; a rider who changes bus taps twice"
+ },
+ {
+  "name": "unique_cards",
+  "label_ar": "البطاقات المختلفة",
+  "question": "How many different cards travelled in the period?",
+  "formula": "COUNT(DISTINCT card_id)",
+  "table": "fct_boarding",
+  "grain": "one card tap at a validator (fct_boarding)",
+  "filters": "none",
+  "time_logic": "service_date; distinct within the period asked for, so weeks do not add up to a month",
+  "unit": "cards",
+  "owner": "Muneer Al-Thaqafi, data platform lead",
+  "limits": "a card is not a person; shared and lost cards make it differ from riders; never shown below 10"
+ },
+ {
+  "name": "journeys",
+  "label_ar": "الرحلات المترابطة",
+  "question": "How many journeys did riders make, counting a transfer as part of one journey?",
+  "formula": "SUM(journey_start)",
+  "table": "boarding_linked",
+  "grain": "one card tap at a validator, with journey_start = 1 when the same card made no tap in the 60 minutes before",
+  "filters": "none",
+  "time_logic": "service_date of the tap; the 60-minute look-back crosses midnight",
+  "unit": "journeys",
+  "owner": "Dhuha Al-Rowais, network planning manager",
+  "limits": "a return within 60 minutes counts as a transfer; taps on passes are linked the same way"
+ },
+ {
+  "name": "rider_days",
+  "label_ar": "أيام الركوب",
+  "question": "How many card-days were there in the period (one card travelling on one day counts once)?",
+  "formula": "COUNT(DISTINCT (card_id, service_date))",
+  "table": "fct_boarding",
+  "grain": "one card tap at a validator (fct_boarding)",
+  "filters": "none",
+  "time_logic": "service_date; additive across days, not across cards",
+  "unit": "card-days",
+  "owner": "Yasmeen Al-Jaafari, strategy and finance analyst",
+  "limits": "used for the day-pass price review; not a count of people"
+ }
+]

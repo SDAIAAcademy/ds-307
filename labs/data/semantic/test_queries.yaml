@@ -1,0 +1,341 @@
+tests:
+- id: t01
+  question: Card taps in September
+  metrics:
+  - boardings.boardings
+  dimensions: []
+  where:
+  - dates.gregorian_month = '2026-09'
+  expected:
+  - boardings: 84063
+- id: t02
+  question: Card taps by depot in September
+  metrics:
+  - boardings.boardings
+  dimensions:
+  - routes.depot
+  where:
+  - dates.gregorian_month = '2026-09'
+  expected:
+  - depot: Central
+    boardings: 30517
+  - depot: East
+    boardings: 24149
+  - depot: North
+    boardings: 29397
+- id: t03
+  question: Distinct cards in the week of 13 September
+  metrics:
+  - boardings.unique_cards
+  dimensions: []
+  where:
+  - dates.week_start = DATE '2026-09-13'
+  expected:
+  - unique_cards: 9864
+- id: t04
+  question: Linked journeys in the week of 13 September
+  metrics:
+  - boardings.journeys
+  dimensions: []
+  where:
+  - dates.week_start = DATE '2026-09-13'
+  expected:
+  - journeys: 16231.0
+- id: t05
+  question: On-time rate in September
+  metrics:
+  - on_time_rate
+  dimensions: []
+  where:
+  - dates.gregorian_month = '2026-09'
+  expected:
+  - on_time_rate: 0.8065479895431346
+- id: t06
+  question: On-time rate by route type in September
+  metrics:
+  - on_time_rate
+  dimensions:
+  - routes.route_type
+  where:
+  - dates.gregorian_month = '2026-09'
+  expected:
+  - route_type: express
+    on_time_rate: 0.8932403433476395
+  - route_type: feeder
+    on_time_rate: 0.827922077922078
+  - route_type: trunk
+    on_time_rate: 0.6698976844372644
+- id: t07
+  question: Cancellation rate in September
+  metrics:
+  - cancellation_rate
+  dimensions: []
+  where:
+  - dates.gregorian_month = '2026-09'
+  expected:
+  - cancellation_rate: 0.02842283502660861
+- id: t08
+  question: Cancellation rate by depot in October
+  metrics:
+  - cancellation_rate
+  dimensions:
+  - routes.depot
+  where:
+  - dates.gregorian_month = '2026-10'
+  expected:
+  - depot: Central
+    cancellation_rate: 0.02820251444104655
+  - depot: East
+    cancellation_rate: 0.039755351681957186
+  - depot: North
+    cancellation_rate: 0.02378525314305131
+- id: t09
+  question: Timepoint on-time rate in September
+  metrics:
+  - timepoint_on_time_rate
+  dimensions: []
+  where:
+  - dates.gregorian_month = '2026-09'
+  expected:
+  - timepoint_on_time_rate: 0.6598707734771971
+- id: t10
+  question: Taps per departed trip in September
+  metrics:
+  - boardings_per_departed_trip
+  dimensions: []
+  where:
+  - dates.gregorian_month = '2026-09'
+  expected:
+  - boardings_per_departed_trip: 10.464708079173409
+- id: t11
+  question: Complaints per 10,000 taps in September
+  metrics:
+  - complaints_per_10k_boardings
+  dimensions: []
+  where:
+  - dates.gregorian_month = '2026-09'
+  expected:
+  - complaints_per_10k_boardings: 27.0035568561674
+- id: t12
+  question: Scheduled trips in Rabi al-Awwal and Rabi al-Thani 1448
+  metrics:
+  - trips.scheduled_trips
+  dimensions:
+  - dates.hijri_month_key
+  where:
+  - dates.hijri_month_key IN ('1448-03', '1448-04')
+  expected:
+  - hijri_month_key: 1448-03
+    scheduled_trips: 8082
+  - hijri_month_key: 1448-04
+    scheduled_trips: 8190
+- id: t13
+  question: Card taps in Ramadan
+  metrics:
+  - boardings.boardings
+  dimensions: []
+  where:
+  - dates.is_ramadan
+  expected:
+  - boardings: 65568
+- id: t14
+  question: Card taps on R07 by route name
+  metrics:
+  - boardings.boardings
+  dimensions:
+  - routes.route_name_en
+  where:
+  - routes.route_id = 'R07'
+  expected:
+  - route_name_en: Al-Rawdah Feeder
+    boardings: 22716
+  - route_name_en: Al-Rawdah Hospital Feeder
+    boardings: 33513
+- id: t15
+  question: On-time rate by month, August to October
+  metrics:
+  - on_time_rate
+  dimensions:
+  - dates.gregorian_month
+  where:
+  - dates.gregorian_month >= '2026-08'
+  expected:
+  - gregorian_month: 2026-08
+    on_time_rate: 0.7895350192285281
+  - gregorian_month: 2026-09
+    on_time_rate: 0.8065479895431346
+  - gregorian_month: 2026-10
+    on_time_rate: 0.8104305639781686
+- id: t16
+  question: Departed trips by route type in August
+  metrics:
+  - trips.departed_trips
+  dimensions:
+  - routes.route_type
+  where:
+  - dates.gregorian_month = '2026-08'
+  expected:
+  - route_type: express
+    departed_trips: 873.0
+  - route_type: feeder
+    departed_trips: 4498.0
+  - route_type: trunk
+    departed_trips: 3210.0
+- id: t17
+  question: Card taps by fare type in September
+  metrics:
+  - boardings.boardings
+  dimensions:
+  - boardings.fare_type
+  where:
+  - dates.gregorian_month = '2026-09'
+  expected:
+  - fare_type: adult
+    boardings: 58581
+  - fare_type: disability
+    boardings: 3669
+  - fare_type: senior
+    boardings: 6655
+  - fare_type: student
+    boardings: 15158
+- id: t18
+  question: Distinct cards in September and in October
+  metrics:
+  - boardings.unique_cards
+  dimensions:
+  - dates.gregorian_month
+  where:
+  - dates.gregorian_month IN ('2026-09', '2026-10')
+  expected:
+  - gregorian_month: 2026-09
+    unique_cards: 24039
+  - gregorian_month: 2026-10
+    unique_cards: 24410
+- id: t19
+  question: Complaints by category in September
+  metrics:
+  - complaints.complaints
+  dimensions:
+  - complaints.category
+  where:
+  - dates.gregorian_month = '2026-09'
+  expected:
+  - category: accessibility
+    complaints: 26
+  - category: card
+    complaints: 38
+  - category: cleanliness
+    complaints: 20
+  - category: crowding
+    complaints: 38
+  - category: driver
+    complaints: 30
+  - category: late
+    complaints: 75
+- id: t20
+  question: Card taps in the week of 4 October by the depot of the bus
+  metrics:
+  - boardings.boardings
+  dimensions:
+  - vehicles.depot
+  where:
+  - dates.week_start = DATE '2026-10-04'
+  expected:
+  - depot: Central
+    boardings: 7356
+  - depot: East
+    boardings: 5764
+  - depot: North
+    boardings: 6992
+- id: t21
+  question: Card taps in the week of 4 October by the depot of the route
+  metrics:
+  - boardings.boardings
+  dimensions:
+  - routes.depot
+  where:
+  - dates.week_start = DATE '2026-10-04'
+  expected:
+  - depot: Central
+    boardings: 7356
+  - depot: East
+    boardings: 1862
+  - depot: null
+    boardings: 3902
+  - depot: North
+    boardings: 6992
+- id: t22
+  question: Linked journeys on weekdays and weekends in September
+  metrics:
+  - boardings.journeys
+  dimensions:
+  - dates.is_weekend
+  where:
+  - dates.gregorian_month = '2026-09'
+  expected:
+  - is_weekend: false
+    journeys: 58733.0
+  - is_weekend: true
+    journeys: 10444.0
+- id: t23
+  question: Timepoint events and on-time events by timepoint in September
+  metrics:
+  - timepoints.timepoint_events
+  - timepoints.on_time_events
+  dimensions:
+  - timepoints.tp_seq
+  where:
+  - dates.gregorian_month = '2026-09'
+  expected:
+  - tp_seq: 1
+    timepoint_events: 8033
+    on_time_events: 6479.0
+  - tp_seq: 2
+    timepoint_events: 8033
+    on_time_events: 5718.0
+  - tp_seq: 3
+    timepoint_events: 7908
+    on_time_events: 4796.0
+  - tp_seq: 4
+    timepoint_events: 7908
+    on_time_events: 4045.0
+- id: t24
+  question: Card taps on each public holiday
+  metrics:
+  - boardings.boardings
+  dimensions:
+  - dates.holiday_en
+  where:
+  - dates.holiday_en IS NOT NULL
+  expected:
+  - holiday_en: Eid al-Adha
+    boardings: 5214
+  - holiday_en: Eid al-Fitr
+    boardings: 3948
+  - holiday_en: Founding Day
+    boardings: 885
+  - holiday_en: National Day
+    boardings: 1184
+- id: t25
+  question: Cancellation rate by day of the week in September
+  metrics:
+  - cancellation_rate
+  dimensions:
+  - dates.day_of_week_en
+  where:
+  - dates.gregorian_month = '2026-09'
+  expected:
+  - day_of_week_en: Friday
+    cancellation_rate: 0.028846153846153848
+  - day_of_week_en: Monday
+    cancellation_rate: 0.022435897435897436
+  - day_of_week_en: Saturday
+    cancellation_rate: 0.0202991452991453
+  - day_of_week_en: Sunday
+    cancellation_rate: 0.026442307692307692
+  - day_of_week_en: Thursday
+    cancellation_rate: 0.032852564102564104
+  - day_of_week_en: Tuesday
+    cancellation_rate: 0.03205128205128205
+  - day_of_week_en: Wednesday
+    cancellation_rate: 0.03276353276353276

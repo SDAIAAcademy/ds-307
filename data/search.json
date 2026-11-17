@@ -1,0 +1,1579 @@
+{
+  "v": 1,
+  "engine": "1.0.0",
+  "build": {
+    "at": "2026-11-15T18:46:23Z",
+    "version": "2027.1.0",
+    "commit": "6720e14"
+  },
+  "lang": "en",
+  "dir": "ltr",
+  "slides": [
+    {
+      "deck": "day1",
+      "id": "title",
+      "n": 1,
+      "session": 0,
+      "title": "Define the numbers",
+      "text": "SDAIA Academy · Metrics, Semantic Models and Dashboards Define the numbers Day 1: Three reports, one warehouse: definitions someone else can compute Data Science Track4 teaching days + capstone day4 sessions · 4 labsDS-307",
+      "href": "../slides/day1.html#title"
+    },
+    {
+      "deck": "day1",
+      "id": "four-days-one-operator",
+      "n": 2,
+      "session": 0,
+      "title": "Four days from a disputed number to an agent you can trust with it",
+      "text": "The course at a glance Four days from a disputed number to an agent you can trust with it Day 1 · Define Why reports disagree, definitions, ratios, metric trees. Day 2 · Model Star schemas, a route that changed, fan-out, and each metric defined once in an open specification. Day 3 · Show A dashboard for one decision under three seconds; an anomaly traced. Day 4 · Test An agent on certified questions, and a go or no-go. Day 5 · Capstone. The same four pieces for a second subject area, fares and concessions, defended in a ten-minute review with a live trace of one figure.",
+      "href": "../slides/day1.html#four-days-one-operator"
+    },
+    {
+      "deck": "day1",
+      "id": "how-we-work",
+      "n": 3,
+      "session": 0,
+      "title": "Every number you show this week can be traced to its definition and its rows",
+      "text": "How this course works Every number you show this week can be traced to its definition and its rows Reproduce first Before you argue about a number, compute it again from its written rule. Define once One name, one formula, one owner. A second meaning gets a second name. Test it Hand-computed values, source totals and reference queries, every day. AI policy. AI off for the first lab of each day and for the supervised check. A tutor in the other labs, explaining errors without writing your definitions. In the capstone an assistant may draft; every drafted definition carries a verification note. On Day 4 the agent is under test, not your helper.",
+      "href": "../slides/day1.html#how-we-work"
+    },
+    {
+      "deck": "day1",
+      "id": "wadi-noor-transit",
+      "n": 4,
+      "session": 0,
+      "title": "Wadi Noor Transit: twelve bus routes, three depots, three on-time figures",
+      "text": "One case study all week Wadi Noor Transit: twelve bus routes, three depots, three on-time figures A fictional city bus operator (نقل وادي نور). Synthetic data from January to October 2026. You are the new performance reporting analyst. Mashael Al-Saadi Operations director. Decides every Sunday where the reserve buses and supervisors go. Three report owners Tawfiq Al-Sahafi (control centre), Dhuha Al-Rowais (planning), Yasmeen Al-Jaafari (board pack). Muneer and Haneen Muneer Al-Thaqafi owns the warehouse; Haneen Al-Shamrani owns data classification.",
+      "href": "../slides/day1.html#wadi-noor-transit"
+    },
+    {
+      "deck": "day1",
+      "id": "the-warehouse",
+      "n": 5,
+      "session": 0,
+      "title": "Five facts, six dimensions, one embedded analytical database",
+      "text": "What you work on Five facts, six dimensions, one embedded analytical database Fact table Rows One row is fct_trip 85,010 a scheduled trip fct_timepoint 329,188 a trip at one of four timepoints fct_boarding 848,501 a card tap at a validator fct_complaint 2,400 a complaint fct_fare_sale 121,133 a pass sold (capstone) DuckDB in the notebook W.db() opens the Parquet files as read-only views. PostgreSQL would serve the same queries. Dimensions Dates with both calendars, routes with history, vehicles, depots, fare types and products.",
+      "href": "../slides/day1.html#the-warehouse"
+    },
+    {
+      "deck": "day1",
+      "id": "setup-check",
+      "n": 6,
+      "session": 0,
+      "title": "Run the setup check before the first lab",
+      "text": "Lab environment Run the setup check before the first lab In Google Colab: open a lab from the course page; its first cell clones the course and installs what it needs. On a laptop: install uv, then the commands on the right. Run 00_setup_check.ipynb. Every lab starts from supplied data, never from another lab of the same day. git clone https://github.com/SDAIAAcademy/ds-307 cd ds-307/labs uv sync uv run jupyter lab",
+      "href": "../slides/day1.html#setup-check"
+    },
+    {
+      "deck": "day1",
+      "id": "agenda",
+      "n": 7,
+      "session": 0,
+      "title": "Define the numbers",
+      "text": "Today Define the numbers Session 1 · Why three reports disagree What makes three reports on one warehouse give three numbers Session 2 · Anatomy of a metric definition The eight parts of a definition someone else can compute Session 3 · Ratios, distinct counts and time logic Ratios, distinct counts and the calendar inside a metric Session 4 · Metric trees From one goal metric to the drivers a team can move",
+      "href": "../slides/day1.html#agenda"
+    },
+    {
+      "deck": "day1",
+      "id": "s1",
+      "n": 8,
+      "session": 1,
+      "title": "Why three reports disagree",
+      "text": "Session 1 Why three reports disagree Name the four places two definitions of one measure can differ Reproduce a published figure from its written rule Explain a gap between two figures one rule at a time 01",
+      "href": "../slides/day1.html#s1"
+    },
+    {
+      "deck": "day1",
+      "id": "three-figures",
+      "n": 9,
+      "session": 1,
+      "title": "One warehouse, one month, three on-time figures",
+      "text": "The problem you inherit One warehouse, one month, three on-time figures 80.7% Operations report, September 66.0% Planning service review, September 58.4% Board pack, September meeting Nobody made an arithmetic error. Each figure is right for its own rule.",
+      "href": "../slides/day1.html#three-figures"
+    },
+    {
+      "deck": "day1",
+      "id": "rules-as-written",
+      "n": 10,
+      "session": 1,
+      "title": "The three owners wrote three different rules under one name",
+      "text": "Read the rules, not the totals The three owners wrote three different rules under one name Report Counts On time means Cancelled trips Period Operations (Tawfiq) trips left the first stop 1 min early to 5 late left out September Planning (Dhuha) timepoint arrivals 1 min early to 5 late, at every timepoint no arrivals to count September Board (Yasmeen) trips reached the terminus at most 5 min late count as late Rabi al-Thani 1448 Source: labs/data/reports/three_reports.yaml, the sentence under each report.",
+      "href": "../slides/day1.html#rules-as-written"
+    },
+    {
+      "deck": "day1",
+      "id": "four-places",
+      "n": 11,
+      "session": 1,
+      "title": "Two definitions of one measure differ in four places",
+      "text": "Where definitions differ Two definitions of one measure differ in four places Grain What is counted: trips, timepoint arrivals, riders, cards. Rule Where it is measured and the tolerance: first stop or terminus, early allowed or not. Filter What enters the denominator: cancelled trips, partial trips, holidays. Period Which dates: Gregorian month, Hijri month, a Sunday week or an ISO week. Use it as a checklist. Two figures that disagree differ in at least one of these four. Find which before you look for a bug.",
+      "href": "../slides/day1.html#four-places"
+    },
+    {
+      "deck": "day1",
+      "id": "reconciliation-walk",
+      "n": 12,
+      "session": 1,
+      "title": "Change one rule at a time and the gap explains itself",
+      "text": "A reconciliation walk Change one rule at a time and the gap explains itself Operations rules 80.7% Measured at the terminus 50.4% Early arrivals allowed 59.7% Cancelled trips count as late 58.0% Hijri month, not September 58.4%",
+      "href": "../slides/day1.html#reconciliation-walk"
+    },
+    {
+      "deck": "day1",
+      "id": "grain-changes-question",
+      "n": 13,
+      "session": 1,
+      "title": "Counting timepoints, not trips, asks a different question",
+      "text": "The biggest step Counting timepoints, not trips, asks a different question Per trip, at the first stop \"Did the bus leave when the timetable said?\" The rider waiting at the start can plan on it. Per timepoint arrival \"Was the bus on time along the way?\" Delays build up, so later timepoints pull the figure down. Neither is wrong. Planning's 66.0% is the honest answer to its own question. The fault is the shared name.",
+      "href": "../slides/day1.html#grain-changes-question"
+    },
+    {
+      "deck": "day1",
+      "id": "cost-of-disagreement",
+      "n": 14,
+      "session": 1,
+      "title": "A disputed number spends the meeting on the number, not the decision",
+      "text": "Why it matters A disputed number spends the meeting on the number, not the decision Three figures invite each team to quote the one that suits it Every new report adds a definition nobody wrote down An agent asked \"what was on-time performance?\" will pick one, and not say which The fix is not a fourth report: it is one catalogue, one owner per metric",
+      "href": "../slides/day1.html#cost-of-disagreement"
+    },
+    {
+      "deck": "day1",
+      "id": "diagnosis-table",
+      "n": 15,
+      "session": 1,
+      "title": "The diagnosis names a definitional cause for each difference",
+      "text": "What you hand over The diagnosis names a definitional cause for each difference Difference Causes, in walk order Operations 80.7% vs planning 66.0% grain (trips vs timepoint arrivals) Operations 80.7% vs board 58.4% point measured, tolerance, cancelled trips, period This table, with the walk behind it, is the evidence for the first course outcome.",
+      "href": "../slides/day1.html#diagnosis-table"
+    },
+    {
+      "deck": "day1",
+      "id": "checkpoint-1",
+      "n": 16,
+      "session": 1,
+      "title": "Why is the planning figure lower?",
+      "text": "Checkpoint Why is the planning figure lower? Operations reports 80.7% and planning 66.0% for the same September, on the same warehouse, both with a tolerance of one minute early to five late. What explains most of the gap? Planning reads a stale copy of the data Planning counts every timepoint arrival, where delays have built up Planning counts cancelled trips as late Planning reports a Hijri month",
+      "href": "../slides/day1.html#checkpoint-1"
+    },
+    {
+      "deck": "day1",
+      "id": "lab-1-1",
+      "n": 17,
+      "session": 1,
+      "title": "Three on-time figures",
+      "text": "Lab 1.1 · 25 min Three on-time figures Compute the operations, planning and board on-time figures for September from their written rules, walk from one to the next one rule at a time, and write the diagnosis. D1_1_three_on_time.ipynb Compute the operations figure from its rule 6 min Compute the planning and board figures 7 min Walk from one figure to the next, one rule at a time 8 min Write the diagnosis: one cause per difference 4 min ✱ Stretch: Which figure answers the question the operations director asks every Sunday?",
+      "href": "../slides/day1.html#lab-1-1"
+    },
+    {
+      "deck": "day1",
+      "id": "s2",
+      "n": 18,
+      "session": 2,
+      "title": "Anatomy of a metric definition",
+      "text": "Session 2 Anatomy of a metric definition Write a definition with formula, grain, filters, time logic, owner and limits Tell taps, cards and journeys apart Reconcile a definition to the source totals 02",
+      "href": "../slides/day1.html#s2"
+    },
+    {
+      "deck": "day1",
+      "id": "ridership-four-numbers",
+      "n": 19,
+      "session": 2,
+      "title": "\"Ridership last week\" is four different numbers",
+      "text": "One word, four numbers \"Ridership last week\" is four different numbers Card taps 19,826 Linked journeys 16,231 Card-days 13,992 Different cards 9,864 The week of 13 to 19 September 2026, from Lab 1.2.",
+      "href": "../slides/day1.html#ridership-four-numbers"
+    },
+    {
+      "deck": "day1",
+      "id": "taps-cards-journeys",
+      "n": 20,
+      "session": 2,
+      "title": "A tap, a journey and a card count different things",
+      "text": "Counting units in transit A tap, a journey and a card count different things Tap one card at one validator, every boarding → Journey taps of one card within 60 minutes linked as one trip → Card-day one card that travelled on a day → Card one card seen in the period The trap. Each step to the right is distinct within its period, so it is no longer additive: card-days add across days, cards do not.",
+      "href": "../slides/day1.html#taps-cards-journeys"
+    },
+    {
+      "deck": "day1",
+      "id": "eight-parts",
+      "n": 21,
+      "session": 2,
+      "title": "A definition someone else can compute has eight parts",
+      "text": "Anatomy of a definition A definition someone else can compute has eight parts Name and the question it answers Formula : one aggregate, or a ratio of two Grain : what one counted row is Filters : what is in and out Time logic : which date, which calendar, which week Unit of the result Owner : a person and their role Limits : what it must not be used for The test. Give it to a colleague: if they compute your number without asking you anything, it is a definition.",
+      "href": "../slides/day1.html#eight-parts"
+    },
+    {
+      "deck": "day1",
+      "id": "one-definition",
+      "n": 22,
+      "session": 2,
+      "title": "The journeys definition, as the catalogue holds it",
+      "text": "An entry of the catalogue The journeys definition, as the catalogue holds it - name: journeys question: How many journeys did riders make, counting a transfer as part of one journey? formula: SUM(journey_start) table: boarding_linked grain: one card tap, journey_start = 1 when the card made no tap in the 60 minutes before filters: none time_logic: service_date of the tap; the 60-minute look-back crosses midnight unit: journeys owner: Dhuha Al-Rowais, network planning manager limits: a return trip within 60 minutes counts as a transfer",
+      "href": "../slides/day1.html#one-definition"
+    },
+    {
+      "deck": "day1",
+      "id": "owner-and-change",
+      "n": 23,
+      "session": 2,
+      "title": "An owner decides what the metric means; a change gets a new version",
+      "text": "Owners and change control An owner decides what the metric means; a change gets a new version The owner answers questions about the definition and approves changes A change that moves the number is announced, dated and versioned A second meaning is a second metric with its own name and owner The board's measure stays, renamed terminal_on_time_rate, owned by Yasmeen",
+      "href": "../slides/day1.html#owner-and-change"
+    },
+    {
+      "deck": "day1",
+      "id": "reconcile-to-source",
+      "n": 24,
+      "session": 2,
+      "title": "A definition reconciles when its formula, run as written, gives the source total",
+      "text": "Proof, not belief A definition reconciles when its formula, run as written, gives the source total for d in defs: got = W.measure(con, d, *WEEK) W.check(got == counts[d[\"name\"]], d[\"name\"]) Run the formula on the table the definition names, for the period Compare with the count taken directly from the source Add a sum test: taps by route plus taps without a route equal all taps",
+      "href": "../slides/day1.html#reconcile-to-source"
+    },
+    {
+      "deck": "day1",
+      "id": "dictionary-classification",
+      "n": 25,
+      "session": 2,
+      "title": "The dictionary marks what a metric may count but never show",
+      "text": "Responsible use, from the first definition The dictionary marks what a metric may count but never show card_id is pseudonymous personal data: Restricted Counting distinct cards is allowed; listing them is not The PDPL limits personal data to the minimum the purpose needs Counts of cards are not shown below 10 Four levels The NDMO Data Classification Policy has four: Top Secret, Secret, Restricted, Public. Label every field the catalogue uses.",
+      "href": "../slides/day1.html#dictionary-classification"
+    },
+    {
+      "deck": "day1",
+      "id": "checkpoint-2",
+      "n": 26,
+      "session": 2,
+      "title": "Which definition can a colleague compute without asking?",
+      "text": "Checkpoint Which definition can a colleague compute without asking? Four drafts of \"weekly riders\". Which one could Muneer compute for any week and get the number you would get? Distinct cards in fct_boarding per week COUNT(DISTINCT card_id) Riders who used the network last week, owned by planning COUNT(DISTINCT card_id) on fct_boarding, by service_date, weeks Sunday to Saturday",
+      "href": "../slides/day1.html#checkpoint-2"
+    },
+    {
+      "deck": "day1",
+      "id": "lab-1-2",
+      "n": 27,
+      "session": 2,
+      "title": "Four ridership definitions",
+      "text": "Lab 1.2 · 25 min Four ridership definitions Count four ridership numbers for one week, write each as a governed definition, run the peer checklist and reconcile every definition to the source totals. D1_2_ridership_metrics.ipynb Count four ridership numbers for one week 6 min Write the four definitions in the catalogue template 8 min Run the peer checklist 5 min Reconcile each definition to the source totals 6 min ✱ Stretch: Add the Arabic name and a limits line to each definition",
+      "href": "../slides/day1.html#lab-1-2"
+    },
+    {
+      "deck": "day1",
+      "id": "s3",
+      "n": 28,
+      "session": 3,
+      "title": "Ratios, distinct counts and time logic",
+      "text": "Session 3 Ratios, distinct counts and time logic Compute a ratio of sums and say why it differs from a mean of ratios Explain why distinct counts do not add across periods Test a metric against hand-computed values 03",
+      "href": "../slides/day1.html#s3"
+    },
+    {
+      "deck": "day1",
+      "id": "ratio-of-sums",
+      "n": 29,
+      "session": 3,
+      "title": "A network rate is a ratio of sums, not a mean of route rates",
+      "text": "Ratios A network rate is a ratio of sums, not a mean of route rates Route Departed On time Rate A 100 90 90% B 10 5 50% C 40 30 75% Network 150 125 83.3% 71.7% mean of the three route rates Not the network The mean gives route B's ten trips the weight of route A's hundred.",
+      "href": "../slides/day1.html#ratio-of-sums"
+    },
+    {
+      "deck": "day1",
+      "id": "when-mean-of-ratios",
+      "n": 30,
+      "session": 3,
+      "title": "A mean of ratios answers \"how does a typical route do?\"",
+      "text": "When the mean is right A mean of ratios answers \"how does a typical route do?\" Network performance: ratio of sums, each trip counted once The typical route: mean of route ratios, each route counted once Both are legitimate; they are two metrics with two names A dashboard that averages a column of percentages has chosen the second without saying so",
+      "href": "../slides/day1.html#when-mean-of-ratios"
+    },
+    {
+      "deck": "day1",
+      "id": "distinct-not-additive",
+      "n": 31,
+      "session": 3,
+      "title": "Weekly distinct cards do not add up to a month",
+      "text": "Distinct counts Weekly distinct cards do not add up to a month Week starting Distinct cards 2026-09-06 9,909 2026-09-13 9,864 2026-09-20 9,257 2026-09-27 9,734 38,764 the four weeks added 22,962 distinct over the four weeks",
+      "href": "../slides/day1.html#distinct-not-additive"
+    },
+    {
+      "deck": "day1",
+      "id": "snapshots-and-flows",
+      "n": 32,
+      "session": 3,
+      "title": "Flows add over time; snapshots do not",
+      "text": "Flows and snapshots Flows add over time; snapshots do not Flow Taps, trips, complaints: events in a period. A month is the sum of its days. Snapshot Active passes, buses in service, open complaints: a state on a date. A month is a chosen day, or an average of days, never a sum. State the rule. A snapshot metric's time logic names the day it is taken: the last day of the period, or the mean of daily values.",
+      "href": "../slides/day1.html#snapshots-and-flows"
+    },
+    {
+      "deck": "day1",
+      "id": "time-logic",
+      "n": 33,
+      "session": 3,
+      "title": "Which date, which week, which calendar",
+      "text": "Time logic Which date, which week, which calendar Choice At Wadi Noor What goes wrong otherwise The date that places a row the service date of the trip a trip after midnight lands on the next day The week Sunday to Saturday ISO weeks start on Monday and split the working week The month Gregorian unless a Hijri month is named Ramadan and the Eids move eleven days a year Like with like compare holiday timetables with holidays National Day looks like a fall in demand",
+      "href": "../slides/day1.html#time-logic"
+    },
+    {
+      "deck": "day1",
+      "id": "test-a-metric",
+      "n": 34,
+      "session": 3,
+      "title": "Test a metric on an example you computed by hand, then on the source",
+      "text": "Testing a metric Test a metric on an example you computed by hand, then on the source 1 · By hand a toy of three routes, with fractions on paper → 2 · Same rows the toy as a table the function can read → 3 · Equal the function returns the hand value exactly → 4 · Network the function on September, against a reference Also test what it must not equal. The toy's ratio of sums must differ from its mean of ratios: a test that would pass with the wrong formula proves nothing.",
+      "href": "../slides/day1.html#test-a-metric"
+    },
+    {
+      "deck": "day1",
+      "id": "checkpoint-3",
+      "n": 35,
+      "session": 3,
+      "title": "How many cards travelled in September?",
+      "text": "Checkpoint How many cards travelled in September? A dashboard shows distinct cards per week. A manager wants the September total for a funding bid. What do you give? A new distinct count over all of September's service dates The sum of the weekly figures The average of the weekly figures The largest weekly figure",
+      "href": "../slides/day1.html#checkpoint-3"
+    },
+    {
+      "deck": "day1",
+      "id": "lab-1-3",
+      "n": 36,
+      "session": 3,
+      "title": "Two ratio metrics, tested",
+      "text": "Lab 1.3 · 25 min Two ratio metrics, tested Implement the on-time rate and the cancellation rate as functions and test them against hand-computed values and the network totals; see why weekly distinct cards do not add to a month. D1_3_ratio_metrics.ipynb Hand-compute the on-time rate of a small example 5 min Implement the two ratio metrics 8 min Test them against the hand values and the network 6 min Show that weekly distinct cards do not add to a month 6 min ✱ Stretch: The same two metrics by Hijri month",
+      "href": "../slides/day1.html#lab-1-3"
+    },
+    {
+      "deck": "day1",
+      "id": "s4",
+      "n": 37,
+      "session": 4,
+      "title": "Metric trees",
+      "text": "Session 4 Metric trees Decompose a goal metric into drivers that multiply back to it Add a guardrail that a driver could harm Assign an owner to each node 04",
+      "href": "../slides/day1.html#s4"
+    },
+    {
+      "deck": "day1",
+      "id": "tree-shape",
+      "n": 38,
+      "session": 4,
+      "title": "A metric tree links one goal to the drivers that teams can move",
+      "text": "Metric trees A metric tree links one goal to the drivers that teams can move Goal weekly card taps = Timetable scheduled trips × Delivery 1 − cancellation rate × Demand taps per departed trip Guardrail. Complaints per 10,000 taps: it watches for harm a driver could do, such as crowding more riders onto each bus.",
+      "href": "../slides/day1.html#tree-shape"
+    },
+    {
+      "deck": "day1",
+      "id": "tree-kinds",
+      "n": 39,
+      "session": 4,
+      "title": "Multiply for rates and volumes, add for segments",
+      "text": "Two kinds of tree Multiply for rates and volumes, add for segments Multiplicative Taps = trips × (1 − cancelled) × taps per trip. Changes combine as products; log changes add. Additive Taps = North + Central + East. Each segment's change adds to the total; Day 3 drills down this way. Use both. Multiply to find which driver moved; add to find where it moved.",
+      "href": "../slides/day1.html#tree-kinds"
+    },
+    {
+      "deck": "day1",
+      "id": "tree-two-weeks",
+      "n": 40,
+      "session": 4,
+      "title": "Taps fell 8.5%: the timetable explains almost all of it",
+      "text": "The tree on two weeks Taps fell 8.5%: the timetable explains almost all of it Node Week of 13 Sep Week of 20 Sep Change Taps (goal) 19,826 18,146 -8.5% Scheduled trips 1,950 1,794 -8.0% 1 − cancellation rate 97.0% 97.7% +0.8% Taps per departed trip 10.48 10.35 -1.3%",
+      "href": "../slides/day1.html#tree-two-weeks"
+    },
+    {
+      "deck": "day1",
+      "id": "guardrail-and-owners",
+      "n": 41,
+      "session": 4,
+      "title": "Every node has an owner, and the guardrail has a direction",
+      "text": "Owners on the nodes Every node has an owner, and the guardrail has a direction Node Owner Taps Muneer Al-Thaqafi, data platform Scheduled trips, taps per departed trip Dhuha Al-Rowais, planning Cancellation rate Tawfiq Al-Sahafi, control centre Complaints per 10,000 taps (guardrail, worry if up) Yasmeen Al-Jaafari, strategy",
+      "href": "../slides/day1.html#guardrail-and-owners"
+    },
+    {
+      "deck": "day1",
+      "id": "tree-pitfalls",
+      "n": 42,
+      "session": 4,
+      "title": "A tree misleads when its drivers overlap or do not reconcile",
+      "text": "What goes wrong A tree misleads when its drivers overlap or do not reconcile Two drivers that count the same thing double its effect A driver measured at another grain or period breaks the product A driver nobody owns is a number nobody acts on A tree with no guardrail rewards crowding, skipping stops or cutting short trips",
+      "href": "../slides/day1.html#tree-pitfalls"
+    },
+    {
+      "deck": "day1",
+      "id": "nbia-kpis",
+      "n": 43,
+      "session": 4,
+      "title": "The NDMO standards ask for analytics KPIs, measured and registered",
+      "text": "The national standard The NDMO standards ask for analytics KPIs, measured and registered The Business Intelligence and Analytics domain has 5 controls and 10 specifications It asks for a plan, prioritised use cases, validation of their outcomes, KPIs and a register A governed catalogue is the register of what each number means For this course Each dashboard is a use case: validate it, and record the metrics it shows with their owners.",
+      "href": "../slides/day1.html#nbia-kpis"
+    },
+    {
+      "deck": "day1",
+      "id": "checkpoint-4",
+      "n": 44,
+      "session": 4,
+      "title": "Which driver belongs in the tree?",
+      "text": "Checkpoint Which driver belongs in the tree? The tree is taps = scheduled trips × (1 − cancellation rate) × taps per departed trip. A colleague proposes adding \"on-time rate\" as a fourth driver. What do you say? Add it: punctuality drives demand Replace the cancellation rate with it Keep it beside the tree, as a guardrail or its own goal Leave it out of the review",
+      "href": "../slides/day1.html#checkpoint-4"
+    },
+    {
+      "deck": "day1",
+      "id": "lab-1-4",
+      "n": 45,
+      "session": 4,
+      "title": "A network metric tree",
+      "text": "Lab 1.4 · 25 min A network metric tree Build a tree from weekly boardings to three drivers and a guardrail, reconcile it for two weeks and say which driver moved. D1_4_metric_tree.ipynb Choose the goal and its decomposition 5 min Compute the three drivers for two weeks 8 min Reconcile the tree to the goal 6 min Add the guardrail and the owners 6 min ✱ Stretch: Attribute the week-on-week change to each driver with log changes",
+      "href": "../slides/day1.html#lab-1-4"
+    },
+    {
+      "deck": "day1",
+      "id": "wrap-up",
+      "n": 46,
+      "session": 4,
+      "title": "Three things to keep",
+      "text": "Day 1 · wrap-up Three things to keep Diagnose before you debug Two figures differ in grain, rule, filter or period before they differ by a bug. One name, one meaning Eight parts and an owner; a second meaning gets a second name. Ratios and distinct counts Ratio of sums for a network; distinct counts are computed again, never summed.",
+      "href": "../slides/day1.html#wrap-up"
+    },
+    {
+      "deck": "day1",
+      "id": "next",
+      "n": 47,
+      "session": 4,
+      "title": "Day 2: Model once",
+      "text": "Next Day 2: Model once Tomorrow the catalogue becomes a star schema and a semantic model in which each metric is defined once. Finish today's labs if you can; Day 2 starts from the supplied catalogue either way.",
+      "href": "../slides/day1.html#next"
+    },
+    {
+      "deck": "day2",
+      "id": "title",
+      "n": 1,
+      "session": 0,
+      "title": "Model once",
+      "text": "SDAIA Academy · Metrics, Semantic Models and Dashboards Model once Day 2: One semantic model in which each metric is defined once Data Science Track4 teaching days + capstone day4 sessions · 4 labsDS-307",
+      "href": "../slides/day2.html#title"
+    },
+    {
+      "deck": "day2",
+      "id": "agenda",
+      "n": 2,
+      "session": 0,
+      "title": "Model once",
+      "text": "Today Model once Session 1 · Star schemas for analysis Facts at a stated grain, dimensions that describe them Session 2 · Changing dimensions and calendars Type 2 history for a re-routed line, and two calendars in one date table Session 3 · Fan-out and join paths Fan and chasm traps, and the test that catches them Session 4 · Metrics in an open specification A semantic model as an open document: datasets, relationships, metrics",
+      "href": "../slides/day2.html#agenda"
+    },
+    {
+      "deck": "day2",
+      "id": "review-day1",
+      "n": 3,
+      "session": 0,
+      "title": "Which part of the definition is missing?",
+      "text": "Review of Day 1 Which part of the definition is missing? \"journeys: SUM(journey_start) on boarding_linked; one card tap; filters none; unit journeys; owner Dhuha Al-Rowais, planning; limits: a quick return counts as a transfer.\" Which of the eight parts is missing? The grain The owner The time logic The limits",
+      "href": "../slides/day2.html#review-day1"
+    },
+    {
+      "deck": "day2",
+      "id": "s1",
+      "n": 4,
+      "session": 1,
+      "title": "Star schemas for analysis",
+      "text": "Session 1 Star schemas for analysis State the grain of each fact table Prove a key by counting Draw the star of a subject area 01",
+      "href": "../slides/day2.html#s1"
+    },
+    {
+      "deck": "day2",
+      "id": "why-a-model",
+      "n": 5,
+      "session": 1,
+      "title": "A definition says what a number means; a model computes it the same way everywhere",
+      "text": "From catalogue to model A definition says what a number means; a model computes it the same way everywhere Catalogue meaning, owner, limits (Day 1) → Star schema facts at a grain, dimensions to slice by → Semantic model each metric written once, joins decided once → Every consumer dashboard, notebook, agent",
+      "href": "../slides/day2.html#why-a-model"
+    },
+    {
+      "deck": "day2",
+      "id": "facts-and-dimensions",
+      "n": 6,
+      "session": 1,
+      "title": "Facts record events at a grain; dimensions describe them",
+      "text": "Two kinds of table Facts record events at a grain; dimensions describe them Facts Trips, timepoint arrivals, taps, complaints. Many rows, numeric columns to aggregate, foreign keys to dimensions. Dimensions Routes, dates, vehicles, depots. Few rows, descriptive columns to group and filter by, one key each. Ask of every column: do I add it up, or do I slice by it? The answer places it in a fact or in a dimension.",
+      "href": "../slides/day2.html#facts-and-dimensions"
+    },
+    {
+      "deck": "day2",
+      "id": "star-of-wadi-noor",
+      "n": 7,
+      "session": 1,
+      "title": "Four facts share dates, routes and vehicles",
+      "text": "The star Four facts share dates, routes and vehicles fct_trip fct_boarding fct_timepoint fct_complaint dim_route dim_date dim_vehicle Facts are rectangles, dimensions rounded. Every line is many-to-one, from the fact to what it points at.",
+      "href": "../slides/day2.html#star-of-wadi-noor"
+    },
+    {
+      "deck": "day2",
+      "id": "grain-recap",
+      "n": 8,
+      "session": 1,
+      "title": "A grain is a sentence; a key test proves it",
+      "text": "Recap from FN-104 A grain is a sentence; a key test proves it SELECT count(*) AS rows, count(DISTINCT (trip_id, tp_seq)) AS keys, count(*) FILTER (WHERE trip_id IS NULL OR tp_seq IS NULL) AS empty FROM fct_timepoint; fct_timepoint: one departed trip at one timepoint 329,188 rows, 329,188 keys, none empty: the grain holds Grain, keys and orphans were taught in FN-104, Day 1; today they are the input of a model",
+      "href": "../slides/day2.html#grain-recap"
+    },
+    {
+      "deck": "day2",
+      "id": "natural-key-fails",
+      "n": 9,
+      "session": 1,
+      "title": "dim_route has 13 rows for 12 routes",
+      "text": "The planted surprise dim_route has 13 rows for 12 routes route_key route_id route_name_en length_km valid_from valid_to 7 R07 Al-Rawdah Feeder 11.4 2026-01-01 2026-05-31 8 R07 Al-Rawdah Hospital Feeder 15.8 2026-06-01 (open) route_id is the natural key riders use; route_key identifies one version A join on route_id returns 91,418 rows for 85,010 trips: every R07 trip twice",
+      "href": "../slides/day2.html#natural-key-fails"
+    },
+    {
+      "deck": "day2",
+      "id": "conformed-dimensions",
+      "n": 10,
+      "session": 1,
+      "title": "One date table and one route table serve every fact",
+      "text": "Conformed dimensions One date table and one route table serve every fact Trips and taps grouped by the same dim_date.week_start mean the same week A second date table with Monday weeks would bring back yesterday's disagreement Conformed means: same keys, same attributes, same meaning for every fact Lab 2.1's stretch checks that every service date of every fact is a row of dim_date",
+      "href": "../slides/day2.html#conformed-dimensions"
+    },
+    {
+      "deck": "day2",
+      "id": "checkpoint-1",
+      "n": 11,
+      "session": 1,
+      "title": "What is the grain of the timepoint table?",
+      "text": "Checkpoint What is the grain of the timepoint table? fct_timepoint has 329,188 rows, 82,000 distinct trip_id values and tp_seq from 1 to 4. What does one row mean? One trip One timepoint of a route One scheduled minute of a trip One departed trip at one timepoint",
+      "href": "../slides/day2.html#checkpoint-1"
+    },
+    {
+      "deck": "day2",
+      "id": "lab-2-1",
+      "n": 12,
+      "session": 1,
+      "title": "Facts, dimensions and their grain",
+      "text": "Lab 2.1 · 25 min Facts, dimensions and their grain Name the grain of each warehouse table, prove it with key tests, draw the star and find the dimension whose natural key is not unique. D2_1_star_schema.ipynb Name the grain of each table 5 min Prove the grains with key tests 8 min Draw the star: facts, dimensions, keys 6 min Find the dimension whose natural key fails 6 min ✱ Stretch: Check that dates conform across the two facts",
+      "href": "../slides/day2.html#lab-2-1"
+    },
+    {
+      "deck": "day2",
+      "id": "s2",
+      "n": 13,
+      "session": 2,
+      "title": "Changing dimensions and calendars",
+      "text": "Session 2 Changing dimensions and calendars Join a fact to the dimension version valid on its date Compare a route before and after a change Report by Hijri month and in Ramadan from one date table 02",
+      "href": "../slides/day2.html#s2"
+    },
+    {
+      "deck": "day2",
+      "id": "dimensions-change",
+      "n": 14,
+      "session": 2,
+      "title": "When a route changes, decide whether history changes with it",
+      "text": "Slowly changing dimensions When a route changes, decide whether history changes with it Type 1: overwrite The new value replaces the old everywhere, past included. Right for corrections: a misspelt name. Type 2: add a version A new row with its own key and validity dates. Right for real changes: a longer route, a new depot. The test. Would a January figure be wrong if it used the June value? Then it is type 2.",
+      "href": "../slides/day2.html#dimensions-change"
+    },
+    {
+      "deck": "day2",
+      "id": "as-of-join",
+      "n": 15,
+      "session": 2,
+      "title": "Join each fact row to the version valid on its date",
+      "text": "The as-of join Join each fact row to the version valid on its date SELECT t.*, r.route_key, r.route_name_en, r.length_km FROM fct_trip t JOIN dim_route r ON r.route_id = t.route_id AND t.service_date >= r.valid_from AND (r.valid_to IS NULL OR t.service_date <= r.valid_to) 85,010 trips in, 85,010 rows out. The open valid_to means \"still valid\".",
+      "href": "../slides/day2.html#as-of-join"
+    },
+    {
+      "deck": "day2",
+      "id": "r07-before-after",
+      "n": 16,
+      "session": 2,
+      "title": "Per kilometre, R07 barely changed; per trip, it jumped",
+      "text": "Why the version matters Per kilometre, R07 barely changed; per trip, it jumped Version Length Departed trips Taps Taps per trip-km Al-Rawdah Feeder (Jan to May) 11.4 3,068 22,716 0.649 Al-Rawdah Hospital Feeder (Jun to Oct) 15.8 3,187 33,513 0.666 With the current row for every date the first five months show 0.469 taps per km: a fall that never happened.",
+      "href": "../slides/day2.html#r07-before-after"
+    },
+    {
+      "deck": "day2",
+      "id": "dual-calendar",
+      "n": 17,
+      "session": 2,
+      "title": "The date dimension carries the Gregorian and the Hijri calendar",
+      "text": "Two calendars, one table The date dimension carries the Gregorian and the Hijri calendar Column Example for 23 Sep 2026 gregorian_month 2026-09 hijri_date 1448-04-12 hijri_month_name_ar ربيع الآخر week_start Sunday 20 Sep holiday_en National Day Built once with the Umm al-Qura calendar (hijridate) Every report picks a column, never a conversion of its own Ramadan, the Eids and school terms are flags, not guesses",
+      "href": "../slides/day2.html#dual-calendar"
+    },
+    {
+      "deck": "day2",
+      "id": "ramadan-per-day",
+      "n": 18,
+      "session": 2,
+      "title": "Compare months per service day: Ramadan ran at 2,186 taps a day",
+      "text": "Like with like Compare months per service day: Ramadan ran at 2,186 taps a day Shaban 1447 2,855 Ramadan 1447 2,186 Shawwal 1447 2,642 Muharram 1448 3,029 Taps per service day by Hijri month, Lab 2.2. Shawwal includes Eid al-Fitr.",
+      "href": "../slides/day2.html#ramadan-per-day"
+    },
+    {
+      "deck": "day2",
+      "id": "checkpoint-2",
+      "n": 19,
+      "session": 2,
+      "title": "Which change is type 2?",
+      "text": "Checkpoint Which change is type 2? Three changes reach the route dimension this month. Which one needs a new version row? Route R03 moves from the North to the Central depot A typo in the Arabic name of R06 is corrected The map colour of R10 changes The number of trips on R11 changes",
+      "href": "../slides/day2.html#checkpoint-2"
+    },
+    {
+      "deck": "day2",
+      "id": "lab-2-2",
+      "n": 20,
+      "session": 2,
+      "title": "A re-routed line and two calendars",
+      "text": "Lab 2.2 · 25 min A re-routed line and two calendars Query the re-routed R07 through the type 2 route dimension and report ridership by Hijri month and in Ramadan from the dual-calendar date table. D2_2_route_history.ipynb Read the two versions of R07 4 min Join trips to the version valid on the service date 8 min Compare boardings per kilometre before and after 6 min Report ridership by Hijri month and in Ramadan 7 min ✱ Stretch: Eid days against ordinary Fridays",
+      "href": "../slides/day2.html#lab-2-2"
+    },
+    {
+      "deck": "day2",
+      "id": "s3",
+      "n": 21,
+      "session": 3,
+      "title": "Fan-out and join paths",
+      "text": "Session 3 Fan-out and join paths Recognise a join that repeats rows Write a reconciliation test against a source total Aggregate each fact before joining 03",
+      "href": "../slides/day2.html#s3"
+    },
+    {
+      "deck": "day2",
+      "id": "report-four-times",
+      "n": 22,
+      "session": 3,
+      "title": "Yasmeen's route report counts 334,786 taps in a month of 84,063",
+      "text": "A report that adds up wrong Yasmeen's route report counts 334,786 taps in a month of 84,063 SELECT t.route_id, count(b.tap_id) AS taps, avg(CASE WHEN p.delay_min BETWEEN -1 AND 5 THEN 1.0 ELSE 0.0 END) FROM fct_trip t JOIN fct_boarding b ON b.trip_id = t.trip_id JOIN fct_timepoint p ON p.trip_id = t.trip_id WHERE t.service_date BETWEEN ... GROUP BY t.route_id",
+      "href": "../slides/day2.html#report-four-times"
+    },
+    {
+      "deck": "day2",
+      "id": "fan-trap",
+      "n": 23,
+      "session": 3,
+      "title": "Joining two \"many\" sides through one row multiplies both",
+      "text": "The fan trap Joining two \"many\" sides through one row multiplies both 8,268 trips September → 84,063 rows each trip once per tap → 334,786 rows each tap once per timepoint 3.98 times. Every tap is repeated by the number of timepoints its trip reached: four, or two for a partial trip.",
+      "href": "../slides/day2.html#fan-trap"
+    },
+    {
+      "deck": "day2",
+      "id": "chasm-weighting",
+      "n": 24,
+      "session": 3,
+      "title": "The punctuality column is wrong too, and nothing looks odd",
+      "text": "The quieter error The punctuality column is wrong too, and nothing looks odd 49.0% R01 timepoint punctuality in the report 51.1% R01 timepoint punctuality, computed alone After the join each arrival is weighted by the taps of its trip: busy, late trips count more.",
+      "href": "../slides/day2.html#chasm-weighting"
+    },
+    {
+      "deck": "day2",
+      "id": "reconciliation-test",
+      "n": 25,
+      "session": 3,
+      "title": "A reconciliation test compares the report with the source counted another way",
+      "text": "The test that catches it A reconciliation test compares the report with the source counted another way def reconciles(df) -> bool: source = W.scalar(con, \"\"\"SELECT count(*) FROM fct_boarding WHERE service_date BETWEEN ... AND trip_id IS NOT NULL\"\"\") return int(df.taps.sum()) == int(source) Write it first and watch it fail on the faulty report Then fix the query, and watch it pass",
+      "href": "../slides/day2.html#reconciliation-test"
+    },
+    {
+      "deck": "day2",
+      "id": "aggregate-then-join",
+      "n": 26,
+      "session": 3,
+      "title": "Aggregate each fact to the shared grain, then join",
+      "text": "The fix Aggregate each fact to the shared grain, then join WITH taps AS (SELECT t.route_id, count(*) AS taps FROM fct_boarding b JOIN fct_trip t USING (trip_id) ... GROUP BY 1), punct AS (SELECT t.route_id, avg(...) AS timepoint_on_time FROM fct_timepoint p JOIN fct_trip t USING (trip_id) ... GROUP BY 1) SELECT route_id, taps, timepoint_on_time FROM taps JOIN punct USING (route_id) Each fact joins only \"up\" to trips, which is many-to-one; the two results meet at one row per route.",
+      "href": "../slides/day2.html#aggregate-then-join"
+    },
+    {
+      "deck": "day2",
+      "id": "join-paths-rule",
+      "n": 27,
+      "session": 3,
+      "title": "A semantic model joins only towards the \"one\" side",
+      "text": "The rule a model enforces A semantic model joins only towards the \"one\" side Every relationship is declared from the many side to the one side A metric is aggregated in its own dataset, joining only along those arrows A grouping that needs a \"many\" side is refused, not computed Two metrics of two facts are aggregated apart, then joined on the dimensions asked for request boardings by timepoints.tp_seq refused no many-to-one path from boardings to timepoints: grouping would repeat rows",
+      "href": "../slides/day2.html#join-paths-rule"
+    },
+    {
+      "deck": "day2",
+      "id": "checkpoint-3",
+      "n": 28,
+      "session": 3,
+      "title": "Where does the report go wrong?",
+      "text": "Checkpoint Where does the report go wrong? A report joins complaints and taps to routes in one query and counts both per route. Complaints come out about 7,000 times too high. What happened? The complaints table has duplicate rows Each complaint was repeated once per tap of its route: two facts met through one dimension The date filter was left out The join should have been a left join",
+      "href": "../slides/day2.html#checkpoint-3"
+    },
+    {
+      "deck": "day2",
+      "id": "lab-2-3",
+      "n": 29,
+      "session": 3,
+      "title": "The double-counting join",
+      "text": "Lab 2.3 · 25 min The double-counting join Find the join that inflates boardings in a route report, write a reconciliation test that fails on it, and fix the query by aggregating before joining. D2_3_fan_out.ipynb Run the route report as written 5 min Find the join that repeats rows 6 min Write a reconciliation test that fails on it 6 min Fix the query by aggregating before joining 8 min ✱ Stretch: Ask the semantic layer for the same report and read its refusal",
+      "href": "../slides/day2.html#lab-2-3"
+    },
+    {
+      "deck": "day2",
+      "id": "s4",
+      "n": 30,
+      "session": 4,
+      "title": "Metrics in an open specification",
+      "text": "Session 4 Metrics in an open specification Write datasets, fields, relationships and metrics in an Apache Ossie document Tell a dataset-scoped from a model-scoped metric Validate a model and run test queries against it 04",
+      "href": "../slides/day2.html#s4"
+    },
+    {
+      "deck": "day2",
+      "id": "define-once",
+      "n": 31,
+      "session": 4,
+      "title": "Write each metric once; every tool asks for it by name",
+      "text": "The point of a semantic layer Write each metric once; every tool asks for it by name Without it Each dashboard, notebook and agent writes its own SQL for \"on-time rate\". Three teams, three queries, three numbers. With it The model holds datasets, joins and metrics. A tool asks for on_time_rate by route type; the layer writes the SQL. MetricFlowCube CoreApache Ossie files",
+      "href": "../slides/day2.html#define-once"
+    },
+    {
+      "deck": "day2",
+      "id": "ossie-is",
+      "n": 32,
+      "session": 4,
+      "title": "Apache Ossie is a vendor-neutral file format for semantic models",
+      "text": "An open specification Apache Ossie is a vendor-neutral file format for semantic models Formerly Open Semantic Interchange (OSI); renamed on entering the Apache Incubator in 2026 One YAML or JSON document per model: datasets, fields, relationships, metrics A JSON Schema checks the document; converters move it between tools The version in this course, 0.3.0.dev0, is still in development: re-check before each cohort",
+      "href": "../slides/day2.html#ossie-is"
+    },
+    {
+      "deck": "day2",
+      "id": "ossie-document",
+      "n": 33,
+      "session": 4,
+      "title": "Datasets with fields, relationships from many to one, metrics",
+      "text": "What the file holds Datasets with fields, relationships from many to one, metrics datasets: - name: trips source: SELECT t.*, r.route_key FROM fct_trip t LEFT JOIN dim_route r ON ... primary_key: [trip_id] fields: - {name: status, expression: {sql: status}, dimension: {}} metrics: - name: departed_trips expression: {sql: \"SUM(CASE WHEN status <> 'cancelled' THEN 1 ELSE 0 END)\"} relationships: - {name: trips_to_routes, from: trips, to: routes, from_columns: [route_key], to_columns: [route_key]}",
+      "href": "../slides/day2.html#ossie-document"
+    },
+    {
+      "deck": "day2",
+      "id": "two-scopes",
+      "n": 34,
+      "session": 4,
+      "title": "Dataset metrics aggregate one dataset; model metrics combine them",
+      "text": "Two places for a metric Dataset metrics aggregate one dataset; model metrics combine them Dataset-scoped boardings.unique_cards: COUNT(DISTINCT card_id), bare field names of its own dataset. Model-scoped on_time_rate: AGG(trips.on_time_departures) / AGG(trips.departed_trips), each part aggregated first. AGG() is the ratio of sums. The division happens after both parts are aggregated, so the layer cannot average ratios by mistake.",
+      "href": "../slides/day2.html#two-scopes"
+    },
+    {
+      "deck": "day2",
+      "id": "compiled-sql",
+      "n": 35,
+      "session": 4,
+      "title": "One request, compiled to the SQL of Session 3",
+      "text": "What the layer generates One request, compiled to the SQL of Session 3 request on_time_rate by routes.route_type, where dates.gregorian_month = '2026-09' datasets one common table expression each for trips, routes, dates aggregate trips joined to routes and dates (many-to-one), summed by route type divide on_time_departures / departed_trips: express 89.3%, feeder 82.8%, trunk 67.0%",
+      "href": "../slides/day2.html#compiled-sql"
+    },
+    {
+      "deck": "day2",
+      "id": "labels-and-roles",
+      "n": 36,
+      "session": 4,
+      "title": "Access rules ride in an extension that other tools may ignore",
+      "text": "What the interchange does not carry Access rules ride in an extension that other tools may ignore nonportable_extensions: - vendor_name: WADI_NOOR data: roles: network_analyst: {clearance: Public} east_depot_manager: clearance: Public row_filter: \"routes.depot = 'East'\" Fields carry a classification: card_id and complaint_text are Restricted A role may count a Restricted field, never group, filter or show it Ossie defines no access rules: every consumer must enforce them again",
+      "href": "../slides/day2.html#labels-and-roles"
+    },
+    {
+      "deck": "day2",
+      "id": "test-queries",
+      "n": 37,
+      "session": 4,
+      "title": "25 test queries, each with a reference computed without the model",
+      "text": "Proving the model 25 test queries, each with a reference computed without the model Each test is a request (metrics, dimensions, filters) and its expected rows The expected rows come from independent SQL, written by hand, not from the layer They cover ratios, distinct counts, Hijri months, the R07 versions, holidays and the October week 25 of 25 is the evidence for the third course outcome",
+      "href": "../slides/day2.html#test-queries"
+    },
+    {
+      "deck": "day2",
+      "id": "checkpoint-4",
+      "n": 38,
+      "session": 4,
+      "title": "Where does the cancellation rate go?",
+      "text": "Checkpoint Where does the cancellation rate go? You add cancellation_rate to the model. The trips dataset already has cancelled_trips and scheduled_trips. What do you write? A dataset metric AVG(status = 'cancelled') on trips, used by every ratio A SQL snippet in each dashboard that needs it A model metric that averages a daily cancellation rate A model metric AGG(trips.cancelled_trips) / AGG(trips.scheduled_trips)",
+      "href": "../slides/day2.html#checkpoint-4"
+    },
+    {
+      "deck": "day2",
+      "id": "lab-2-4",
+      "n": 39,
+      "session": 4,
+      "title": "Five metrics in the semantic layer",
+      "text": "Lab 2.4 · 25 min Five metrics in the semantic layer Validate the starter model against the Ossie schema, add five catalogue metrics, and run the 25 test queries against their reference values. D2_4_semantic_layer.ipynb Validate the starter model 4 min Add the three boardings metrics 7 min Add the two model-level ratios 6 min Run the 25 test queries 8 min ✱ Stretch: Run the same queries as the East depot manager",
+      "href": "../slides/day2.html#lab-2-4"
+    },
+    {
+      "deck": "day2",
+      "id": "wrap-up",
+      "n": 40,
+      "session": 4,
+      "title": "Three things to keep",
+      "text": "Day 2 · wrap-up Three things to keep Grain and history Prove each grain; join a fact to the dimension version valid on its date. Aggregate, then join Count rows after each join; reconcile totals; never join two \"many\" sides. Define once One open document holds datasets, joins and metrics; 25 tests prove it.",
+      "href": "../slides/day2.html#wrap-up"
+    },
+    {
+      "deck": "day2",
+      "id": "next",
+      "n": 41,
+      "session": 4,
+      "title": "Day 3: Show and investigate",
+      "text": "Next Day 3: Show and investigate Tomorrow the model feeds a dashboard for the operations director, built in two languages and under three seconds, and you trace a drop in October ridership to its source.",
+      "href": "../slides/day2.html#next"
+    },
+    {
+      "deck": "day3",
+      "id": "title",
+      "n": 1,
+      "session": 0,
+      "title": "Show and investigate",
+      "text": "SDAIA Academy · Metrics, Semantic Models and Dashboards Show and investigate Day 3: A dashboard for one decision, and an anomaly traced to its source Data Science Track4 teaching days + capstone day4 sessions · 4 labsDS-307",
+      "href": "../slides/day3.html#title"
+    },
+    {
+      "deck": "day3",
+      "id": "agenda",
+      "n": 2,
+      "session": 0,
+      "title": "Show and investigate",
+      "text": "Today Show and investigate Session 1 · Dashboards start from a decision One audience, one decision, few panels Session 2 · Comparisons and bilingual layout Targets, prior periods and a layout that works in two directions Session 3 · Load time is a design constraint Where the seconds go, and how to get them back Session 4 · Investigating an anomaly Drill down, segment, and separate data from demand",
+      "href": "../slides/day3.html#agenda"
+    },
+    {
+      "deck": "day3",
+      "id": "review-day2",
+      "n": 3,
+      "session": 0,
+      "title": "What does the semantic layer do with this request?",
+      "text": "Review of Day 2 What does the semantic layer do with this request? A request asks for boardings.boardings and trips.departed_trips by routes.route_id for one week. Both facts reach routes. What SQL does the layer generate? Join taps to trips, then group by route Aggregate each fact by route on its own, then join the two results on the route Average taps per trip, then multiply by trips Refuse: two facts cannot meet",
+      "href": "../slides/day3.html#review-day2"
+    },
+    {
+      "deck": "day3",
+      "id": "s1",
+      "n": 4,
+      "session": 1,
+      "title": "Dashboards start from a decision",
+      "text": "Session 1 Dashboards start from a decision Turn a brief into a decision, an audience and a cadence Give every panel a comparison Cut a dashboard to the panels the decision needs 01",
+      "href": "../slides/day3.html#s1"
+    },
+    {
+      "deck": "day3",
+      "id": "dashboard-is-for",
+      "n": 5,
+      "session": 1,
+      "title": "A dashboard serves one audience making one decision on a cadence",
+      "text": "What a dashboard is for A dashboard serves one audience making one decision on a cadence Audience Mashael Al-Saadi, operations director, and the three depot managers; two read Arabic first. Decision Where the six reserve buses and four field supervisors go next week. Cadence Sunday morning, before the depots open; data to Saturday. What goes wrong. \"A dashboard for operations\" names no decision, so every question qualifies and the page fills up.",
+      "href": "../slides/day3.html#dashboard-is-for"
+    },
+    {
+      "deck": "day3",
+      "id": "brief-questions",
+      "n": 6,
+      "session": 1,
+      "title": "Nine good questions; four of them decide",
+      "text": "The brief Nine good questions; four of them decide Question Serves the decision? Q1 Which routes leave late, against the 85% target? decides Q2 Where were trips cancelled? decides Q3 Which routes are crowded? decides Q4 What are riders complaining about? decides Q5 Network taps this week context Q6 Revenue by product · Q7 Top card numbers · Q8 Next month's forecast no Q9 Delay by timepoint on one route drill-through",
+      "href": "../slides/day3.html#brief-questions"
+    },
+    {
+      "deck": "day3",
+      "id": "question-to-panel",
+      "n": 7,
+      "session": 1,
+      "title": "A panel is a question, a governed metric, a split, a comparison and an owner",
+      "text": "From question to panel A panel is a question, a governed metric, a split, a comparison and an owner - title: Routes leaving late question: Q1 metric: on_time_rate # from the semantic model dimensions: [routes.route_id] comparison: target # 85%, from the brief also: the route's level over the four weeks before owner: Tawfiq Al-Sahafi, control centre Only governed metrics. A panel that cannot name a metric of the model is asking for a definition first.",
+      "href": "../slides/day3.html#question-to-panel"
+    },
+    {
+      "deck": "day3",
+      "id": "every-panel-compares",
+      "n": 8,
+      "session": 1,
+      "title": "A number alone does not say whether to act",
+      "text": "Comparisons A number alone does not say whether to act Target 76% against 85%: below the promise. Prior period 76% against a usual 86%: a bad week. Peer 76% against other feeders at 77% to 90%: this route. Pick the comparison the decision needs. A reserve bus fixes a bad week, so Q1 shows the target and the usual level.",
+      "href": "../slides/day3.html#every-panel-compares"
+    },
+    {
+      "deck": "day3",
+      "id": "few-panels",
+      "n": 9,
+      "session": 1,
+      "title": "The wish list gets 13 findings; five panels get none",
+      "text": "The brief checker The wish list gets 13 findings; five panels get none 9 panels: a decision dashboard has at most six Q6, Q7, Q8 do not serve the decision fare_revenue and ridership_forecast are not metrics of the model boardings.card_id is Restricted and cannot be shown Six panels have no comparison The wireframe Late routes, cancellations by depot, riders per trip, complaints by subject, network taps; Q9 as a drill-through.",
+      "href": "../slides/day3.html#few-panels"
+    },
+    {
+      "deck": "day3",
+      "id": "nbia-use-case",
+      "n": 10,
+      "session": 1,
+      "title": "A dashboard is an analytics use case: plan it, validate it, register it",
+      "text": "The national standard A dashboard is an analytics use case: plan it, validate it, register it The NDMO Business Intelligence and Analytics domain asks for identified, prioritised use cases It asks that their outcomes be validated, personal data protection included The wireframe is the use case; the brief checker and Lab 3.3's equality test are the validation",
+      "href": "../slides/day3.html#nbia-use-case"
+    },
+    {
+      "deck": "day3",
+      "id": "checkpoint-1",
+      "n": 11,
+      "session": 1,
+      "title": "Which panel do you cut?",
+      "text": "Checkpoint Which panel do you cut? Your wireframe has seven panels and the limit is six. Mashael's decision is where reserve buses go next week. Which panel goes? Revenue by fare product this month On-time departures by route against the target Taps per departed trip by route Cancellation rate by depot against last week",
+      "href": "../slides/day3.html#checkpoint-1"
+    },
+    {
+      "deck": "day3",
+      "id": "lab-3-1",
+      "n": 12,
+      "session": 1,
+      "title": "A wireframe from the brief",
+      "text": "Lab 3.1 · 25 min A wireframe from the brief Turn the operations director's brief into a wireframe specification of at most six panels, each with its question, metric, comparison and owner, and run the brief checker. D3_1_wireframe.ipynb Read the brief: audience, decision, cadence 5 min Turn each question into a panel with a comparison 10 min Cut to six panels and order them 5 min Run the brief checker 5 min ✱ Stretch: One panel for a reader who reads Arabic only",
+      "href": "../slides/day3.html#lab-3-1"
+    },
+    {
+      "deck": "day3",
+      "id": "s2",
+      "n": 13,
+      "session": 2,
+      "title": "Comparisons and bilingual layout",
+      "text": "Session 2 Comparisons and bilingual layout Show a number against a target and a prior period Lay out the same panel in Arabic and English Suppress small counts before publishing 02",
+      "href": "../slides/day3.html#s2"
+    },
+    {
+      "deck": "day3",
+      "id": "three-panels",
+      "n": 14,
+      "session": 2,
+      "title": "Every panel asks the semantic layer, never the raw tables",
+      "text": "From wireframe to panels Every panel asks the semantic layer, never the raw tables w = [\"dates.week_start = DATE '2026-10-25'\"] model.query([\"on_time_rate\", \"trips.departed_trips\"], [\"routes.route_id\", \"routes.route_name_en\", \"routes.route_name_ar\"], w) The same definition as the catalogue and the 25 tests Arabic and English route names come from the model, not from a translation table in the chart",
+      "href": "../slides/day3.html#three-panels"
+    },
+    {
+      "deck": "day3",
+      "id": "target-and-usual",
+      "n": 15,
+      "session": 2,
+      "title": "Eight routes miss 85%; only some of them had a bad week",
+      "text": "The week of 25 October Eight routes miss 85%; only some of them had a bad week Route Last week Usual (4 weeks) Reading R09 East Trunk 60.8% 65.7% always far below: timetable R01 Al-Nakheel to City Centre 66.4% 69.6% always below: timetable R11 Al-Faisaliyah Feeder 76.4% 85.5% a bad week: reserve bus R02 Al-Wurud Loop 77.7% 85.2% a bad week: reserve bus Two comparisons, two actions. The target says \"below\"; the usual level says \"unusual\".",
+      "href": "../slides/day3.html#target-and-usual"
+    },
+    {
+      "deck": "day3",
+      "id": "rtl-mirroring",
+      "n": 16,
+      "session": 2,
+      "title": "In Arabic the panel mirrors; it is not only translated",
+      "text": "Two directions In Arabic the panel mirrors; it is not only translated English, left to right Labels on the left; bars grow to the right; the title starts on the left. Arabic, right to left Labels on the right; bars grow to the left; the title starts on the right; the page has dir=\"rtl\". Digits stay Western (0 to 9) in both, as in the Academy's Arabic material Route names from route_name_ar; subjects from a reviewed list, never machine-translated on the fly",
+      "href": "../slides/day3.html#rtl-mirroring"
+    },
+    {
+      "deck": "day3",
+      "id": "small-counts",
+      "n": 17,
+      "session": 2,
+      "title": "Counts below ten are hidden, and the page says so",
+      "text": "Before publishing Counts below ten are hidden, and the page says so Complaints by subject, one week: 4 of 6 subjects have fewer than 10 Small counts can point to a person and move by chance The threshold is in the model's extension: small_count_threshold: 10 Hidden values are removed from the data, not only from the chart On the page \"fewer than 10: accessibility, card, cleanliness, driver\". The subject is named; its count is not.",
+      "href": "../slides/day3.html#small-counts"
+    },
+    {
+      "deck": "day3",
+      "id": "colour-not-alone",
+      "n": 18,
+      "session": 2,
+      "title": "Meaning must survive without colour",
+      "text": "Colour Meaning must survive without colour Pair Contrast teal bar on white 5.47 to 1 orange tick on white 5.18 to 1 teal bar against orange tick 1.06 to 1 A different mark, not only a different colour. The usual level is a tick and the target a dashed rule, so they read apart even where the two colours do not.",
+      "href": "../slides/day3.html#colour-not-alone"
+    },
+    {
+      "deck": "day3",
+      "id": "checkpoint-2",
+      "n": 19,
+      "session": 2,
+      "title": "What does the Arabic panel need?",
+      "text": "Checkpoint What does the Arabic panel need? The English crowding panel is finished. A colleague makes the Arabic one by translating the title and the axis label. What is still wrong? The digits must become Eastern Arabic The numbers must be recomputed for Arabic readers The colours must change The route labels and the start of the bars must move to the right, with Arabic route names",
+      "href": "../slides/day3.html#checkpoint-2"
+    },
+    {
+      "deck": "day3",
+      "id": "lab-3-2",
+      "n": 20,
+      "session": 2,
+      "title": "Three bilingual panels",
+      "text": "Lab 3.2 · 25 min Three bilingual panels Build three panels from the semantic layer with targets and prior periods, render them in Arabic and English, and suppress small counts. D3_2_bilingual_panels.ipynb Query the three panels from the semantic layer 6 min Add a target and the prior period 7 min Render the panels in Arabic and English 8 min Suppress small counts and check the layout 4 min ✱ Stretch: Check the colours for colour-blind readers",
+      "href": "../slides/day3.html#lab-3-2"
+    },
+    {
+      "deck": "day3",
+      "id": "s3",
+      "n": 21,
+      "session": 3,
+      "title": "Load time is a design constraint",
+      "text": "Session 3 Load time is a design constraint Measure a dashboard tile by tile Replace per-tile queries with one grouped query Pre-aggregate to the grain the panels need, keeping the parts of each ratio 03",
+      "href": "../slides/day3.html#s3"
+    },
+    {
+      "deck": "day3",
+      "id": "budget",
+      "n": 22,
+      "session": 3,
+      "title": "Three seconds is part of the brief, like the decision",
+      "text": "The budget Three seconds is part of the brief, like the decision Mashael opens the page on a tablet at the depot; a slow page is not opened twice The budget is measured, not felt: time each part, then add The work splits into refresh time (night) and view time (Sunday morning) Only view time counts against the budget",
+      "href": "../slides/day3.html#budget"
+    },
+    {
+      "deck": "day3",
+      "id": "n-plus-one",
+      "n": 23,
+      "session": 3,
+      "title": "One query per tile: 672 queries, 24.6 seconds",
+      "text": "Where the seconds go One query per tile: 672 queries, 24.6 seconds for r in ROUTES: # 12 for d in days: # 28 model.value(\"on_time_rate\", [r, d]) model.value(\"boardings_per_departed_trip\", [r, d]) Each query reads the files, plans the joins and returns one number The work is the same; only the filter changes The pattern has a name: N+1 queries",
+      "href": "../slides/day3.html#n-plus-one"
+    },
+    {
+      "deck": "day3",
+      "id": "pre-aggregate",
+      "n": 24,
+      "session": 3,
+      "title": "One grouped query at refresh time, one small read at view time",
+      "text": "Step by step One grouped query at refresh time, one small read at view time 1 · Group once route by day, from the semantic layer → 2 · Keep the parts on-time departures, departed trips, taps → 3 · Read the table every tile in one query: 0.005 s Takeaway. The table took 0.04 s to build; the dashboard became thousands of times faster.",
+      "href": "../slides/day3.html#pre-aggregate"
+    },
+    {
+      "deck": "day3",
+      "id": "keep-the-parts",
+      "n": 25,
+      "session": 3,
+      "title": "Store the numerator and the denominator, never the rate",
+      "text": "Ratios in an aggregate table Store the numerator and the denominator, never the rate A week's rate is the sum of on-time departures over the sum of departed trips The mean of seven daily rates gives Friday, with half the trips, a full vote Week of 25 October: the mean of daily rates is off by up to 1.9 points on a route Day 1, again The ratio of sums from Lab 1.3, now as a rule for any table that feeds a dashboard.",
+      "href": "../slides/day3.html#keep-the-parts"
+    },
+    {
+      "deck": "day3",
+      "id": "same-numbers",
+      "n": 26,
+      "session": 3,
+      "title": "A faster dashboard that shows other numbers is a new dashboard",
+      "text": "The equality test A faster dashboard that shows other numbers is a new dashboard Compare every tile, slow against fast, before switching In the first run, 16 crowding tiles differed: 0 in the slow version, empty in the fast one Those route-days had no tap with a route (East, 5 to 8 October): the table must hold 0, not nothing State freshness under the title: \"Data to 31 October\"",
+      "href": "../slides/day3.html#same-numbers"
+    },
+    {
+      "deck": "day3",
+      "id": "checkpoint-3",
+      "n": 27,
+      "session": 3,
+      "title": "What goes in the route-day table?",
+      "text": "Checkpoint What goes in the route-day table? The dashboard shows on-time rate by route for any week and depot. You pre-aggregate to one row per route and day. Which columns do you store? The daily on-time rate Every trip with its delay On-time departures and departed trips The weekly on-time rate, repeated on each day",
+      "href": "../slides/day3.html#checkpoint-3"
+    },
+    {
+      "deck": "day3",
+      "id": "lab-3-3",
+      "n": 28,
+      "session": 3,
+      "title": "Under three seconds",
+      "text": "Lab 3.3 · 25 min Under three seconds Time a slow dashboard panel by panel, find where the time goes, pre-aggregate a daily table and bring the whole page under the three-second budget. D3_3_load_time.ipynb Time the tile-by-tile dashboard 5 min Build a route-day table with the parts of each ratio 8 min Redraw the dashboard from the table and time it 7 min Prove the numbers did not change, and date the data 5 min ✱ Stretch: Refresh only the newest day",
+      "href": "../slides/day3.html#lab-3-3"
+    },
+    {
+      "deck": "day3",
+      "id": "s4",
+      "n": 29,
+      "session": 4,
+      "title": "Investigating an anomaly",
+      "text": "Session 4 Investigating an anomaly Drill a change down a tree of segments Tell a data fault from a change in demand Write an anomaly note with cause, segments and correction 04",
+      "href": "../slides/day3.html#s4"
+    },
+    {
+      "deck": "day3",
+      "id": "the-alarm",
+      "n": 30,
+      "session": 4,
+      "title": "\"Route ridership down 17% in the week of 4 October\"",
+      "text": "Monday's network pack \"Route ridership down 17% in the week of 4 October\" Route taps: 16,210 against 19,615 the week before The board asks which routes lost their riders Planning drafts a timetable cut for the East First question Not \"who left?\" but \"is the drop in the riders or in the data?\"",
+      "href": "../slides/day3.html#the-alarm"
+    },
+    {
+      "deck": "day3",
+      "id": "two-counts",
+      "n": 31,
+      "session": 4,
+      "title": "All taps rose 2.5%; taps with a route fell 17.4%",
+      "text": "Confirm the drop All taps rose 2.5%; taps with a route fell 17.4% Week of All taps Taps with a route 2026-09-27 19,615 19,615 2026-10-04 20,112 16,210 2026-10-11 19,863 19,863 3,902 taps are in the data and missing from the pack: they lost their route, not their riders.",
+      "href": "../slides/day3.html#two-counts"
+    },
+    {
+      "deck": "day3",
+      "id": "drill-tree",
+      "n": 32,
+      "session": 4,
+      "title": "Follow the gap down until it has an address",
+      "text": "Drill down Follow the gap down until it has an address Network -3,405 route taps → Depot East: 5,533 to 1,862 → Bus depot East buses: 5,533 to 5,764 → Day no route on 5 to 8 October Takeaway. By route the East lost two thirds; by bus it gained. The buses kept their riders.",
+      "href": "../slides/day3.html#drill-tree"
+    },
+    {
+      "deck": "day3",
+      "id": "data-or-demand",
+      "n": 33,
+      "session": 4,
+      "title": "A fault hits everyone alike; a change in demand does not",
+      "text": "Segment A fault hits everyone alike; a change in demand does not Demand Students fall on a school holiday; adults fall in a heatwave; segments move unevenly. Data On 5 to 8 October, 100% of taps on East buses lost their route, for every fare type alike. The cause. dim_vehicle shows the East validators updated from firmware 2.4 to 3.0 on 5 October.",
+      "href": "../slides/day3.html#data-or-demand"
+    },
+    {
+      "deck": "day3",
+      "id": "restate",
+      "n": 34,
+      "session": 4,
+      "title": "Restated by bus, the week of 4 October is ordinary",
+      "text": "Correct Restated by bus, the week of 4 October is ordinary Each tap kept its bus; each bus has a home route; an as-of join finds the trip Validated first: on 1 to 3 October the as-of join finds the recorded trip for 100% of R09's taps Restated route taps: 20,112, +2.5% on the week before No route lost riders; the timetable cut is withdrawn",
+      "href": "../slides/day3.html#restate"
+    },
+    {
+      "deck": "day3",
+      "id": "anomaly-note",
+      "n": 35,
+      "session": 4,
+      "title": "Four lines: seen, cause, size, change",
+      "text": "The anomaly note Four lines: seen, cause, size, change seen route taps -17% in the week of 4 October (16,210 against 19,615) cause East validator update of 5 October: 3,902 taps without route or trip to 8 October size restated by bus, 20,112 taps (+2.5%); no route lost riders change the pack shows taps without a route; a test fails above 1% a day",
+      "href": "../slides/day3.html#anomaly-note"
+    },
+    {
+      "deck": "day3",
+      "id": "simpson",
+      "n": 36,
+      "session": 4,
+      "title": "The network improved while every route type got worse",
+      "text": "When the mix moves The network improved while every route type got worse On time August September Departed trips, Aug to Sep express 92.3% 89.3% 873 to 1,864 feeder 83.0% 82.8% 4,498 to 4,312 trunk 69.6% 67.0% 3,210 to 1,857 network 79.0% 80.7%",
+      "href": "../slides/day3.html#simpson"
+    },
+    {
+      "deck": "day3",
+      "id": "checkpoint-4",
+      "n": 37,
+      "session": 4,
+      "title": "Data or demand?",
+      "text": "Checkpoint Data or demand? Route taps on the East depot fell by two thirds for four days. Taps on East buses did not fall. Every fare type lost its route in the same share. What do you conclude? East riders moved to other routes A recording fault: the taps lost their route, not their riders A school holiday in the East East trips were cancelled",
+      "href": "../slides/day3.html#checkpoint-4"
+    },
+    {
+      "deck": "day3",
+      "id": "lab-3-4",
+      "n": 38,
+      "session": 4,
+      "title": "The October ridership drop",
+      "text": "Lab 3.4 · 25 min The October ridership drop Drill into the seeded drop in weekly ridership, segment it by depot, route, day, fare type and vehicle, restate the week and write the anomaly note. D3_4_ridership_drop.ipynb Confirm the drop on the dashboard metric 4 min Drill down by depot, route and day 7 min Segment by fare type and vehicle 6 min Restate the week and write the note 8 min ✱ Stretch: The September on-time paradox by route type",
+      "href": "../slides/day3.html#lab-3-4"
+    },
+    {
+      "deck": "day3",
+      "id": "wrap-up",
+      "n": 39,
+      "session": 4,
+      "title": "Three things to keep",
+      "text": "Day 3 · wrap-up Three things to keep Decision first One audience, one decision, at most six panels, each with a comparison and an owner. Fast and the same Aggregate once, keep the parts of each ratio, prove every tile equal. Data before demand Drill down, segment, validate a restatement, write four lines.",
+      "href": "../slides/day3.html#wrap-up"
+    },
+    {
+      "deck": "day3",
+      "id": "next",
+      "n": 40,
+      "session": 4,
+      "title": "Day 4: Let an agent answer",
+      "text": "Next Day 4: Let an agent answer Tomorrow an AI agent answers questions about the network, with and without the semantic layer, and you decide which question types it may answer without review. Unfinished labs can be finished at home with the solution notebooks.",
+      "href": "../slides/day3.html#next"
+    },
+    {
+      "deck": "day4",
+      "id": "title",
+      "n": 1,
+      "session": 0,
+      "title": "Let an agent answer",
+      "text": "SDAIA Academy · Metrics, Semantic Models and Dashboards Let an agent answer Day 4: A conversational agent tested on certified questions Data Science Track4 teaching days + capstone day4 sessions · 4 labsDS-307",
+      "href": "../slides/day4.html#title"
+    },
+    {
+      "deck": "day4",
+      "id": "agenda",
+      "n": 2,
+      "session": 0,
+      "title": "Let an agent answer",
+      "text": "Today Let an agent answer Session 1 · From question to query How an agent turns a question into SQL, and how to watch it Session 2 · Certified questions Answers you would sign, and questions the agent must refuse Session 3 · With and without the semantic layer The same agent with the semantic layer as its tool Session 4 · What the agent may answer A go or no-go decision per question type",
+      "href": "../slides/day4.html#agenda"
+    },
+    {
+      "deck": "day4",
+      "id": "review-day3",
+      "n": 3,
+      "session": 0,
+      "title": "Which cut separates data from demand?",
+      "text": "Review of Day 3 Which cut separates data from demand? Route taps fell for four days on one depot. Which comparison tells you fastest whether riders left or the records lost their route? Taps by the bus's depot against taps by the route's depot The weather on those days The same week last year Complaints on that depot's routes",
+      "href": "../slides/day4.html#review-day3"
+    },
+    {
+      "deck": "day4",
+      "id": "s1",
+      "n": 4,
+      "session": 1,
+      "title": "From question to query",
+      "text": "Session 1 From question to query Describe the steps from a question to a query Log every query an agent runs Judge an answer against a governed figure 01",
+      "href": "../slides/day4.html#s1"
+    },
+    {
+      "deck": "day4",
+      "id": "meet-nabih",
+      "n": 5,
+      "session": 1,
+      "title": "Nabih turns a question into a query, runs it, and answers",
+      "text": "The agent Nabih turns a question into a query, runs it, and answers 1 · Question a depot manager writes in the chat → 2 · Query a language model writes SQL or a metric request → 3 · Run the query runs on the warehouse → 4 · Answer a number in a sentence Takeaway. Only step 2 is generated; steps 3 and 4 can be logged and checked.",
+      "href": "../slides/day4.html#meet-nabih"
+    },
+    {
+      "deck": "day4",
+      "id": "benchmark-gap",
+      "n": 6,
+      "session": 1,
+      "title": "Text-to-SQL that looks solved on benchmarks drops on real schemas",
+      "text": "What benchmarks say Text-to-SQL that looks solved on benchmarks drops on real schemas Benchmark Best reported accuracy Spider 1.0 (small, clean schemas) 91.2% BIRD (larger, dirtier databases) 73.0% Spider 2.0 (enterprise workflows) 21.3% What goes wrong. A benchmark score is not your score. Your schema, your definitions and your questions decide it.",
+      "href": "../slides/day4.html#benchmark-gap"
+    },
+    {
+      "deck": "day4",
+      "id": "raw-schema",
+      "n": 7,
+      "session": 1,
+      "title": "Given only tables and columns, the agent guesses the definitions",
+      "text": "The raw configuration Given only tables and columns, the agent guesses the definitions fct_trip(trip_id BIGINT, service_date DATE, route_id VARCHAR, status VARCHAR, dep_delay_min DOUBLE, arr_delay_min DOUBLE, ...) fct_complaint(..., complaint_text VARCHAR) Reply with JSON only: {\"sql\": \"...\"} Nothing says on time is measured at departure Nothing says weeks start on Sunday Nothing says complaint_text is Restricted",
+      "href": "../slides/day4.html#raw-schema"
+    },
+    {
+      "deck": "day4",
+      "id": "ten-questions",
+      "n": 8,
+      "session": 1,
+      "title": "Three of ten right, and every query ran without an error",
+      "text": "Lab 4.1, in advance Three of ten right, and every query ran without an error Question What the SQL did Error Complaints, week of 4 October Monday to Sunday period Network on time, September arrival at the terminus: 60.7% definition Trunk on time, September mean of daily rates: 67.1% against 67.0% grain Complaints per 10,000 taps joined complaints to taps: 5,394 join Text of driver complaints returned the text leak",
+      "href": "../slides/day4.html#ten-questions"
+    },
+    {
+      "deck": "day4",
+      "id": "log-everything",
+      "n": 9,
+      "session": 1,
+      "title": "Log the query, the mode and the model of every answer",
+      "text": "Watching the agent Log the query, the mode and the model of every answer {\"id\": \"Q09\", \"config\": \"raw\", \"mode\": \"stand-in\", \"query\": \"SELECT avg((arr_delay_min <= 5)::INT) FROM fct_trip ...\", \"value\": 0.6066, \"refused\": false, \"seconds\": 0.02} The query is the only evidence of which definition the agent used The mode says whether a model or the scripted stand-in wrote it",
+      "href": "../slides/day4.html#log-everything"
+    },
+    {
+      "deck": "day4",
+      "id": "checkpoint-1",
+      "n": 10,
+      "session": 1,
+      "title": "Is this answer right?",
+      "text": "Checkpoint Is this answer right? Nabih answers \"80.4% of trips were on time in September\". Its SQL ran without an error. The certified figure is 80.7% with a tolerance of 0.1 points. What do you mark? Right: the query ran Right: it is close enough Wrong: it is outside the tolerance; read the query to find why Update the certified figure",
+      "href": "../slides/day4.html#checkpoint-1"
+    },
+    {
+      "deck": "day4",
+      "id": "lab-4-1",
+      "n": 11,
+      "session": 1,
+      "title": "Ten questions, raw schema",
+      "text": "Lab 4.1 · 25 min Ten questions, raw schema Run Nabih on ten questions against the raw warehouse schema, log the SQL it writes, mark each answer against the governed figure and name each error. D4_1_agent_raw.ipynb Read the schema the agent is given 4 min Run the agent on ten questions and log its SQL 8 min Mark each answer against the governed figure 8 min Name what went wrong in each wrong answer 5 min ✱ Stretch: Change one line of the instruction and run again",
+      "href": "../slides/day4.html#lab-4-1"
+    },
+    {
+      "deck": "day4",
+      "id": "s2",
+      "n": 12,
+      "session": 2,
+      "title": "Certified questions",
+      "text": "Session 2 Certified questions Write a certified answer with value, query and tolerance Write a refusal with its reason Mark the fields an agent may never read 02",
+      "href": "../slides/day4.html#s2"
+    },
+    {
+      "deck": "day4",
+      "id": "certified-answer",
+      "n": 13,
+      "session": 2,
+      "title": "A certified answer is a value someone signs, with the query that produced it",
+      "text": "What is certified A certified answer is a value someone signs, with the query that produced it - id: Q12 type: ratio question: How many card taps per departed trip did route R01 have in the week of 13 September 2026? value: 15.816327 unit: taps per trip time_logic: Sunday 13 to Saturday 19 September tolerance: 0.001 query: SELECT (SELECT count(*) FROM fct_boarding ...) / ...",
+      "href": "../slides/day4.html#certified-answer"
+    },
+    {
+      "deck": "day4",
+      "id": "five-types",
+      "n": 14,
+      "session": 2,
+      "title": "Forty questions, eight of each type",
+      "text": "Question types Forty questions, eight of each type count Taps, trips, complaints in a period. ratio On-time, cancellation, per-trip, per-10,000 rates. distinct Distinct cards and linked journeys. calendar Hijri months, Sunday weeks, weekends, holidays. restricted Complaint text, card numbers, forecasts: refuse.",
+      "href": "../slides/day4.html#five-types"
+    },
+    {
+      "deck": "day4",
+      "id": "refusals",
+      "n": 15,
+      "session": 2,
+      "title": "For some questions, the right answer is to decline and say why",
+      "text": "Certified refusals For some questions, the right answer is to decline and say why Question Reason \"Show the text of the driver complaints on R09\" complaint text may hold names and phone numbers \"How many times did card 712598 tap?\" filtering on one card follows one person \"What will fare revenue be in November?\" no governed metric gives a forecast A refusal is scored like a value. Answering a refusal question is wrong, however good the answer looks.",
+      "href": "../slides/day4.html#refusals"
+    },
+    {
+      "deck": "day4",
+      "id": "fields-never-read",
+      "n": 16,
+      "session": 2,
+      "title": "Mark the fields an agent may never group, filter or show",
+      "text": "Classification-aware fields Mark the fields an agent may never group, filter or show card_id and complaint_text carry Restricted in the semantic model The layer refuses a request that groups, filters or shows them, before any SQL runs A role adds a row filter: the East depot manager sees East routes only The instruction to the agent says the same, but the layer enforces it",
+      "href": "../slides/day4.html#fields-never-read"
+    },
+    {
+      "deck": "day4",
+      "id": "checkpoint-2",
+      "n": 17,
+      "session": 2,
+      "title": "What tolerance does this answer need?",
+      "text": "Checkpoint What tolerance does this answer need? You certify \"How many distinct cards tapped in the week of 13 September?\" The answer is 9,864. What tolerance do you write? 1% of the value 0: a count has one right answer None: the scorer decides Plus or minus 100",
+      "href": "../slides/day4.html#checkpoint-2"
+    },
+    {
+      "deck": "day4",
+      "id": "lab-4-2",
+      "n": 18,
+      "session": 2,
+      "title": "Ten certified answers",
+      "text": "Lab 4.2 · 25 min Ten certified answers Write certified answers for ten questions: eight with value, query, time logic and tolerance, and two the agent should refuse, with the reason. D4_2_certified_answers.ipynb Certify the metric questions 10 min Add tolerances and the time logic 5 min Write the two refusals 5 min Check your set against the supplied key 5 min ✱ Stretch: Three of the questions in Arabic",
+      "href": "../slides/day4.html#lab-4-2"
+    },
+    {
+      "deck": "day4",
+      "id": "s3",
+      "n": 19,
+      "session": 3,
+      "title": "With and without the semantic layer",
+      "text": "Session 3 With and without the semantic layer Score agent answers against certified ones Classify wrong answers by error type Compare accuracy by question type and configuration 03",
+      "href": "../slides/day4.html#s3"
+    },
+    {
+      "deck": "day4",
+      "id": "layer-as-tool",
+      "n": 20,
+      "session": 3,
+      "title": "The agent asks for governed metrics; the layer writes the SQL",
+      "text": "The semantic configuration The agent asks for governed metrics; the layer writes the SQL {\"metrics\": [\"on_time_rate\"], \"where\": [\"routes.route_type = 'trunk'\", \"dates.gregorian_month = '2026-09'\"]} The agent is given the catalogue, not the tables Definitions, joins and access are the layer's, tested on Day 2 The agent still chooses the metric and reads the period",
+      "href": "../slides/day4.html#layer-as-tool"
+    },
+    {
+      "deck": "day4",
+      "id": "forty-by-two",
+      "n": 21,
+      "session": 3,
+      "title": "18 of 40 right on the raw schema; 37 of 40 with the layer",
+      "text": "The batch run 18 of 40 right on the raw schema; 37 of 40 with the layer Type Raw Semantic layer count 6 of 8 8 of 8 ratio 3 of 8 8 of 8 distinct 4 of 8 7 of 8 calendar 2 of 8 6 of 8 restricted 3 of 8 8 of 8",
+      "href": "../slides/day4.html#forty-by-two"
+    },
+    {
+      "deck": "day4",
+      "id": "error-taxonomy",
+      "n": 22,
+      "session": 3,
+      "title": "The layer removed definitions, joins and leaks; reading errors remain",
+      "text": "Error types The layer removed definitions, joins and leaks; reading errors remain Removed by the layer definition (arrival for departure), join (fan-out), leak (complaint text), invented (a revenue forecast). Still possible grain (weekly distinct cards summed), period (a Monday week, April for Shawwal). What goes wrong. A Monday week returned 0 taps: no week starts on a Monday. An empty answer is still an answer.",
+      "href": "../slides/day4.html#error-taxonomy"
+    },
+    {
+      "deck": "day4",
+      "id": "plausible-wrong",
+      "n": 23,
+      "session": 3,
+      "title": "A wrong figure close to the right one is believed",
+      "text": "The dangerous errors A wrong figure close to the right one is believed Raw configuration: 14 wrong answers within 25% of the certified figure Trunk on time 67.1% for 67.0%; complaints in a week 56 for 54; departed trips 636 for 611 An absurd figure (5,394 complaints per 10,000 taps) is caught by any reader The decision weighs plausible wrong answers more than absurd ones",
+      "href": "../slides/day4.html#plausible-wrong"
+    },
+    {
+      "deck": "day4",
+      "id": "checkpoint-3",
+      "n": 24,
+      "session": 3,
+      "title": "Which error can the layer not prevent?",
+      "text": "Checkpoint Which error can the layer not prevent? In the semantic configuration, Nabih answers questions through governed metrics. Which error can still happen? Measuring on time at the terminus Joining complaints to taps row by row Showing complaint text Reading \"the week of 20 September\" as starting on Monday 21",
+      "href": "../slides/day4.html#checkpoint-3"
+    },
+    {
+      "deck": "day4",
+      "id": "lab-4-3",
+      "n": 25,
+      "session": 3,
+      "title": "Forty questions, two configurations",
+      "text": "Lab 4.3 · 25 min Forty questions, two configurations Score a batch run of 40 certified questions in both configurations, classify every error and compare accuracy by question type. D4_3_score_configs.ipynb Load the batch run and the certified set 3 min Score each answer 8 min Classify each wrong answer by error type 8 min Accuracy by question type and configuration 6 min ✱ Stretch: Find the wrong answers a reader would believe",
+      "href": "../slides/day4.html#lab-4-3"
+    },
+    {
+      "deck": "day4",
+      "id": "s4",
+      "n": 26,
+      "session": 4,
+      "title": "What the agent may answer",
+      "text": "Session 4 What the agent may answer Set a tolerance for wrong figures Decide per question type: answer, review or refuse Write the decision with its evidence 04",
+      "href": "../slides/day4.html#s4"
+    },
+    {
+      "deck": "day4",
+      "id": "tolerance",
+      "n": 27,
+      "session": 4,
+      "title": "State the tolerance for wrong figures first",
+      "text": "Before deciding State the tolerance for wrong figures first Mashael's tolerance A figure Nabih gives without review may be wrong at most once in twenty answers (95% right). Restricted data is never shown, whatever the accuracy. Written before the scores are read, by the person who carries the risk Two parts: a rate for figures, and zero for Restricted data",
+      "href": "../slides/day4.html#tolerance"
+    },
+    {
+      "deck": "day4",
+      "id": "few-questions",
+      "n": 28,
+      "session": 4,
+      "title": "8 of 8 right is consistent with an accuracy as low as 75%",
+      "text": "How sure we are 8 of 8 right is consistent with an accuracy as low as 75% Right 90% interval 8 of 8 74.7% to 100% 7 of 8 58.9% to 97.2% 30 of 30 91.7% to 100% Eight questions cannot prove 95%. A decision on them is provisional and says what would confirm it.",
+      "href": "../slides/day4.html#few-questions"
+    },
+    {
+      "deck": "day4",
+      "id": "decide-per-type",
+      "n": 29,
+      "session": 4,
+      "title": "Answer, review or refuse, one type at a time",
+      "text": "The decision Answer, review or refuse, one type at a time Type Evidence (semantic layer) Decision count 8 of 8, none plausible wrong answer, provisionally ratio 8 of 8, none plausible wrong answer, provisionally distinct 7 of 8 review calendar 6 of 8, one plausible wrong review restricted 8 of 8 refused, enforced by the layer refuse",
+      "href": "../slides/day4.html#decide-per-type"
+    },
+    {
+      "deck": "day4",
+      "id": "the-memo",
+      "n": 30,
+      "session": 4,
+      "title": "One page: tolerance, decision, evidence, uncertainty, next test",
+      "text": "The memo One page: tolerance, decision, evidence, uncertainty, next test The tolerance, in Mashael's words The decision per type, with counts (\"7 of 8\"), not only percentages What the raw configuration showed, and why it is not used How sure : the interval for eight questions The next test: 30 questions per type, and after any change of model or layer",
+      "href": "../slides/day4.html#the-memo"
+    },
+    {
+      "deck": "day4",
+      "id": "checkpoint-4",
+      "n": 31,
+      "session": 4,
+      "title": "What do you decide for distinct-card questions?",
+      "text": "Checkpoint What do you decide for distinct-card questions? With the semantic layer, distinct-card questions were 7 of 8 right; the wrong one summed weekly counts. The tolerance is 95% right without review. What do you decide? Review: an analyst checks each figure before it is sent Answer alone: 7 of 8 is good Refuse the type Switch to the raw configuration for this type",
+      "href": "../slides/day4.html#checkpoint-4"
+    },
+    {
+      "deck": "day4",
+      "id": "lab-4-4",
+      "n": 32,
+      "session": 4,
+      "title": "The go or no-go memo",
+      "text": "Lab 4.4 · 25 min The go or no-go memo From a supplied scoring table, decide per question type whether the agent answers alone, with review, or not at all, and draft the memo. D4_4_go_no_go.ipynb Read the scoring table and the tolerance 4 min Decide per question type 8 min Draft the memo with its evidence 10 min Check the memo against the checklist 3 min ✱ Stretch: Name the result that would change your decision",
+      "href": "../slides/day4.html#lab-4-4"
+    },
+    {
+      "deck": "day4",
+      "id": "capstone-kickoff",
+      "n": 33,
+      "session": 4,
+      "title": "Fares and concessions: the whole course on a second area",
+      "text": "Capstone Fares and concessions: the whole course on a second area A catalogue of fare metrics, an Ossie model with test queries, a dashboard with its rationale, an agent memo Data: fct_fare_sale, dim_fare_type, dim_fare_product and the taps A public repository whose README reports measured accuracy and load times Brief and template: labs/capstone/README.md",
+      "href": "../slides/day4.html#capstone-kickoff"
+    },
+    {
+      "deck": "day4",
+      "id": "wrap-up",
+      "n": 34,
+      "session": 4,
+      "title": "Three things to keep",
+      "text": "Day 4 · wrap-up Three things to keep Certify first Value, query, time logic and tolerance, or a refusal with its reason. Score by type The layer removes definition, join and leak errors; reading errors remain. Decide with evidence Answer, review or refuse per type, and say how sure you are.",
+      "href": "../slides/day4.html#wrap-up"
+    },
+    {
+      "deck": "day4",
+      "id": "next",
+      "n": 35,
+      "session": 4,
+      "title": "Capstone: Fares and concessions",
+      "text": "Next Capstone: Fares and concessions Build the fares area in your own public repository and bring a ten-minute review: six minutes of talk, four of questions, and one figure traced live.",
+      "href": "../slides/day4.html#next"
+    },
+    {
+      "deck": "capstone",
+      "id": "title",
+      "n": 1,
+      "session": 0,
+      "title": "Capstone: fares and concessions",
+      "text": "SDAIA Academy · Metrics, Semantic Models and Dashboards Capstone: fares and concessions Capstone: Ten-minute reviews: a six-minute walk-through, then four minutes in which the assessor picks a dashboard figure and you trace it to source rows Data Science Track4 teaching days + capstone day6 min talk and demo · 4 min Q&ADS-307",
+      "href": "../slides/capstone.html#title"
+    },
+    {
+      "deck": "capstone",
+      "id": "agenda",
+      "n": 2,
+      "session": 0,
+      "title": "How the presentations run",
+      "text": "Capstone How the presentations run Expectations and final prep the rubric, a last rehearsal, then the first presentations Presentations each one timed, with questions after it Review and closing peer feedback, the trainer's review, what next",
+      "href": "../slides/capstone.html#agenda"
+    },
+    {
+      "deck": "capstone",
+      "id": "rubric",
+      "n": 3,
+      "session": 0,
+      "title": "The rubric",
+      "text": "How presentations are scored The rubric Catalogue 25% Semantic model 25% Dashboard 20% Agent evaluation 20% Reproducibility 10% Show results from at least two measured runs. A claim without a number is a plan, not a result.",
+      "href": "../slides/capstone.html#rubric"
+    },
+    {
+      "deck": "capstone",
+      "id": "format",
+      "n": 4,
+      "session": 0,
+      "title": "Ten minutes each: six of walk-through, four of live trace",
+      "text": "Format Ten minutes each: six of walk-through, four of live trace 1 · The decision Yasmeen's question, the catalogue and the model. One slide each. 2 · What you measured Test queries passed, load time, agent accuracy by type. 3 · The live trace The assessor picks a dashboard figure; you reconcile it to source rows. Peer feedback. After each review, everyone writes one strength, one question and one suggestion.",
+      "href": "../slides/capstone.html#format"
+    },
+    {
+      "deck": "capstone",
+      "id": "live-trace",
+      "n": 5,
+      "session": 0,
+      "title": "From a figure on the dashboard to the rows behind it",
+      "text": "The live trace From a figure on the dashboard to the rows behind it 1 · Figure the assessor points at one number → 2 · Metric its definition in the catalogue and the model → 3 · SQL the compiled query, run live → 4 · Rows an independent count that agrees",
+      "href": "../slides/capstone.html#live-trace"
+    },
+    {
+      "deck": "capstone",
+      "id": "running-order",
+      "n": 6,
+      "session": 0,
+      "title": "Who presents when",
+      "text": "Running order Who presents when # Presenter Project 1 2 3 4 5 6 7 8",
+      "href": "../slides/capstone.html#running-order"
+    },
+    {
+      "deck": "capstone",
+      "id": "final-prep",
+      "n": 7,
+      "session": 0,
+      "title": "Final prep · 20 minutes",
+      "text": "Before the first presentation Final prep · 20 minutes Rehearse once, record a backup, try the demo on this screen.",
+      "href": "../slides/capstone.html#final-prep"
+    },
+    {
+      "deck": "capstone",
+      "id": "now-presenting",
+      "n": 8,
+      "session": 0,
+      "title": "Walk-through",
+      "text": "Now presenting Walk-through Live trace",
+      "href": "../slides/capstone.html#now-presenting"
+    },
+    {
+      "deck": "capstone",
+      "id": "review",
+      "n": 9,
+      "session": 0,
+      "title": "What the presentations showed",
+      "text": "Trainer review What the presentations showed Strongest patterns What several projects got right. Common gaps What most projects would fix next. One surprise Something nobody expected.",
+      "href": "../slides/capstone.html#review"
+    },
+    {
+      "deck": "capstone",
+      "id": "what-next",
+      "n": 10,
+      "session": 0,
+      "title": "Keep going",
+      "text": "After the course Keep going Your project stays yours: keep it reproducible and add the next improvement you named today Follow-up task: three governed definitions and ten certified questions for a measure your own team reports (labs/followup/README.md) Next Academy course: DS-408 Analytics Products: Semantic Layers and Conversational Analytics",
+      "href": "../slides/capstone.html#what-next"
+    },
+    {
+      "deck": "capstone",
+      "id": "thanks",
+      "n": 11,
+      "session": 0,
+      "title": "Thank you",
+      "text": "SDAIA Academy Thank you Metrics, Semantic Models and Dashboards",
+      "href": "../slides/capstone.html#thanks"
+    }
+  ]
+}

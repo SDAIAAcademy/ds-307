@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-ax="deck" data-track="data-science">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 2 · Model once · Metrics, Semantic Models and Dashboards</title>
+<meta name="generator" content="SDAIA Academy engine 1.0.0">
+<link rel="icon" href="../_engine/icon.svg">
+<link rel="alternate" type="text/markdown" href="day2.md">
+<link rel="describedby" href="../llms.txt">
+<link rel="stylesheet" href="../_engine/academy.css">
+</head>
+<body>
+<div class="deck" data-course="Metrics, Semantic Models and Dashboards" data-track="data-science" data-day="Day 2">
+<!-- ======================= OPENING ======================= -->
+<section class="slide title" id="title" data-auto="title" data-label="Welcome" data-n="1">
+  <div class="kicker">SDAIA Academy · Metrics, Semantic Models and Dashboards</div>
+  <h1>Model once</h1>
+  <p class="lead mt">Day 2: One semantic model in which each metric is defined once</p>
+  <div class="meta"><span class="track">Data Science Track</span><span>4 teaching days + capstone day</span><span>4 sessions · 4 labs</span><span>DS-307</span></div>
+  <aside class="notes"><p>Welcome back. Yesterday the numbers got definitions; today they get a model, so that each one is computed in one place. Ask: who has seen the same metric computed in two dashboards with two different SQL queries? That is the problem a semantic model removes.</p></aside>
+</section>
+
+<section class="slide" id="agenda" data-auto="agenda" data-label="Agenda" data-n="2">
+  <div class="kicker">Today</div>
+  <h2>Model once</h2>
+  <div class="agenda"><div class="item"><div><b>Session 1 · Star schemas for analysis</b><small>Facts at a stated grain, dimensions that describe them</small></div></div><div class="item"><div><b>Session 2 · Changing dimensions and calendars</b><small>Type 2 history for a re-routed line, and two calendars in one date table</small></div></div><div class="item"><div><b>Session 3 · Fan-out and join paths</b><small>Fan and chasm traps, and the test that catches them</small></div></div><div class="item"><div><b>Session 4 · Metrics in an open specification</b><small>A semantic model as an open document: datasets, relationships, metrics</small></div></div></div>
+</section>
+
+<section class="slide" id="review-day1" data-lo="LO2" data-n="3">
+  <div class="kicker">Review of Day 1</div>
+  <h2>Which part of the definition is missing?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2" data-id="review-day1-q1">
+    <p class="lead">"journeys: SUM(journey_start) on boarding_linked; one card tap; filters none; unit journeys; owner Dhuha Al-Rowais, planning; limits: a quick return counts as a transfer." Which of the eight parts is missing?</p>
+    <div class="opts">
+      <div class="opt" data-why="The grain is there: one card tap" data-k="A">The grain</div>
+      <div class="opt" data-why="The owner is a named person with a role" data-k="B">The owner</div>
+      <div class="opt" data-ok data-k="C">The time logic</div>
+      <div class="opt" data-why="The limits line names a known undercount" data-k="D">The limits</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> Nothing says which date places a tap in a period, or which week and calendar apply, so two analysts could still report two numbers for "last week".</div>
+  </div>
+  <aside class="notes"><p>Answer: C. The catalogue entry says "service_date of the tap; the 60-minute look-back crosses midnight". If the room hesitates between options, read the eight parts aloud from yesterday's slide.</p></aside>
+</section>
+
+<!-- ======================= SESSION 1 ======================= -->
+<section class="slide section" id="s1" data-auto="section" data-session="1" data-n="4">
+  <div class="kicker">Session 1</div>
+  <h1>Star schemas for analysis</h1>
+  <ul class="bullets outcomes"><li>State the grain of each fact table</li><li>Prove a key by counting</li><li>Draw the star of a subject area</li></ul>
+  <div class="sess-no">01</div>
+</section>
+
+<section class="slide" id="why-a-model" data-lo="LO3" data-n="5" data-session="1">
+  <div class="kicker">From catalogue to model</div>
+  <h2>A definition says what a number means; a model computes it the same way everywhere</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>Catalogue</b>meaning, owner, limits (Day 1)</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>Star schema</b>facts at a grain, dimensions to slice by</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>Semantic model</b>each metric written once, joins decided once</div>
+    <div class="arrow">→</div>
+    <div class="step c-purple"><b>Every consumer</b>dashboard, notebook, agent</div>
+  </div>
+  <aside class="notes"><p>The order of the day: Session 1 the star, Session 2 the history and the calendars, Session 3 the joins that go wrong, Session 4 the model written as an open document. Platform-scale semantic layers across many business areas are DS-408; here it is one area, network performance.</p></aside>
+</section>
+
+<section class="slide" id="facts-and-dimensions" data-lo="LO3" data-n="6" data-session="1">
+  <div class="kicker">Two kinds of table</div>
+  <h2>Facts record events at a grain; dimensions describe them</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>Facts</h4><p class="small mb0">Trips, timepoint arrivals, taps, complaints. Many rows, numeric columns to aggregate, foreign keys to dimensions.</p></div>
+    <div class="card c-cyan"><h4>Dimensions</h4><p class="small mb0">Routes, dates, vehicles, depots. Few rows, descriptive columns to group and filter by, one key each.</p></div>
+  </div>
+  <div class="callout tip mt"><b>Ask of every column:</b> do I add it up, or do I slice by it? The answer places it in a fact or in a dimension.</div>
+  <aside class="notes"><p>A quick exercise: call out columns and ask the room to say "fact" or "dimension": arr_delay_min (fact measure), depot (dimension), fare_type (an attribute of the tap kept on the fact, a degenerate dimension), route_name_ar (dimension).</p></aside>
+</section>
+
+<section class="slide" id="star-of-wadi-noor" data-lo="LO3" data-read="scaled" data-n="7" data-session="1">
+  <div class="kicker">The star</div>
+  <h2>Four facts share dates, routes and vehicles</h2>
+  <div class="figure">
+    <svg viewBox="0 0 900 360" role="img" aria-label="Star schema: fct_trip, fct_boarding, fct_timepoint and fct_complaint around dim_date, dim_route and dim_vehicle; taps and timepoints also point to trips">
+      <g font-family="IBM Plex Sans, sans-serif" font-size="17" text-anchor="middle">
+        <rect x="360" y="140" width="180" height="60" rx="10" fill="#e6f4f1" stroke="#0f766e"/><text x="450" y="176">fct_trip</text>
+        <rect x="80" y="40" width="180" height="60" rx="10" fill="#e6f4f1" stroke="#0f766e"/><text x="170" y="76">fct_boarding</text>
+        <rect x="640" y="40" width="180" height="60" rx="10" fill="#e6f4f1" stroke="#0f766e"/><text x="730" y="76">fct_timepoint</text>
+        <rect x="80" y="260" width="180" height="60" rx="10" fill="#e6f4f1" stroke="#0f766e"/><text x="170" y="296">fct_complaint</text>
+        <rect x="360" y="20" width="180" height="56" rx="28" fill="#fdf0ea" stroke="#c2410c"/><text x="450" y="54">dim_route</text>
+        <rect x="360" y="280" width="180" height="56" rx="28" fill="#fdf0ea" stroke="#c2410c"/><text x="450" y="314">dim_date</text>
+        <rect x="640" y="260" width="180" height="56" rx="28" fill="#fdf0ea" stroke="#c2410c"/><text x="730" y="294">dim_vehicle</text>
+        <g stroke="#475569" stroke-width="2">
+          <line x1="260" y1="70" x2="360" y2="48"/><line x1="260" y1="90" x2="360" y2="290"/><line x1="260" y1="80" x2="370" y2="150"/>
+          <line x1="640" y1="80" x2="530" y2="150"/><line x1="450" y1="140" x2="450" y2="76"/><line x1="450" y1="200" x2="450" y2="280"/>
+          <line x1="540" y1="190" x2="640" y2="280"/><line x1="260" y1="290" x2="360" y2="300"/><line x1="260" y1="280" x2="380" y2="76"/>
+        </g>
+      </g>
+    </svg>
+    <div class="caption">Facts are rectangles, dimensions rounded. Every line is many-to-one, from the fact to what it points at.</div>
+  </div>
+  <aside class="notes"><p>This is the star participants draw in Lab 2.1, task 3. Point out the two lines that go from a fact to another fact: taps and timepoints both point to trips. That makes trips a dimension of taps (one trip, many taps), which is how the semantic model treats it, and it is why the fan-out of Session 3 is possible.</p></aside>
+</section>
+
+<section class="slide" id="grain-recap" data-lo="LO3" data-n="8" data-session="1">
+  <div class="kicker">Recap from FN-104</div>
+  <h2>A grain is a sentence; a key test proves it</h2>
+  <div class="cols cols-2">
+    <pre class="code s" data-file="Lab 2.1 · key_test"><code class="language-sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>)                         <span class="hljs-keyword">AS</span> <span class="hljs-keyword">rows</span>,
+       <span class="hljs-built_in">count</span>(<span class="hljs-keyword">DISTINCT</span> (trip_id, tp_seq)) <span class="hljs-keyword">AS</span> keys,
+       <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FILTER</span> (<span class="hljs-keyword">WHERE</span> trip_id <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+                         <span class="hljs-keyword">OR</span> tp_seq <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>) <span class="hljs-keyword">AS</span> <span class="hljs-keyword">empty</span>
+<span class="hljs-keyword">FROM</span> fct_timepoint;</code></pre>
+    <ul class="bullets small">
+      <li><code>fct_timepoint</code>: one departed trip at one timepoint</li>
+      <li>329,188 rows, 329,188 keys, none empty: the grain holds</li>
+      <li>Grain, keys and orphans were taught in FN-104, Day 1; today they are the input of a model</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>One slide only: FN-104 is the prerequisite and taught key tests and anti joins in full. If several participants struggle with the counting, pair them with someone who passed FN-104 recently. Numbers from Lab 2.1.</p></aside>
+</section>
+
+<section class="slide" id="natural-key-fails" data-lo="LO3" data-n="9" data-session="1">
+  <div class="kicker">The planted surprise</div>
+  <h2>dim_route has 13 rows for 12 routes</h2>
+  <table class="t small">
+    <tr><th>route_key</th><th>route_id</th><th>route_name_en</th><th class="num">length_km</th><th>valid_from</th><th>valid_to</th></tr>
+    <tr><td>7</td><td>R07</td><td>Al-Rawdah Feeder</td><td class="num">11.4</td><td><time>2026-01-01</time></td><td><time>2026-05-31</time></td></tr>
+    <tr class="hl"><td>8</td><td>R07</td><td>Al-Rawdah Hospital Feeder</td><td class="num">15.8</td><td><time>2026-06-01</time></td><td>(open)</td></tr>
+  </table>
+  <ul class="bullets small mt-s">
+    <li><code>route_id</code> is the natural key riders use; <code>route_key</code> identifies one version</li>
+    <li>A join on <code>route_id</code> returns <b>91,418 rows for 85,010 trips</b>: every R07 trip twice</li>
+  </ul>
+  <aside class="notes"><p>From Lab 2.1, task 4. R07 was extended to Al-Rawdah Hospital on 1 June 2026. Ask: which version should a January trip join? Session 2 answers with the as-of join.</p></aside>
+</section>
+
+<section class="slide" id="conformed-dimensions" data-lo="LO3" data-n="10" data-session="1">
+  <div class="kicker">Conformed dimensions</div>
+  <h2>One date table and one route table serve every fact</h2>
+  <ul class="bullets">
+    <li>Trips and taps grouped by the same <code>dim_date.week_start</code> mean the same week</li>
+    <li>A second date table with Monday weeks would bring back yesterday's disagreement</li>
+    <li>Conformed means: <b>same keys, same attributes, same meaning</b> for every fact</li>
+    <li>Lab 2.1's stretch checks that every service date of every fact is a row of <code>dim_date</code></li>
+  </ul>
+  <aside class="notes"><p>Conformed dimensions are what lets the dashboard on Day 3 put trips and taps on one chart by week without a second argument. In a platform with many subject areas this becomes a design discipline of its own (DS-408).</p></aside>
+</section>
+
+<section class="slide" id="checkpoint-1" data-lo="LO3" data-n="11" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>What is the grain of the timepoint table?</h2>
+  <div class="quiz" data-type="single" data-lo="LO3" data-id="checkpoint-1-q1">
+    <p class="lead"><code>fct_timepoint</code> has 329,188 rows, 82,000 distinct <code>trip_id</code> values and <code>tp_seq</code> from 1 to 4. What does one row mean?</p>
+    <div class="opts">
+      <div class="opt" data-why="Trusts the trip_id column over the row count: there are four times more rows than trips" data-k="A">One trip</div>
+      <div class="opt" data-why="Timepoints are fixed places on a route; the table records arrivals, not places" data-k="B">One timepoint of a route</div>
+      <div class="opt" data-why="Arrivals are per trip, not per scheduled minute" data-k="C">One scheduled minute of a trip</div>
+      <div class="opt" data-ok data-k="D">One departed trip at one timepoint</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The key is (trip_id, tp_seq): rows equal distinct pairs, so one row is a trip's arrival at one of its four timepoints.</div>
+  </div>
+  <aside class="notes"><p>Answer: D. The figure of 82,000 trips is rounded on purpose; the exact count of departed trips is in the lab. If many pick A, return to the key-test slide.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-2-1" data-auto="lab" data-lab="2.1" data-label="Lab 2.1" data-n="12" data-session="1">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 2.1 · 25 min</div><h2>Facts, dimensions and their grain</h2><p class="lead small">Name the grain of each warehouse table, prove it with key tests, draw the star and find the dimension whose natural key is not unique.</p><a class="nb" href="../labs/D2_1_star_schema.ipynb">D2_1_star_schema.ipynb</a></div><ul class="checklist"><li>Name the grain of each table <span class="min">5 min</span></li><li>Prove the grains with key tests <span class="min">8 min</span></li><li>Draw the star: facts, dimensions, keys <span class="min">6 min</span></li><li>Find the dimension whose natural key fails <span class="min">6 min</span></li><li class="stretch">✱ Stretch: Check that dates conform across the two facts</li></ul></div>
+  <aside class="notes"><p>AI-off. The common error is to write route_id as the key of dim_route and stop when the test fails: the task asks them to find out why. Point participants who finish early to the stretch (conformed dates). The safety nets supply the reference keys.</p></aside>
+</section>
+
+<!-- ======================= SESSION 2 ======================= -->
+<section class="slide section" id="s2" data-auto="section" data-session="2" data-n="13">
+  <div class="kicker">Session 2</div>
+  <h1>Changing dimensions and calendars</h1>
+  <ul class="bullets outcomes"><li>Join a fact to the dimension version valid on its date</li><li>Compare a route before and after a change</li><li>Report by Hijri month and in Ramadan from one date table</li></ul>
+  <div class="sess-no">02</div>
+</section>
+
+<section class="slide" id="dimensions-change" data-lo="LO3" data-n="14" data-session="2">
+  <div class="kicker">Slowly changing dimensions</div>
+  <h2>When a route changes, decide whether history changes with it</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>Type 1: overwrite</h4><p class="small mb0">The new value replaces the old everywhere, past included. Right for corrections: a misspelt name.</p></div>
+    <div class="card c-coral"><h4>Type 2: add a version</h4><p class="small mb0">A new row with its own key and validity dates. Right for real changes: a longer route, a new depot.</p></div>
+  </div>
+  <div class="callout warn mt"><b>The test.</b> Would a January figure be wrong if it used the June value? Then it is type 2.</div>
+  <aside class="notes"><p>Other types exist (keeping a previous value in a column, separate history tables). Type 1 and type 2 cover most needs and are the two this course uses. FN-104 met the same idea as courier stints.</p></aside>
+</section>
+
+<section class="slide" id="as-of-join" data-lo="LO3" data-n="15" data-session="2">
+  <div class="kicker">The as-of join</div>
+  <h2>Join each fact row to the version valid on its date</h2>
+  <pre class="code" data-file="Lab 2.2 · trips_with_version"><code class="language-sql"><span class="hljs-keyword">SELECT</span> t.<span class="hljs-operator">*</span>, r.route_key, r.route_name_en, r.length_km
+<span class="hljs-keyword">FROM</span> fct_trip t
+<span class="hljs-keyword">JOIN</span> dim_route r
+  <span class="hljs-keyword">ON</span> r.route_id <span class="hljs-operator">=</span> t.route_id
+ <span class="hljs-keyword">AND</span> t.service_date <span class="hljs-operator">&gt;=</span> r.valid_from
+ <span class="hljs-keyword">AND</span> (r.valid_to <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">OR</span> t.service_date <span class="hljs-operator">&lt;=</span> r.valid_to)</code></pre>
+  <p class="small mt-s">85,010 trips in, 85,010 rows out. The open <code>valid_to</code> means "still valid".</p>
+  <aside class="notes"><p>Walk through the three conditions. Common errors: forgetting the IS NULL branch, which drops every trip of the current version; using BETWEEN with a NULL end. A warehouse often stores the surrogate key on the fact at load time instead; here the semantic model's dataset source does the as-of join, so the rule lives in one place.</p></aside>
+</section>
+
+<section class="slide" id="r07-before-after" data-lo="LO3" data-n="16" data-session="2">
+  <div class="kicker">Why the version matters</div>
+  <h2>Per kilometre, R07 barely changed; per trip, it jumped</h2>
+  <table class="t">
+    <tr><th>Version</th><th class="num">Length</th><th class="num">Departed trips</th><th class="num">Taps</th><th class="num">Taps per trip-km</th></tr>
+    <tr><td>Al-Rawdah Feeder (Jan to May)</td><td class="num">11.4</td><td class="num">3,068</td><td class="num">22,716</td><td class="num">0.649</td></tr>
+    <tr><td>Al-Rawdah Hospital Feeder (Jun to Oct)</td><td class="num">15.8</td><td class="num">3,187</td><td class="num">33,513</td><td class="num">0.666</td></tr>
+  </table>
+  <div class="callout warn mt"><b>With the current row for every date</b> the first five months show 0.469 taps per km: a fall that never happened.</div>
+  <aside class="notes"><p>From Lab 2.2. Taps per trip went from 7.4 to 10.5 because the route got longer and reaches a hospital. Per kilometre, demand density is almost unchanged. Which number goes to planning depends on the question; either way it must use the right version.</p></aside>
+</section>
+
+<section class="slide" id="dual-calendar" data-lo="LO3" data-n="17" data-session="2">
+  <div class="kicker">Two calendars, one table</div>
+  <h2>The date dimension carries the Gregorian and the Hijri calendar</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Column</th><th>Example for 23 Sep 2026</th></tr>
+      <tr><td><code>gregorian_month</code></td><td>2026-09</td></tr>
+      <tr><td><code>hijri_date</code></td><td>1448-04-12</td></tr>
+      <tr><td><code>hijri_month_name_ar</code></td><td class="ar">ربيع الآخر</td></tr>
+      <tr><td><code>week_start</code></td><td>Sunday 20 Sep</td></tr>
+      <tr><td><code>holiday_en</code></td><td>National Day</td></tr>
+    </table>
+    <ul class="bullets small">
+      <li>Built once with the Umm al-Qura calendar (<code>hijridate</code>)</li>
+      <li>Every report picks a column, never a conversion of its own</li>
+      <li>Ramadan, the Eids and school terms are flags, not guesses</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>FN-104 taught the conversion itself; here the point is that it is done once, in the dimension. The Hijri date of 23 September 2026 in the generated table is 1448-04-12; check it live in Lab 2.2 if someone asks. Ramadan 1447 ran from 18 February to 19 March 2026 in this table.</p></aside>
+</section>
+
+<section class="slide" id="ramadan-per-day" data-lo="LO3" data-n="18" data-session="2">
+  <div class="kicker">Like with like</div>
+  <h2>Compare months per service day: Ramadan ran at 2,186 taps a day</h2>
+  <div class="bars">
+    <div class="row"><span>Shaban 1447</span><div class="bar c-teal" style="--w:94%"></div><span class="val">2,855</span></div>
+    <div class="row"><span>Ramadan 1447</span><div class="bar c-coral" style="--w:72%"></div><span class="val">2,186</span></div>
+    <div class="row"><span>Shawwal 1447</span><div class="bar c-cyan" style="--w:87%"></div><span class="val">2,642</span></div>
+    <div class="row"><span>Muharram 1448</span><div class="bar c-purple" style="--w:100%"></div><span class="val">3,029</span></div>
+  </div>
+  <p class="small mt-s">Taps per service day by Hijri month, Lab 2.2. Shawwal includes Eid al-Fitr.</p>
+  <aside class="notes"><p>Months differ in length (29 or 30 days in the Hijri calendar, 28 to 31 in the Gregorian), so totals mislead. Ramadan's service runs later in the day in this case; demand per day was lower. Next year Ramadan starts about eleven days earlier in the Gregorian calendar: a year-on-year comparison by Gregorian month would compare Ramadan with ordinary weeks.</p></aside>
+</section>
+
+<section class="slide" id="checkpoint-2" data-lo="LO3" data-n="19" data-session="2">
+  <div class="kicker">Checkpoint</div>
+  <h2>Which change is type 2?</h2>
+  <div class="quiz" data-type="single" data-lo="LO3" data-id="checkpoint-2-q1">
+    <p class="lead">Three changes reach the route dimension this month. Which one needs a new version row?</p>
+    <div class="opts">
+      <div class="opt" data-ok data-k="A">Route R03 moves from the North to the Central depot</div>
+      <div class="opt" data-why="A spelling fix should correct history too: old reports never meant the misspelt name" data-k="B">A typo in the Arabic name of R06 is corrected</div>
+      <div class="opt" data-why="A colour on a map is presentation, not an attribute any figure is grouped by" data-k="C">The map colour of R10 changes</div>
+      <div class="opt" data-why="Treats the timetable, a fact, as an attribute of the route" data-k="D">The number of trips on R11 changes</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> Past R03 trips belonged to North. If the depot is overwritten, North's history loses them and Central's gains them: a type 2 version keeps each trip with the depot it really had.</div>
+  </div>
+  <aside class="notes"><p>Answer: A. The trips option is a good discussion: trip counts live in the fact table, so they change without touching the dimension.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-2-2" data-auto="lab" data-lab="2.2" data-label="Lab 2.2" data-n="20" data-session="2">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 2.2 · 25 min</div><h2>A re-routed line and two calendars</h2><p class="lead small">Query the re-routed R07 through the type 2 route dimension and report ridership by Hijri month and in Ramadan from the dual-calendar date table.</p><a class="nb" href="../labs/D2_2_route_history.ipynb">D2_2_route_history.ipynb</a></div><ul class="checklist"><li>Read the two versions of R07 <span class="min">4 min</span></li><li>Join trips to the version valid on the service date <span class="min">8 min</span></li><li>Compare boardings per kilometre before and after <span class="min">6 min</span></li><li>Report ridership by Hijri month and in Ramadan <span class="min">7 min</span></li><li class="stretch">✱ Stretch: Eid days against ordinary Fridays</li></ul></div>
+  <aside class="notes"><p>AI-tutor. The check on "one row per trip" catches the missing IS NULL branch at once. Taps per kilometre is per departed-trip kilometre; some participants divide by the route length only. The safety nets supply the reference rows for R07 and the Hijri months.</p></aside>
+</section>
+
+<!-- ======================= SESSION 3 ======================= -->
+<section class="slide section" id="s3" data-auto="section" data-session="3" data-n="21">
+  <div class="kicker">Session 3</div>
+  <h1>Fan-out and join paths</h1>
+  <ul class="bullets outcomes"><li>Recognise a join that repeats rows</li><li>Write a reconciliation test against a source total</li><li>Aggregate each fact before joining</li></ul>
+  <div class="sess-no">03</div>
+</section>
+
+<section class="slide" id="report-four-times" data-lo="LO3" data-n="22" data-session="3">
+  <div class="kicker">A report that adds up wrong</div>
+  <h2>Yasmeen's route report counts 334,786 taps in a month of 84,063</h2>
+  <pre class="code s" data-file="the route report, as written"><code class="language-sql"><span class="hljs-keyword">SELECT</span> t.route_id, <span class="hljs-built_in">count</span>(b.tap_id) <span class="hljs-keyword">AS</span> taps,
+       <span class="hljs-built_in">avg</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> p.delay_min <span class="hljs-keyword">BETWEEN</span> <span class="hljs-number">-1</span> <span class="hljs-keyword">AND</span> <span class="hljs-number">5</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">1.0</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0.0</span> <span class="hljs-keyword">END</span>)
+<span class="hljs-keyword">FROM</span> fct_trip t
+<span class="hljs-keyword">JOIN</span> fct_boarding  b <span class="hljs-keyword">ON</span> b.trip_id <span class="hljs-operator">=</span> t.trip_id
+<span class="hljs-keyword">JOIN</span> fct_timepoint p <span class="hljs-keyword">ON</span> p.trip_id <span class="hljs-operator">=</span> t.trip_id
+<span class="hljs-keyword">WHERE</span> t.service_date <span class="hljs-keyword">BETWEEN</span> ... <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> t.route_id</code></pre>
+  <aside class="notes"><p>From Lab 2.3. Ask the room to find the fault before the next slide. Nothing in the SQL is invalid; every join condition is right. The fault is that two "many" sides meet at one trip.</p></aside>
+</section>
+
+<section class="slide" id="fan-trap" data-lo="LO3" data-n="23" data-session="3">
+  <div class="kicker">The fan trap</div>
+  <h2>Joining two "many" sides through one row multiplies both</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>8,268 trips</b>September</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>84,063 rows</b>each trip once per tap</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>334,786 rows</b>each tap once per timepoint</div>
+  </div>
+  <div class="callout warn mt"><b>3.98 times.</b> Every tap is repeated by the number of timepoints its trip reached: four, or two for a partial trip.</div>
+  <aside class="notes"><p>Row counts from Lab 2.3, task 2. Counting rows after each join is the fastest diagnosis there is. The general rule: a join is safe for a measure when it goes to the "one" side of that measure's fact.</p></aside>
+</section>
+
+<section class="slide" id="chasm-weighting" data-lo="LO3" data-n="24" data-session="3">
+  <div class="kicker">The quieter error</div>
+  <h2>The punctuality column is wrong too, and nothing looks odd</h2>
+  <div class="cols cols-2">
+    <div class="stat center"><div class="big">49.0%</div><div class="lbl">R01 timepoint punctuality in the report</div></div>
+    <div class="stat center"><div class="big">51.1%</div><div class="lbl">R01 timepoint punctuality, computed alone</div></div>
+  </div>
+  <p class="lead mt">After the join each arrival is weighted by the taps of its trip: busy, late trips count more.</p>
+  <aside class="notes"><p>This is the chasm trap: two facts (taps, timepoints) related only through a shared dimension (trips). The tap total is obviously wrong; the punctuality is only slightly wrong, so nobody notices it. That is why reconciliation tests check totals, and why the model aggregates each fact separately.</p></aside>
+</section>
+
+<section class="slide" id="reconciliation-test" data-lo="LO3" data-n="25" data-session="3">
+  <div class="kicker">The test that catches it</div>
+  <h2>A reconciliation test compares the report with the source counted another way</h2>
+  <pre class="code s" data-file="Lab 2.3 · reconciles"><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">reconciles</span>(<span class="hljs-params">df</span>) -&gt; <span class="hljs-built_in">bool</span>:
+    source = W.scalar(con, <span class="hljs-string">&quot;&quot;&quot;SELECT count(*) FROM fct_boarding
+                              WHERE service_date BETWEEN ... AND trip_id IS NOT NULL&quot;&quot;&quot;</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(df.taps.<span class="hljs-built_in">sum</span>()) == <span class="hljs-built_in">int</span>(source)</code></pre>
+  <ul class="bullets small mt-s">
+    <li>Write it first and watch it <b>fail on the faulty report</b></li>
+    <li>Then fix the query, and watch it pass</li>
+  </ul>
+  <aside class="notes"><p>A test that has never failed has not shown it can catch anything. This is the same habit as the toy test of Lab 1.3. In a pipeline these tests run on every load; dbt and similar tools call them data tests.</p></aside>
+</section>
+
+<section class="slide" id="aggregate-then-join" data-lo="LO3" data-n="26" data-session="3">
+  <div class="kicker">The fix</div>
+  <h2>Aggregate each fact to the shared grain, then join</h2>
+  <pre class="code s" data-file="Lab 2.3 · fixed_report"><code class="language-sql"><span class="hljs-keyword">WITH</span> taps  <span class="hljs-keyword">AS</span> (<span class="hljs-keyword">SELECT</span> t.route_id, <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> taps
+               <span class="hljs-keyword">FROM</span> fct_boarding b <span class="hljs-keyword">JOIN</span> fct_trip t <span class="hljs-keyword">USING</span> (trip_id) ... <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> <span class="hljs-number">1</span>),
+     punct <span class="hljs-keyword">AS</span> (<span class="hljs-keyword">SELECT</span> t.route_id, <span class="hljs-built_in">avg</span>(...) <span class="hljs-keyword">AS</span> timepoint_on_time
+               <span class="hljs-keyword">FROM</span> fct_timepoint p <span class="hljs-keyword">JOIN</span> fct_trip t <span class="hljs-keyword">USING</span> (trip_id) ... <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> <span class="hljs-number">1</span>)
+<span class="hljs-keyword">SELECT</span> route_id, taps, timepoint_on_time
+<span class="hljs-keyword">FROM</span> taps <span class="hljs-keyword">JOIN</span> punct <span class="hljs-keyword">USING</span> (route_id)</code></pre>
+  <p class="small mt-s">Each fact joins only "up" to trips, which is many-to-one; the two results meet at one row per route.</p>
+  <aside class="notes"><p>Point at the direction of each join: taps to trips, timepoints to trips, both many-to-one. The final join is one-to-one on route_id. This is exactly the shape of the SQL the semantic layer generates in Session 4.</p></aside>
+</section>
+
+<section class="slide" id="join-paths-rule" data-lo="LO3" data-n="27" data-session="3">
+  <div class="kicker">The rule a model enforces</div>
+  <h2>A semantic model joins only towards the "one" side</h2>
+  <ul class="bullets">
+    <li>Every relationship is declared <b>from</b> the many side <b>to</b> the one side</li>
+    <li>A metric is aggregated in its own dataset, joining only along those arrows</li>
+    <li>A grouping that needs a "many" side is <b>refused</b>, not computed</li>
+    <li>Two metrics of two facts are aggregated apart, then joined on the dimensions asked for</li>
+  </ul>
+  <div class="trace s mt-s">
+    <div class="ev user"><b>request</b>boardings by timepoints.tp_seq</div>
+    <div class="ev error"><b>refused</b>no many-to-one path from boardings to timepoints: grouping would repeat rows</div>
+  </div>
+  <aside class="notes"><p>The refusal text is the real message of the course compiler, from the stretch of Lab 2.3. MetricFlow and Cube enforce the same idea with entities and join types. A refusal is a feature: it is the model saying "this question has no single answer at this grain".</p></aside>
+</section>
+
+<section class="slide" id="checkpoint-3" data-lo="LO3" data-n="28" data-session="3">
+  <div class="kicker">Checkpoint</div>
+  <h2>Where does the report go wrong?</h2>
+  <div class="quiz" data-type="single" data-lo="LO3" data-id="checkpoint-3-q1">
+    <p class="lead">A report joins complaints and taps to routes in one query and counts both per route. Complaints come out about 7,000 times too high. What happened?</p>
+    <div class="opts">
+      <div class="opt" data-why="Duplicates in the source would inflate both counts by a small factor, not by thousands" data-k="A">The complaints table has duplicate rows</div>
+      <div class="opt" data-ok data-k="B">Each complaint was repeated once per tap of its route: two facts met through one dimension</div>
+      <div class="opt" data-why="A missing filter changes which rows are counted, not how many times each one is" data-k="C">The date filter was left out</div>
+      <div class="opt" data-why="An inner join can drop rows; it cannot multiply them by thousands" data-k="D">The join should have been a left join</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> Routes are the "one" side of both facts. Joining both to the same route row pairs every complaint with every tap of that route. Aggregate each per route, then join.</div>
+  </div>
+  <aside class="notes"><p>Answer: B. The size of the inflation (thousands) points at a many-to-many pairing; a duplicate would give a factor of 2 or 3. Ask how a reconciliation test would have caught it.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-2-3" data-auto="lab" data-lab="2.3" data-label="Lab 2.3" data-n="29" data-session="3">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 2.3 · 25 min</div><h2>The double-counting join</h2><p class="lead small">Find the join that inflates boardings in a route report, write a reconciliation test that fails on it, and fix the query by aggregating before joining.</p><a class="nb" href="../labs/D2_3_fan_out.ipynb">D2_3_fan_out.ipynb</a></div><ul class="checklist"><li>Run the route report as written <span class="min">5 min</span></li><li>Find the join that repeats rows <span class="min">6 min</span></li><li>Write a reconciliation test that fails on it <span class="min">6 min</span></li><li>Fix the query by aggregating before joining <span class="min">8 min</span></li><li class="stretch">✱ Stretch: Ask the semantic layer for the same report and read its refusal</li></ul></div>
+  <aside class="notes"><p>AI-tutor. Insist that the test is written and seen to fail before the fix. Participants who fix the taps but keep the punctuality from the joined query miss the chasm weighting: compare their R01 punctuality with 51.1%. The stretch shows the semantic layer refusing the same grouping.</p></aside>
+</section>
+
+<!-- ======================= SESSION 4 ======================= -->
+<section class="slide section" id="s4" data-auto="section" data-session="4" data-n="30">
+  <div class="kicker">Session 4</div>
+  <h1>Metrics in an open specification</h1>
+  <ul class="bullets outcomes"><li>Write datasets, fields, relationships and metrics in an Apache Ossie document</li><li>Tell a dataset-scoped from a model-scoped metric</li><li>Validate a model and run test queries against it</li></ul>
+  <div class="sess-no">04</div>
+</section>
+
+<section class="slide" id="define-once" data-lo="LO3" data-n="31" data-session="4">
+  <div class="kicker">The point of a semantic layer</div>
+  <h2>Write each metric once; every tool asks for it by name</h2>
+  <div class="cols cols-2">
+    <div class="card c-coral"><h4>Without it</h4><p class="small mb0">Each dashboard, notebook and agent writes its own SQL for "on-time rate". Three teams, three queries, three numbers.</p></div>
+    <div class="card c-teal"><h4>With it</h4><p class="small mb0">The model holds datasets, joins and metrics. A tool asks for <code>on_time_rate</code> by route type; the layer writes the SQL.</p></div>
+  </div>
+  <div class="tools mt"><span>MetricFlow</span><span>Cube Core</span><span>Apache Ossie files</span></div>
+  <aside class="notes"><p>Tool names are examples, not endorsements: MetricFlow (dbt Labs, Apache-2.0), Cube Core (Cube's open semantic layer), and Apache Ossie as the interchange format. This course writes the model as an Ossie document and compiles it with a small course module, so that it runs anywhere in a few seconds; the converters project translates Ossie to dbt MetricFlow, Cube and others. Sources: github.com/dbt-labs/metricflow, github.com/cube-js/cube, github.com/apache/ossie-converters.</p></aside>
+</section>
+
+<section class="slide" id="ossie-is" data-lo="LO3" data-n="32" data-session="4">
+  <div class="kicker">An open specification</div>
+  <h2>Apache Ossie is a vendor-neutral file format for semantic models</h2>
+  <ul class="bullets">
+    <li>Formerly <b>Open Semantic Interchange</b> (OSI); renamed on entering the Apache Incubator in 2026</li>
+    <li>One YAML or JSON document per model: datasets, fields, relationships, metrics</li>
+    <li>A JSON Schema checks the document; converters move it between tools</li>
+    <li>The version in this course, <b>0.3.0.dev0</b>, is still in development: re-check before each cohort</li>
+  </ul>
+  <aside class="notes"><p>The project's announcement says the name changed and the specification did not. Its README lists converters for dbt, Cube, Snowflake, Polaris and others. Status is perishable: the catalog marks "the status of Apache Ossie" as a refresh item. Sources: ossie.apache.org/updates/ossie-enters-apache-incubator/ and github.com/apache/ossie, core-spec/spec.md (version history).</p></aside>
+</section>
+
+<section class="slide" id="ossie-document" data-lo="LO3" data-n="33" data-session="4">
+  <div class="kicker">What the file holds</div>
+  <h2>Datasets with fields, relationships from many to one, metrics</h2>
+  <pre class="code s" data-file="labs/data/semantic/wadi_noor_transit.yaml (excerpt)"><code class="language-yaml"><span class="hljs-attr">datasets:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">trips</span>
+    <span class="hljs-attr">source:</span> <span class="hljs-string">SELECT</span> <span class="hljs-string">t.*,</span> <span class="hljs-string">r.route_key</span> <span class="hljs-string">FROM</span> <span class="hljs-string">fct_trip</span> <span class="hljs-string">t</span> <span class="hljs-string">LEFT</span> <span class="hljs-string">JOIN</span> <span class="hljs-string">dim_route</span> <span class="hljs-string">r</span> <span class="hljs-string">ON</span> <span class="hljs-string">...</span>
+    <span class="hljs-attr">primary_key:</span> [<span class="hljs-string">trip_id</span>]
+    <span class="hljs-attr">fields:</span>
+      <span class="hljs-bullet">-</span> {<span class="hljs-attr">name:</span> <span class="hljs-string">status</span>, <span class="hljs-attr">expression:</span> {<span class="hljs-attr">sql:</span> <span class="hljs-string">status</span>}, <span class="hljs-attr">dimension:</span> {}}
+    <span class="hljs-attr">metrics:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">departed_trips</span>
+        <span class="hljs-attr">expression:</span> {<span class="hljs-attr">sql:</span> <span class="hljs-string">&quot;SUM(CASE WHEN status &lt;&gt; &#x27;cancelled&#x27; THEN 1 ELSE 0 END)&quot;</span>}
+<span class="hljs-attr">relationships:</span>
+  <span class="hljs-bullet">-</span> {<span class="hljs-attr">name:</span> <span class="hljs-string">trips_to_routes</span>, <span class="hljs-attr">from:</span> <span class="hljs-string">trips</span>, <span class="hljs-attr">to:</span> <span class="hljs-string">routes</span>, <span class="hljs-attr">from_columns:</span> [<span class="hljs-string">route_key</span>], <span class="hljs-attr">to_columns:</span> [<span class="hljs-string">route_key</span>]}</code></pre>
+  <aside class="notes"><p>Point at three things: the dataset's source is the as-of join of Session 2, so the version rule lives once; a field is an expression over the source; a relationship goes from the many side to the one side. The full file has seven datasets and ten relationships.</p></aside>
+</section>
+
+<section class="slide" id="two-scopes" data-lo="LO3" data-n="34" data-session="4">
+  <div class="kicker">Two places for a metric</div>
+  <h2>Dataset metrics aggregate one dataset; model metrics combine them</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>Dataset-scoped</h4><p class="small mb0"><code>boardings.unique_cards</code>: <code>COUNT(DISTINCT card_id)</code>, bare field names of its own dataset.</p></div>
+    <div class="card c-cyan"><h4>Model-scoped</h4><p class="small mb0"><code>on_time_rate</code>: <code>AGG(trips.on_time_departures) / AGG(trips.departed_trips)</code>, each part aggregated first.</p></div>
+  </div>
+  <div class="callout tip mt"><b>AGG() is the ratio of sums.</b> The division happens after both parts are aggregated, so the layer cannot average ratios by mistake.</div>
+  <aside class="notes"><p>The specification allows a model-scoped metric to read a dataset metric only through AGG(dataset.metric). That rule is how Day 1's ratio-of-sums discipline is enforced by the file itself. Cross-fact ratios such as complaints per 10,000 taps use the same form, and the layer aggregates the two facts separately, as in Session 3.</p></aside>
+</section>
+
+<section class="slide" id="compiled-sql" data-lo="LO3" data-n="35" data-session="4">
+  <div class="kicker">What the layer generates</div>
+  <h2>One request, compiled to the SQL of Session 3</h2>
+  <div class="trace s">
+    <div class="ev user"><b>request</b>on_time_rate by routes.route_type, where dates.gregorian_month = '2026-09'</div>
+    <div class="ev model"><b>datasets</b>one common table expression each for trips, routes, dates</div>
+    <div class="ev call"><b>aggregate</b>trips joined to routes and dates (many-to-one), summed by route type</div>
+    <div class="ev final"><b>divide</b>on_time_departures / departed_trips: express 89.3%, feeder 82.8%, trunk 67.0%</div>
+  </div>
+  <aside class="notes"><p>Show the real compiled SQL with m.compile(...) in Lab 2.4, task 3; participants read it there. The numbers are September from the test queries. The trunk routes' low figure returns on Day 3, in the Simpson reversal.</p></aside>
+</section>
+
+<section class="slide" id="labels-and-roles" data-lo="LO3" data-n="36" data-session="4">
+  <div class="kicker">What the interchange does not carry</div>
+  <h2>Access rules ride in an extension that other tools may ignore</h2>
+  <div class="cols cols-2">
+    <pre class="code s" data-file="the model's extension"><code class="language-yaml"><span class="hljs-attr">nonportable_extensions:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">vendor_name:</span> <span class="hljs-string">WADI_NOOR</span>
+    <span class="hljs-attr">data:</span>
+      <span class="hljs-attr">roles:</span>
+        <span class="hljs-attr">network_analyst:</span> {<span class="hljs-attr">clearance:</span> <span class="hljs-string">Public</span>}
+        <span class="hljs-attr">east_depot_manager:</span>
+          <span class="hljs-attr">clearance:</span> <span class="hljs-string">Public</span>
+          <span class="hljs-attr">row_filter:</span> <span class="hljs-string">&quot;routes.depot = &#x27;East&#x27;&quot;</span></code></pre>
+    <ul class="bullets small">
+      <li>Fields carry a classification: <code>card_id</code> and <code>complaint_text</code> are Restricted</li>
+      <li>A role may count a Restricted field, never group, filter or show it</li>
+      <li>Ossie defines no access rules: <b>every consumer must enforce them again</b></li>
+    </ul>
+  </div>
+  <aside class="notes"><p>The specification says plainly that non-portable extensions are vendor state Ossie carries and does not interpret. That is a design fact worth stating to a governance officer: moving a model between tools can silently drop its access rules. Access across many roles and areas is DS-408; here there are two roles. Source: Ossie core spec, "Non-portable Extensions".</p></aside>
+</section>
+
+<section class="slide" id="test-queries" data-lo="LO3" data-n="37" data-session="4">
+  <div class="kicker">Proving the model</div>
+  <h2>25 test queries, each with a reference computed without the model</h2>
+  <ul class="bullets">
+    <li>Each test is a request (metrics, dimensions, filters) and its expected rows</li>
+    <li>The expected rows come from <b>independent SQL</b>, written by hand, not from the layer</li>
+    <li>They cover ratios, distinct counts, Hijri months, the R07 versions, holidays and the October week</li>
+    <li>25 of 25 is the evidence for the third course outcome</li>
+  </ul>
+  <aside class="notes"><p>The reference queries live in labs/_tools/make_reference.py, written in plain SQL over the warehouse and never through wnt_semantic.py; participants receive only the expected rows in data/semantic/test_queries.yaml. A test whose reference was produced by the system under test proves only that the system agrees with itself. The capstone asks for the same on the fares area.</p></aside>
+</section>
+
+<section class="slide" id="checkpoint-4" data-lo="LO3" data-n="38" data-session="4">
+  <div class="kicker">Checkpoint</div>
+  <h2>Where does the cancellation rate go?</h2>
+  <div class="quiz" data-type="single" data-lo="LO3" data-id="checkpoint-4-q1">
+    <p class="lead">You add <code>cancellation_rate</code> to the model. The trips dataset already has <code>cancelled_trips</code> and <code>scheduled_trips</code>. What do you write?</p>
+    <div class="opts">
+      <div class="opt" data-why="A mean of a per-trip 0 or 1 works here only by accident, and the pattern breaks for any ratio of two different sums" data-k="A">A dataset metric AVG(status = 'cancelled') on trips, used by every ratio</div>
+      <div class="opt" data-why="Copies the formula into each report: the definition is no longer written once" data-k="B">A SQL snippet in each dashboard that needs it</div>
+      <div class="opt" data-why="Averages daily rates: days with few trips weigh as much as busy days" data-k="C">A model metric that averages a daily cancellation rate</div>
+      <div class="opt" data-ok data-k="D">A model metric AGG(trips.cancelled_trips) / AGG(trips.scheduled_trips)</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> It reuses the two governed counts and divides after aggregating, so it is a ratio of sums for any grouping, written once.</div>
+  </div>
+  <aside class="notes"><p>Answer: D. Option A gives the right number for this particular metric and is a fair discussion point; the reason to prefer D is that the same pattern serves every ratio and keeps the parts governed.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-2-4" data-auto="lab" data-lab="2.4" data-label="Lab 2.4" data-n="39" data-session="4">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 2.4 · 25 min</div><h2>Five metrics in the semantic layer</h2><p class="lead small">Validate the starter model against the Ossie schema, add five catalogue metrics, and run the 25 test queries against their reference values.</p><a class="nb" href="../labs/D2_4_semantic_layer.ipynb">D2_4_semantic_layer.ipynb</a></div><ul class="checklist"><li>Validate the starter model <span class="min">4 min</span></li><li>Add the three boardings metrics <span class="min">7 min</span></li><li>Add the two model-level ratios <span class="min">6 min</span></li><li>Run the 25 test queries <span class="min">8 min</span></li><li class="stretch">✱ Stretch: Run the same queries as the East depot manager</li></ul></div>
+  <aside class="notes"><p>AI-tutor. Typical errors: a qualified name in a dataset metric (boardings.card_id inside COUNT), which validation rejects with a clear message; a model metric without AGG(). Running the 25 tests takes about fifteen seconds on a laptop: the journeys metric computes a window over all taps. Anyone who did not finish still gets the reference model for Days 3 and 4.</p></aside>
+</section>
+
+<section class="slide" id="wrap-up" data-n="40" data-session="4">
+  <div class="kicker">Day 2 · wrap-up</div>
+  <h2>Three things to keep</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Grain and history</h4><p class="small mb0">Prove each grain; join a fact to the dimension version valid on its date.</p></div>
+    <div class="card c-coral"><h4>Aggregate, then join</h4><p class="small mb0">Count rows after each join; reconcile totals; never join two "many" sides.</p></div>
+    <div class="card c-purple"><h4>Define once</h4><p class="small mb0">One open document holds datasets, joins and metrics; 25 tests prove it.</p></div>
+  </div>
+  <aside class="notes"><p>Ask which of the three participants would explain first to their own team. The model of today is the input of tomorrow's dashboard.</p></aside>
+</section>
+
+<section class="slide dark" id="next" data-label="Next" data-n="41" data-session="4">
+  <div class="kicker">Next</div>
+  <h2>Day 3: Show and investigate</h2>
+  <p class="lead">Tomorrow the model feeds a dashboard for the operations director, built in two languages and under three seconds, and you trace a drop in October ridership to its source.</p>
+  <aside class="notes"><p>Ask participants to bring one dashboard from their own work (a screenshot without sensitive data) for the first session's discussion. Day 3 starts from the reference model, so nobody depends on finishing Lab 2.4.</p></aside>
+</section>
+</div>
+<script type="application/json" id="academy-data">{"v":1,"engine":"1.0.0","build":{"at":"2026-11-15T18:46:23Z","version":"2027.1.0","commit":"6720e14"},"course":{"id":"ds-307","code":"DS-307","title":"Metrics, Semantic Models and Dashboards","track":"data-science","lang":"en","dir":"ltr","url":"https://sdaiaacademy.github.io/ds-307/","repo":"SDAIAAcademy/ds-307","home":"../index.html"},"deck":{"id":"day2","kind":"day","day":2,"label":"Day 2","title":"Model once","prev":"day1.html","next":"day3.html","md":"day2.md","alt":{}},"sessions":[{"n":1,"label":"Session 1","title":"Star schemas for analysis","slide":"s1","outcomes":["State the grain of each fact table","Prove a key by counting","Draw the star of a subject area"],"minutes":50,"lab":{"id":"2.1","title":"Facts, dimensions and their grain","minutes":25,"href":"../labs/D2_1_star_schema.ipynb"}},{"n":2,"label":"Session 2","title":"Changing dimensions and calendars","slide":"s2","outcomes":["Join a fact to the dimension version valid on its date","Compare a route before and after a change","Report by Hijri month and in Ramadan from one date table"],"minutes":50,"lab":{"id":"2.2","title":"A re-routed line and two calendars","minutes":25,"href":"../labs/D2_2_route_history.ipynb"}},{"n":3,"label":"Session 3","title":"Fan-out and join paths","slide":"s3","outcomes":["Recognise a join that repeats rows","Write a reconciliation test against a source total","Aggregate each fact before joining"],"minutes":50,"lab":{"id":"2.3","title":"The double-counting join","minutes":25,"href":"../labs/D2_3_fan_out.ipynb"}},{"n":4,"label":"Session 4","title":"Metrics in an open specification","slide":"s4","outcomes":["Write datasets, fields, relationships and metrics in an Apache Ossie document","Tell a dataset-scoped from a model-scoped metric","Validate a model and run test queries against it"],"minutes":50,"lab":{"id":"2.4","title":"Five metrics in the semantic layer","minutes":25,"href":"../labs/D2_4_semantic_layer.ipynb"}}],"slides":[{"id":"title","n":1,"title":"Model once","kind":"title","session":0,"hash":"3104d61c","md":"#### [day2#title] Model once\n\n*SDAIA Academy · Metrics, Semantic Models and Dashboards*\n\nDay 2: One semantic model in which each metric is defined once\n\nData Science Track · 4 teaching days + capstone day · 4 sessions · 4 labs · DS-307","notes":"Welcome back. Yesterday the numbers got definitions; today they get a model, so that each one is computed in one place. Ask: who has seen the same metric computed in two dashboards with two different SQL queries? That is the problem a semantic model removes.","minutes":null,"lo":[]},{"id":"agenda","n":2,"title":"Model once","kind":"content","session":0,"hash":"50cd3c37","md":"#### [day2#agenda] Model once\n\n*Today*\n\n- **Session 1 · Star schemas for analysis**: Facts at a stated grain, dimensions that describe them\n- **Session 2 · Changing dimensions and calendars**: Type 2 history for a re-routed line, and two calendars in one date table\n- **Session 3 · Fan-out and join paths**: Fan and chasm traps, and the test that catches them\n- **Session 4 · Metrics in an open specification**: A semantic model as an open document: datasets, relationships, metrics","notes":"","minutes":null,"lo":[]},{"id":"review-day1","n":3,"title":"Which part of the definition is missing?","kind":"quiz","session":0,"hash":"a21a3766","md":"#### [day2#review-day1] Which part of the definition is missing?\n\n*Review of Day 1*\n\n**Question:** \"journeys: SUM(journey_start) on boarding_linked; one card tap; filters none; unit journeys; owner Dhuha Al-Rowais, planning; limits: a quick return counts as a transfer.\" Which of the eight parts is missing?\n\n- A. The grain\n- B. The owner\n- C. The time logic\n- D. The limits","notes":"Answer: C. The catalogue entry says \"service_date of the tap; the 60-minute look-back crosses midnight\". If the room hesitates between options, read the eight parts aloud from yesterday's slide.","minutes":null,"lo":["LO2"]},{"id":"s1","n":4,"title":"Star schemas for analysis","kind":"section","session":1,"hash":"c87a2349","md":"#### [day2#s1] Star schemas for analysis\n\n*Session 1*\n\n- State the grain of each fact table\n- Prove a key by counting\n- Draw the star of a subject area","notes":"","minutes":null,"lo":["LO3"]},{"id":"why-a-model","n":5,"title":"A definition says what a number means; a model computes it the same way everywhere","kind":"content","session":1,"hash":"41c627a6","md":"#### [day2#why-a-model] A definition says what a number means; a model computes it the same way everywhere\n\n*From catalogue to model*\n\n1. **Catalogue** meaning, owner, limits (Day 1)\n2. **Star schema** facts at a grain, dimensions to slice by\n3. **Semantic model** each metric written once, joins decided once\n4. **Every consumer** dashboard, notebook, agent","notes":"The order of the day: Session 1 the star, Session 2 the history and the calendars, Session 3 the joins that go wrong, Session 4 the model written as an open document. Platform-scale semantic layers across many business areas are DS-408; here it is one area, network performance.","minutes":null,"lo":["LO3"]},{"id":"facts-and-dimensions","n":6,"title":"Facts record events at a grain; dimensions describe them","kind":"content","session":1,"hash":"84329cf3","md":"#### [day2#facts-and-dimensions] Facts record events at a grain; dimensions describe them\n\n*Two kinds of table*\n\n- **Facts.** Trips, timepoint arrivals, taps, complaints. Many rows, numeric columns to aggregate, foreign keys to dimensions.\n- **Dimensions.** Routes, dates, vehicles, depots. Few rows, descriptive columns to group and filter by, one key each.\n\n> **Ask of every column:** do I add it up, or do I slice by it? The answer places it in a fact or in a dimension.","notes":"A quick exercise: call out columns and ask the room to say \"fact\" or \"dimension\": arr_delay_min (fact measure), depot (dimension), fare_type (an attribute of the tap kept on the fact, a degenerate dimension), route_name_ar (dimension).","minutes":null,"lo":["LO3"]},{"id":"star-of-wadi-noor","n":7,"title":"Four facts share dates, routes and vehicles","kind":"content","session":1,"hash":"691f5549","md":"#### [day2#star-of-wadi-noor] Four facts share dates, routes and vehicles\n\n*The star*\n\nFigure: Facts are rectangles, dimensions rounded. Every line is many-to-one, from the fact to what it points at.","notes":"This is the star participants draw in Lab 2.1, task 3. Point out the two lines that go from a fact to another fact: taps and timepoints both point to trips. That makes trips a dimension of taps (one trip, many taps), which is how the semantic model treats it, and it is why the fan-out of Session 3 is possible.","minutes":null,"lo":["LO3"]},{"id":"grain-recap","n":8,"title":"A grain is a sentence; a key test proves it","kind":"content","session":1,"hash":"824c857d","md":"#### [day2#grain-recap] A grain is a sentence; a key test proves it\n\n*Recap from FN-104*\n\n```sql\n-- file: Lab 2.1 · key_test\nSELECT count(*)                         AS rows,\n       count(DISTINCT (trip_id, tp_seq)) AS keys,\n       count(*) FILTER (WHERE trip_id IS NULL\n                         OR tp_seq IS NULL) AS empty\nFROM fct_timepoint;\n```\n\n- `fct_timepoint`: one departed trip at one timepoint\n- 329,188 rows, 329,188 keys, none empty: the grain holds\n- Grain, keys and orphans were taught in FN-104, Day 1; today they are the input of a model","notes":"One slide only: FN-104 is the prerequisite and taught key tests and anti joins in full. If several participants struggle with the counting, pair them with someone who passed FN-104 recently. Numbers from Lab 2.1.","minutes":null,"lo":["LO3"]},{"id":"natural-key-fails","n":9,"title":"dim_route has 13 rows for 12 routes","kind":"content","session":1,"hash":"681a3d61","md":"#### [day2#natural-key-fails] dim_route has 13 rows for 12 routes\n\n*The planted surprise*\n\n| route_key | route_id | route_name_en | length_km | valid_from | valid_to |\n| --- | --- | --- | --- | --- | --- |\n| 7 | R07 | Al-Rawdah Feeder | 11.4 | 2026-01-01 | 2026-05-31 |\n| 8 | R07 | Al-Rawdah Hospital Feeder | 15.8 | 2026-06-01 | (open) |\n\n- `route_id` is the natural key riders use; `route_key` identifies one version\n- A join on `route_id` returns **91,418 rows for 85,010 trips**: every R07 trip twice","notes":"From Lab 2.1, task 4. R07 was extended to Al-Rawdah Hospital on 1 June 2026. Ask: which version should a January trip join? Session 2 answers with the as-of join.","minutes":null,"lo":["LO3"]},{"id":"conformed-dimensions","n":10,"title":"One date table and one route table serve every fact","kind":"content","session":1,"hash":"04716a63","md":"#### [day2#conformed-dimensions] One date table and one route table serve every fact\n\n*Conformed dimensions*\n\n- Trips and taps grouped by the same `dim_date.week_start` mean the same week\n- A second date table with Monday weeks would bring back yesterday's disagreement\n- Conformed means: **same keys, same attributes, same meaning** for every fact\n- Lab 2.1's stretch checks that every service date of every fact is a row of `dim_date`","notes":"Conformed dimensions are what lets the dashboard on Day 3 put trips and taps on one chart by week without a second argument. In a platform with many subject areas this becomes a design discipline of its own (DS-408).","minutes":null,"lo":["LO3"]},{"id":"checkpoint-1","n":11,"title":"What is the grain of the timepoint table?","kind":"quiz","session":1,"hash":"85744bcd","md":"#### [day2#checkpoint-1] What is the grain of the timepoint table?\n\n*Checkpoint*\n\n**Question:** `fct_timepoint` has 329,188 rows, 82,000 distinct `trip_id` values and `tp_seq` from 1 to 4. What does one row mean?\n\n- A. One trip\n- B. One timepoint of a route\n- C. One scheduled minute of a trip\n- D. One departed trip at one timepoint","notes":"Answer: D. The figure of 82,000 trips is rounded on purpose; the exact count of departed trips is in the lab. If many pick A, return to the key-test slide.","minutes":null,"lo":["LO3"]},{"id":"lab-2-1","n":12,"title":"Facts, dimensions and their grain","kind":"lab","session":1,"hash":"f88559bb","md":"#### [day2#lab-2-1] Facts, dimensions and their grain\n\nLab 2.1 · 25 min\n\nName the grain of each warehouse table, prove it with key tests, draw the star and find the dimension whose natural key is not unique.\n\n[D2_1_star_schema.ipynb](https://sdaiaacademy.github.io/ds-307/labs/D2_1_star_schema.ipynb)\n\n- [ ] Name the grain of each table (5 min)\n- [ ] Prove the grains with key tests (8 min)\n- [ ] Draw the star: facts, dimensions, keys (6 min)\n- [ ] Find the dimension whose natural key fails (6 min)\n- [ ] ✱ Stretch: Check that dates conform across the two facts","notes":"AI-off. The common error is to write route_id as the key of dim_route and stop when the test fails: the task asks them to find out why. Point participants who finish early to the stretch (conformed dates). The safety nets supply the reference keys.","minutes":null,"lo":[]},{"id":"s2","n":13,"title":"Changing dimensions and calendars","kind":"section","session":2,"hash":"3686244e","md":"#### [day2#s2] Changing dimensions and calendars\n\n*Session 2*\n\n- Join a fact to the dimension version valid on its date\n- Compare a route before and after a change\n- Report by Hijri month and in Ramadan from one date table","notes":"","minutes":null,"lo":["LO3"]},{"id":"dimensions-change","n":14,"title":"When a route changes, decide whether history changes with it","kind":"content","session":2,"hash":"f5177318","md":"#### [day2#dimensions-change] When a route changes, decide whether history changes with it\n\n*Slowly changing dimensions*\n\n- **Type 1: overwrite.** The new value replaces the old everywhere, past included. Right for corrections: a misspelt name.\n- **Type 2: add a version.** A new row with its own key and validity dates. Right for real changes: a longer route, a new depot.\n\n> **The test.** Would a January figure be wrong if it used the June value? Then it is type 2.","notes":"Other types exist (keeping a previous value in a column, separate history tables). Type 1 and type 2 cover most needs and are the two this course uses. FN-104 met the same idea as courier stints.","minutes":null,"lo":["LO3"]},{"id":"as-of-join","n":15,"title":"Join each fact row to the version valid on its date","kind":"content","session":2,"hash":"f2280521","md":"#### [day2#as-of-join] Join each fact row to the version valid on its date\n\n*The as-of join*\n\n```sql\n-- file: Lab 2.2 · trips_with_version\nSELECT t.*, r.route_key, r.route_name_en, r.length_km\nFROM fct_trip t\nJOIN dim_route r\n  ON r.route_id = t.route_id\n AND t.service_date >= r.valid_from\n AND (r.valid_to IS NULL OR t.service_date \u003c= r.valid_to)\n```\n\n85,010 trips in, 85,010 rows out. The open `valid_to` means \"still valid\".","notes":"Walk through the three conditions. Common errors: forgetting the IS NULL branch, which drops every trip of the current version; using BETWEEN with a NULL end. A warehouse often stores the surrogate key on the fact at load time instead; here the semantic model's dataset source does the as-of join, so the rule lives in one place.","minutes":null,"lo":["LO3"]},{"id":"r07-before-after","n":16,"title":"Per kilometre, R07 barely changed; per trip, it jumped","kind":"content","session":2,"hash":"b428fd42","md":"#### [day2#r07-before-after] Per kilometre, R07 barely changed; per trip, it jumped\n\n*Why the version matters*\n\n| Version | Length | Departed trips | Taps | Taps per trip-km |\n| --- | --- | --- | --- | --- |\n| Al-Rawdah Feeder (Jan to May) | 11.4 | 3,068 | 22,716 | 0.649 |\n| Al-Rawdah Hospital Feeder (Jun to Oct) | 15.8 | 3,187 | 33,513 | 0.666 |\n\n> **With the current row for every date** the first five months show 0.469 taps per km: a fall that never happened.","notes":"From Lab 2.2. Taps per trip went from 7.4 to 10.5 because the route got longer and reaches a hospital. Per kilometre, demand density is almost unchanged. Which number goes to planning depends on the question; either way it must use the right version.","minutes":null,"lo":["LO3"]},{"id":"dual-calendar","n":17,"title":"The date dimension carries the Gregorian and the Hijri calendar","kind":"content","session":2,"hash":"f9acb337","md":"#### [day2#dual-calendar] The date dimension carries the Gregorian and the Hijri calendar\n\n*Two calendars, one table*\n\n| Column | Example for 23 Sep 2026 |\n| --- | --- |\n| `gregorian_month` | 2026-09 |\n| `hijri_date` | 1448-04-12 |\n| `hijri_month_name_ar` | ربيع الآخر |\n| `week_start` | Sunday 20 Sep |\n| `holiday_en` | National Day |\n\n- Built once with the Umm al-Qura calendar (`hijridate`)\n- Every report picks a column, never a conversion of its own\n- Ramadan, the Eids and school terms are flags, not guesses","notes":"FN-104 taught the conversion itself; here the point is that it is done once, in the dimension. The Hijri date of 23 September 2026 in the generated table is 1448-04-12; check it live in Lab 2.2 if someone asks. Ramadan 1447 ran from 18 February to 19 March 2026 in this table.","minutes":null,"lo":["LO3"]},{"id":"ramadan-per-day","n":18,"title":"Compare months per service day: Ramadan ran at 2,186 taps a day","kind":"content","session":2,"hash":"64f204c1","md":"#### [day2#ramadan-per-day] Compare months per service day: Ramadan ran at 2,186 taps a day\n\n*Like with like*\n\n| Item | Value |\n| --- | --- |\n| Shaban 1447 | 2,855 |\n| Ramadan 1447 | 2,186 |\n| Shawwal 1447 | 2,642 |\n| Muharram 1448 | 3,029 |\n\nTaps per service day by Hijri month, Lab 2.2. Shawwal includes Eid al-Fitr.","notes":"Months differ in length (29 or 30 days in the Hijri calendar, 28 to 31 in the Gregorian), so totals mislead. Ramadan's service runs later in the day in this case; demand per day was lower. Next year Ramadan starts about eleven days earlier in the Gregorian calendar: a year-on-year comparison by Gregorian month would compare Ramadan with ordinary weeks.","minutes":null,"lo":["LO3"]},{"id":"checkpoint-2","n":19,"title":"Which change is type 2?","kind":"quiz","session":2,"hash":"0c8b3b23","md":"#### [day2#checkpoint-2] Which change is type 2?\n\n*Checkpoint*\n\n**Question:** Three changes reach the route dimension this month. Which one needs a new version row?\n\n- A. Route R03 moves from the North to the Central depot\n- B. A typo in the Arabic name of R06 is corrected\n- C. The map colour of R10 changes\n- D. The number of trips on R11 changes","notes":"Answer: A. The trips option is a good discussion: trip counts live in the fact table, so they change without touching the dimension.","minutes":null,"lo":["LO3"]},{"id":"lab-2-2","n":20,"title":"A re-routed line and two calendars","kind":"lab","session":2,"hash":"4c1e409e","md":"#### [day2#lab-2-2] A re-routed line and two calendars\n\nLab 2.2 · 25 min\n\nQuery the re-routed R07 through the type 2 route dimension and report ridership by Hijri month and in Ramadan from the dual-calendar date table.\n\n[D2_2_route_history.ipynb](https://sdaiaacademy.github.io/ds-307/labs/D2_2_route_history.ipynb)\n\n- [ ] Read the two versions of R07 (4 min)\n- [ ] Join trips to the version valid on the service date (8 min)\n- [ ] Compare boardings per kilometre before and after (6 min)\n- [ ] Report ridership by Hijri month and in Ramadan (7 min)\n- [ ] ✱ Stretch: Eid days against ordinary Fridays","notes":"AI-tutor. The check on \"one row per trip\" catches the missing IS NULL branch at once. Taps per kilometre is per departed-trip kilometre; some participants divide by the route length only. The safety nets supply the reference rows for R07 and the Hijri months.","minutes":null,"lo":[]},{"id":"s3","n":21,"title":"Fan-out and join paths","kind":"section","session":3,"hash":"28d82f6d","md":"#### [day2#s3] Fan-out and join paths\n\n*Session 3*\n\n- Recognise a join that repeats rows\n- Write a reconciliation test against a source total\n- Aggregate each fact before joining","notes":"","minutes":null,"lo":["LO3"]},{"id":"report-four-times","n":22,"title":"Yasmeen's route report counts 334,786 taps in a month of 84,063","kind":"content","session":3,"hash":"bd3904e4","md":"#### [day2#report-four-times] Yasmeen's route report counts 334,786 taps in a month of 84,063\n\n*A report that adds up wrong*\n\n```sql\n-- file: the route report, as written\nSELECT t.route_id, count(b.tap_id) AS taps,\n       avg(CASE WHEN p.delay_min BETWEEN -1 AND 5 THEN 1.0 ELSE 0.0 END)\nFROM fct_trip t\nJOIN fct_boarding  b ON b.trip_id = t.trip_id\nJOIN fct_timepoint p ON p.trip_id = t.trip_id\nWHERE t.service_date BETWEEN ... GROUP BY t.route_id\n```","notes":"From Lab 2.3. Ask the room to find the fault before the next slide. Nothing in the SQL is invalid; every join condition is right. The fault is that two \"many\" sides meet at one trip.","minutes":null,"lo":["LO3"]},{"id":"fan-trap","n":23,"title":"Joining two \"many\" sides through one row multiplies both","kind":"content","session":3,"hash":"400b444c","md":"#### [day2#fan-trap] Joining two \"many\" sides through one row multiplies both\n\n*The fan trap*\n\n1. **8,268 trips** September\n2. **84,063 rows** each trip once per tap\n3. **334,786 rows** each tap once per timepoint\n\n> **3.98 times.** Every tap is repeated by the number of timepoints its trip reached: four, or two for a partial trip.","notes":"Row counts from Lab 2.3, task 2. Counting rows after each join is the fastest diagnosis there is. The general rule: a join is safe for a measure when it goes to the \"one\" side of that measure's fact.","minutes":null,"lo":["LO3"]},{"id":"chasm-weighting","n":24,"title":"The punctuality column is wrong too, and nothing looks odd","kind":"content","session":3,"hash":"8aa22c8d","md":"#### [day2#chasm-weighting] The punctuality column is wrong too, and nothing looks odd\n\n*The quieter error*\n\n- **49.0%** R01 timepoint punctuality in the report\n- **51.1%** R01 timepoint punctuality, computed alone\n\nAfter the join each arrival is weighted by the taps of its trip: busy, late trips count more.","notes":"This is the chasm trap: two facts (taps, timepoints) related only through a shared dimension (trips). The tap total is obviously wrong; the punctuality is only slightly wrong, so nobody notices it. That is why reconciliation tests check totals, and why the model aggregates each fact separately.","minutes":null,"lo":["LO3"]},{"id":"reconciliation-test","n":25,"title":"A reconciliation test compares the report with the source counted another way","kind":"content","session":3,"hash":"6c613ca3","md":"#### [day2#reconciliation-test] A reconciliation test compares the report with the source counted another way\n\n*The test that catches it*\n\n```python\n# file: Lab 2.3 · reconciles\ndef reconciles(df) -> bool:\n    source = W.scalar(con, \"\"\"SELECT count(*) FROM fct_boarding\n                              WHERE service_date BETWEEN ... AND trip_id IS NOT NULL\"\"\")\n    return int(df.taps.sum()) == int(source)\n```\n\n- Write it first and watch it **fail on the faulty report**\n- Then fix the query, and watch it pass","notes":"A test that has never failed has not shown it can catch anything. This is the same habit as the toy test of Lab 1.3. In a pipeline these tests run on every load; dbt and similar tools call them data tests.","minutes":null,"lo":["LO3"]},{"id":"aggregate-then-join","n":26,"title":"Aggregate each fact to the shared grain, then join","kind":"content","session":3,"hash":"257033d0","md":"#### [day2#aggregate-then-join] Aggregate each fact to the shared grain, then join\n\n*The fix*\n\n```sql\n-- file: Lab 2.3 · fixed_report\nWITH taps  AS (SELECT t.route_id, count(*) AS taps\n               FROM fct_boarding b JOIN fct_trip t USING (trip_id) ... GROUP BY 1),\n     punct AS (SELECT t.route_id, avg(...) AS timepoint_on_time\n               FROM fct_timepoint p JOIN fct_trip t USING (trip_id) ... GROUP BY 1)\nSELECT route_id, taps, timepoint_on_time\nFROM taps JOIN punct USING (route_id)\n```\n\nEach fact joins only \"up\" to trips, which is many-to-one; the two results meet at one row per route.","notes":"Point at the direction of each join: taps to trips, timepoints to trips, both many-to-one. The final join is one-to-one on route_id. This is exactly the shape of the SQL the semantic layer generates in Session 4.","minutes":null,"lo":["LO3"]},{"id":"join-paths-rule","n":27,"title":"A semantic model joins only towards the \"one\" side","kind":"content","session":3,"hash":"a2f9ce36","md":"#### [day2#join-paths-rule] A semantic model joins only towards the \"one\" side\n\n*The rule a model enforces*\n\n- Every relationship is declared **from** the many side **to** the one side\n- A metric is aggregated in its own dataset, joining only along those arrows\n- A grouping that needs a \"many\" side is **refused**, not computed\n- Two metrics of two facts are aggregated apart, then joined on the dimensions asked for\n\n- request: boardings by timepoints.tp_seq\n- refused: no many-to-one path from boardings to timepoints: grouping would repeat rows","notes":"The refusal text is the real message of the course compiler, from the stretch of Lab 2.3. MetricFlow and Cube enforce the same idea with entities and join types. A refusal is a feature: it is the model saying \"this question has no single answer at this grain\".","minutes":null,"lo":["LO3"]},{"id":"checkpoint-3","n":28,"title":"Where does the report go wrong?","kind":"quiz","session":3,"hash":"bba23163","md":"#### [day2#checkpoint-3] Where does the report go wrong?\n\n*Checkpoint*\n\n**Question:** A report joins complaints and taps to routes in one query and counts both per route. Complaints come out about 7,000 times too high. What happened?\n\n- A. The complaints table has duplicate rows\n- B. Each complaint was repeated once per tap of its route: two facts met through one dimension\n- C. The date filter was left out\n- D. The join should have been a left join","notes":"Answer: B. The size of the inflation (thousands) points at a many-to-many pairing; a duplicate would give a factor of 2 or 3. Ask how a reconciliation test would have caught it.","minutes":null,"lo":["LO3"]},{"id":"lab-2-3","n":29,"title":"The double-counting join","kind":"lab","session":3,"hash":"107b710d","md":"#### [day2#lab-2-3] The double-counting join\n\nLab 2.3 · 25 min\n\nFind the join that inflates boardings in a route report, write a reconciliation test that fails on it, and fix the query by aggregating before joining.\n\n[D2_3_fan_out.ipynb](https://sdaiaacademy.github.io/ds-307/labs/D2_3_fan_out.ipynb)\n\n- [ ] Run the route report as written (5 min)\n- [ ] Find the join that repeats rows (6 min)\n- [ ] Write a reconciliation test that fails on it (6 min)\n- [ ] Fix the query by aggregating before joining (8 min)\n- [ ] ✱ Stretch: Ask the semantic layer for the same report and read its refusal","notes":"AI-tutor. Insist that the test is written and seen to fail before the fix. Participants who fix the taps but keep the punctuality from the joined query miss the chasm weighting: compare their R01 punctuality with 51.1%. The stretch shows the semantic layer refusing the same grouping.","minutes":null,"lo":[]},{"id":"s4","n":30,"title":"Metrics in an open specification","kind":"section","session":4,"hash":"e47005b3","md":"#### [day2#s4] Metrics in an open specification\n\n*Session 4*\n\n- Write datasets, fields, relationships and metrics in an Apache Ossie document\n- Tell a dataset-scoped from a model-scoped metric\n- Validate a model and run test queries against it","notes":"","minutes":null,"lo":["LO3"]},{"id":"define-once","n":31,"title":"Write each metric once; every tool asks for it by name","kind":"content","session":4,"hash":"138ab2dc","md":"#### [day2#define-once] Write each metric once; every tool asks for it by name\n\n*The point of a semantic layer*\n\n- **Without it.** Each dashboard, notebook and agent writes its own SQL for \"on-time rate\". Three teams, three queries, three numbers.\n- **With it.** The model holds datasets, joins and metrics. A tool asks for `on_time_rate` by route type; the layer writes the SQL.\n\nTools: MetricFlow, Cube Core, Apache Ossie files","notes":"Tool names are examples, not endorsements: MetricFlow (dbt Labs, Apache-2.0), Cube Core (Cube's open semantic layer), and Apache Ossie as the interchange format. This course writes the model as an Ossie document and compiles it with a small course module, so that it runs anywhere in a few seconds; the converters project translates Ossie to dbt MetricFlow, Cube and others. Sources: github.com/dbt-labs/metricflow, github.com/cube-js/cube, github.com/apache/ossie-converters.","minutes":null,"lo":["LO3"]},{"id":"ossie-is","n":32,"title":"Apache Ossie is a vendor-neutral file format for semantic models","kind":"content","session":4,"hash":"9098e9b3","md":"#### [day2#ossie-is] Apache Ossie is a vendor-neutral file format for semantic models\n\n*An open specification*\n\n- Formerly **Open Semantic Interchange** (OSI); renamed on entering the Apache Incubator in 2026\n- One YAML or JSON document per model: datasets, fields, relationships, metrics\n- A JSON Schema checks the document; converters move it between tools\n- The version in this course, **0.3.0.dev0**, is still in development: re-check before each cohort","notes":"The project's announcement says the name changed and the specification did not. Its README lists converters for dbt, Cube, Snowflake, Polaris and others. Status is perishable: the catalog marks \"the status of Apache Ossie\" as a refresh item. Sources: ossie.apache.org/updates/ossie-enters-apache-incubator/ and github.com/apache/ossie, core-spec/spec.md (version history).","minutes":null,"lo":["LO3"]},{"id":"ossie-document","n":33,"title":"Datasets with fields, relationships from many to one, metrics","kind":"content","session":4,"hash":"783c90d2","md":"#### [day2#ossie-document] Datasets with fields, relationships from many to one, metrics\n\n*What the file holds*\n\n```yaml\n# file: labs/data/semantic/wadi_noor_transit.yaml (excerpt)\ndatasets:\n  - name: trips\n    source: SELECT t.*, r.route_key FROM fct_trip t LEFT JOIN dim_route r ON ...\n    primary_key: [trip_id]\n    fields:\n      - {name: status, expression: {sql: status}, dimension: {}}\n    metrics:\n      - name: departed_trips\n        expression: {sql: \"SUM(CASE WHEN status \u003c> 'cancelled' THEN 1 ELSE 0 END)\"}\nrelationships:\n  - {name: trips_to_routes, from: trips, to: routes, from_columns: [route_key], to_columns: [route_key]}\n```","notes":"Point at three things: the dataset's source is the as-of join of Session 2, so the version rule lives once; a field is an expression over the source; a relationship goes from the many side to the one side. The full file has seven datasets and ten relationships.","minutes":null,"lo":["LO3"]},{"id":"two-scopes","n":34,"title":"Dataset metrics aggregate one dataset; model metrics combine them","kind":"content","session":4,"hash":"c39b3fbd","md":"#### [day2#two-scopes] Dataset metrics aggregate one dataset; model metrics combine them\n\n*Two places for a metric*\n\n- **Dataset-scoped.** `boardings.unique_cards`: `COUNT(DISTINCT card_id)`, bare field names of its own dataset.\n- **Model-scoped.** `on_time_rate`: `AGG(trips.on_time_departures) / AGG(trips.departed_trips)`, each part aggregated first.\n\n> **AGG() is the ratio of sums.** The division happens after both parts are aggregated, so the layer cannot average ratios by mistake.","notes":"The specification allows a model-scoped metric to read a dataset metric only through AGG(dataset.metric). That rule is how Day 1's ratio-of-sums discipline is enforced by the file itself. Cross-fact ratios such as complaints per 10,000 taps use the same form, and the layer aggregates the two facts separately, as in Session 3.","minutes":null,"lo":["LO3"]},{"id":"compiled-sql","n":35,"title":"One request, compiled to the SQL of Session 3","kind":"content","session":4,"hash":"f5585c81","md":"#### [day2#compiled-sql] One request, compiled to the SQL of Session 3\n\n*What the layer generates*\n\n- request: on_time_rate by routes.route_type, where dates.gregorian_month = '2026-09'\n- datasets: one common table expression each for trips, routes, dates\n- aggregate: trips joined to routes and dates (many-to-one), summed by route type\n- divide: on_time_departures / departed_trips: express 89.3%, feeder 82.8%, trunk 67.0%","notes":"Show the real compiled SQL with m.compile(...) in Lab 2.4, task 3; participants read it there. The numbers are September from the test queries. The trunk routes' low figure returns on Day 3, in the Simpson reversal.","minutes":null,"lo":["LO3"]},{"id":"labels-and-roles","n":36,"title":"Access rules ride in an extension that other tools may ignore","kind":"content","session":4,"hash":"56ab4833","md":"#### [day2#labels-and-roles] Access rules ride in an extension that other tools may ignore\n\n*What the interchange does not carry*\n\n```yaml\n# file: the model's extension\nnonportable_extensions:\n  - vendor_name: WADI_NOOR\n    data:\n      roles:\n        network_analyst: {clearance: Public}\n        east_depot_manager:\n          clearance: Public\n          row_filter: \"routes.depot = 'East'\"\n```\n\n- Fields carry a classification: `card_id` and `complaint_text` are Restricted\n- A role may count a Restricted field, never group, filter or show it\n- Ossie defines no access rules: **every consumer must enforce them again**","notes":"The specification says plainly that non-portable extensions are vendor state Ossie carries and does not interpret. That is a design fact worth stating to a governance officer: moving a model between tools can silently drop its access rules. Access across many roles and areas is DS-408; here there are two roles. Source: Ossie core spec, \"Non-portable Extensions\".","minutes":null,"lo":["LO3"]},{"id":"test-queries","n":37,"title":"25 test queries, each with a reference computed without the model","kind":"content","session":4,"hash":"e96cbd25","md":"#### [day2#test-queries] 25 test queries, each with a reference computed without the model\n\n*Proving the model*\n\n- Each test is a request (metrics, dimensions, filters) and its expected rows\n- The expected rows come from **independent SQL**, written by hand, not from the layer\n- They cover ratios, distinct counts, Hijri months, the R07 versions, holidays and the October week\n- 25 of 25 is the evidence for the third course outcome","notes":"The reference queries live in labs/_tools/make_reference.py, written in plain SQL over the warehouse and never through wnt_semantic.py; participants receive only the expected rows in data/semantic/test_queries.yaml. A test whose reference was produced by the system under test proves only that the system agrees with itself. The capstone asks for the same on the fares area.","minutes":null,"lo":["LO3"]},{"id":"checkpoint-4","n":38,"title":"Where does the cancellation rate go?","kind":"quiz","session":4,"hash":"556ca5d2","md":"#### [day2#checkpoint-4] Where does the cancellation rate go?\n\n*Checkpoint*\n\n**Question:** You add `cancellation_rate` to the model. The trips dataset already has `cancelled_trips` and `scheduled_trips`. What do you write?\n\n- A. A dataset metric AVG(status = 'cancelled') on trips, used by every ratio\n- B. A SQL snippet in each dashboard that needs it\n- C. A model metric that averages a daily cancellation rate\n- D. A model metric AGG(trips.cancelled_trips) / AGG(trips.scheduled_trips)","notes":"Answer: D. Option A gives the right number for this particular metric and is a fair discussion point; the reason to prefer D is that the same pattern serves every ratio and keeps the parts governed.","minutes":null,"lo":["LO3"]},{"id":"lab-2-4","n":39,"title":"Five metrics in the semantic layer","kind":"lab","session":4,"hash":"672e22ee","md":"#### [day2#lab-2-4] Five metrics in the semantic layer\n\nLab 2.4 · 25 min\n\nValidate the starter model against the Ossie schema, add five catalogue metrics, and run the 25 test queries against their reference values.\n\n[D2_4_semantic_layer.ipynb](https://sdaiaacademy.github.io/ds-307/labs/D2_4_semantic_layer.ipynb)\n\n- [ ] Validate the starter model (4 min)\n- [ ] Add the three boardings metrics (7 min)\n- [ ] Add the two model-level ratios (6 min)\n- [ ] Run the 25 test queries (8 min)\n- [ ] ✱ Stretch: Run the same queries as the East depot manager","notes":"AI-tutor. Typical errors: a qualified name in a dataset metric (boardings.card_id inside COUNT), which validation rejects with a clear message; a model metric without AGG(). Running the 25 tests takes about fifteen seconds on a laptop: the journeys metric computes a window over all taps. Anyone who did not finish still gets the reference model for Days 3 and 4.","minutes":null,"lo":[]},{"id":"wrap-up","n":40,"title":"Three things to keep","kind":"content","session":4,"hash":"48c717a0","md":"#### [day2#wrap-up] Three things to keep\n\n*Day 2 · wrap-up*\n\n- **Grain and history.** Prove each grain; join a fact to the dimension version valid on its date.\n- **Aggregate, then join.** Count rows after each join; reconcile totals; never join two \"many\" sides.\n- **Define once.** One open document holds datasets, joins and metrics; 25 tests prove it.","notes":"Ask which of the three participants would explain first to their own team. The model of today is the input of tomorrow's dashboard.","minutes":null,"lo":[]},{"id":"next","n":41,"title":"Day 3: Show and investigate","kind":"content","session":4,"hash":"769fe7e3","md":"#### [day2#next] Day 3: Show and investigate\n\n*Next*\n\nTomorrow the model feeds a dashboard for the operations director, built in two languages and under three seconds, and you trace a drop in October ridership to its source.","notes":"Ask participants to bring one dashboard from their own work (a screenshot without sensitive data) for the first session's discussion. Day 3 starts from the reference model, so nobody depends on finishing Lab 2.4.","minutes":null,"lo":[]}],"activities":[{"id":"review-day1-q1","slide":"review-day1","type":"single","prompt":"\"journeys: SUM(journey_start) on boarding_linked; one card tap; filters none; unit journeys; owner Dhuha Al-Rowais, planning; limits: a quick return counts as a transfer.\" Which of the eight parts is missing?","options":[{"key":"A","text":"The grain"},{"key":"B","text":"The owner"},{"key":"C","text":"The time logic"},{"key":"D","text":"The limits"}],"correct":[2],"explanation":"Nothing says which date places a tap in a period, or which week and calendar apply, so two analysts could still report two numbers for \"last week\".","misconceptions":["The grain is there: one card tap","The owner is a named person with a role","","The limits line names a known undercount"],"lo":["LO2"]},{"id":"checkpoint-1-q1","slide":"checkpoint-1","type":"single","prompt":"fct_timepoint has 329,188 rows, 82,000 distinct trip_id values and tp_seq from 1 to 4. What does one row mean?","options":[{"key":"A","text":"One trip"},{"key":"B","text":"One timepoint of a route"},{"key":"C","text":"One scheduled minute of a trip"},{"key":"D","text":"One departed trip at one timepoint"}],"correct":[3],"explanation":"The key is (trip_id, tp_seq): rows equal distinct pairs, so one row is a trip's arrival at one of its four timepoints.","misconceptions":["Trusts the trip_id column over the row count: there are four times more rows than trips","Timepoints are fixed places on a route; the table records arrivals, not places","Arrivals are per trip, not per scheduled minute",""],"lo":["LO3"]},{"id":"checkpoint-2-q1","slide":"checkpoint-2","type":"single","prompt":"Three changes reach the route dimension this month. Which one needs a new version row?","options":[{"key":"A","text":"Route R03 moves from the North to the Central depot"},{"key":"B","text":"A typo in the Arabic name of R06 is corrected"},{"key":"C","text":"The map colour of R10 changes"},{"key":"D","text":"The number of trips on R11 changes"}],"correct":[0],"explanation":"Past R03 trips belonged to North. If the depot is overwritten, North's history loses them and Central's gains them: a type 2 version keeps each trip with the depot it really had.","misconceptions":["","A spelling fix should correct history too: old reports never meant the misspelt name","A colour on a map is presentation, not an attribute any figure is grouped by","Treats the timetable, a fact, as an attribute of the route"],"lo":["LO3"]},{"id":"checkpoint-3-q1","slide":"checkpoint-3","type":"single","prompt":"A report joins complaints and taps to routes in one query and counts both per route. Complaints come out about 7,000 times too high. What happened?","options":[{"key":"A","text":"The complaints table has duplicate rows"},{"key":"B","text":"Each complaint was repeated once per tap of its route: two facts met through one dimension"},{"key":"C","text":"The date filter was left out"},{"key":"D","text":"The join should have been a left join"}],"correct":[1],"explanation":"Routes are the \"one\" side of both facts. Joining both to the same route row pairs every complaint with every tap of that route. Aggregate each per route, then join.","misconceptions":["Duplicates in the source would inflate both counts by a small factor, not by thousands","","A missing filter changes which rows are counted, not how many times each one is","An inner join can drop rows; it cannot multiply them by thousands"],"lo":["LO3"]},{"id":"checkpoint-4-q1","slide":"checkpoint-4","type":"single","prompt":"You add cancellation_rate to the model. The trips dataset already has cancelled_trips and scheduled_trips. What do you write?","options":[{"key":"A","text":"A dataset metric AVG(status = 'cancelled') on trips, used by every ratio"},{"key":"B","text":"A SQL snippet in each dashboard that needs it"},{"key":"C","text":"A model metric that averages a daily cancellation rate"},{"key":"D","text":"A model metric AGG(trips.cancelled_trips) / AGG(trips.scheduled_trips)"}],"correct":[3],"explanation":"It reuses the two governed counts and divides after aggregating, so it is a ratio of sums for any grouping, written once.","misconceptions":["A mean of a per-trip 0 or 1 works here only by accident, and the pattern breaks for any ratio of two different sums","Copies the formula into each report: the definition is no longer written once","Averages daily rates: days with few trips weigh as much as busy days",""],"lo":["LO3"]}],"ai":{"context":{"course":"../context/course.md","courseJs":"../context/course.js","day":"day2.md","llms":"../llms.txt"},"tasks":[],"tools":[]},"bridge":{"allowedOrigins":[]},"features":{},"strings":{}}</script>
+<script src="../_engine/academy.js"></script>
+</body>
+</html>

@@ -1,0 +1,4706 @@
+[
+ {
+  "route_id": "R01",
+  "date": "2026-09-06",
+  "departed_trips": 24.0,
+  "on_time_departures": 16.0,
+  "boardings": 406
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-07",
+  "departed_trips": 24.0,
+  "on_time_departures": 19.0,
+  "boardings": 419
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-08",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 385
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-09",
+  "departed_trips": 24.0,
+  "on_time_departures": 16.0,
+  "boardings": 412
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-10",
+  "departed_trips": 22.0,
+  "on_time_departures": 16.0,
+  "boardings": 354
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-11",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 117
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-12",
+  "departed_trips": 18.0,
+  "on_time_departures": 13.0,
+  "boardings": 235
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-13",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 419
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-14",
+  "departed_trips": 24.0,
+  "on_time_departures": 14.0,
+  "boardings": 388
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-15",
+  "departed_trips": 23.0,
+  "on_time_departures": 16.0,
+  "boardings": 405
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-16",
+  "departed_trips": 23.0,
+  "on_time_departures": 10.0,
+  "boardings": 360
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-17",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 379
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-18",
+  "departed_trips": 12.0,
+  "on_time_departures": 7.0,
+  "boardings": 138
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-19",
+  "departed_trips": 18.0,
+  "on_time_departures": 11.0,
+  "boardings": 236
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-20",
+  "departed_trips": 24.0,
+  "on_time_departures": 15.0,
+  "boardings": 416
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-21",
+  "departed_trips": 23.0,
+  "on_time_departures": 15.0,
+  "boardings": 412
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-22",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 420
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-23",
+  "departed_trips": 12.0,
+  "on_time_departures": 7.0,
+  "boardings": 132
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-24",
+  "departed_trips": 24.0,
+  "on_time_departures": 16.0,
+  "boardings": 466
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-25",
+  "departed_trips": 11.0,
+  "on_time_departures": 9.0,
+  "boardings": 123
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-26",
+  "departed_trips": 18.0,
+  "on_time_departures": 13.0,
+  "boardings": 234
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-27",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 441
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-28",
+  "departed_trips": 24.0,
+  "on_time_departures": 16.0,
+  "boardings": 399
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-29",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 447
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-09-30",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 410
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-01",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 402
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-02",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 129
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-03",
+  "departed_trips": 17.0,
+  "on_time_departures": 10.0,
+  "boardings": 207
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-04",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 405
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-05",
+  "departed_trips": 24.0,
+  "on_time_departures": 19.0,
+  "boardings": 412
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-06",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 413
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-07",
+  "departed_trips": 22.0,
+  "on_time_departures": 14.0,
+  "boardings": 414
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-08",
+  "departed_trips": 24.0,
+  "on_time_departures": 13.0,
+  "boardings": 406
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-09",
+  "departed_trips": 12.0,
+  "on_time_departures": 8.0,
+  "boardings": 124
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-10",
+  "departed_trips": 18.0,
+  "on_time_departures": 9.0,
+  "boardings": 248
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-11",
+  "departed_trips": 21.0,
+  "on_time_departures": 18.0,
+  "boardings": 364
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-12",
+  "departed_trips": 23.0,
+  "on_time_departures": 15.0,
+  "boardings": 393
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-13",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 426
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-14",
+  "departed_trips": 24.0,
+  "on_time_departures": 16.0,
+  "boardings": 386
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-15",
+  "departed_trips": 24.0,
+  "on_time_departures": 16.0,
+  "boardings": 389
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-16",
+  "departed_trips": 12.0,
+  "on_time_departures": 6.0,
+  "boardings": 129
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-17",
+  "departed_trips": 17.0,
+  "on_time_departures": 15.0,
+  "boardings": 243
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-18",
+  "departed_trips": 24.0,
+  "on_time_departures": 16.0,
+  "boardings": 437
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-19",
+  "departed_trips": 24.0,
+  "on_time_departures": 15.0,
+  "boardings": 470
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-20",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 423
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-21",
+  "departed_trips": 24.0,
+  "on_time_departures": 13.0,
+  "boardings": 421
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-22",
+  "departed_trips": 24.0,
+  "on_time_departures": 15.0,
+  "boardings": 415
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-23",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 101
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-24",
+  "departed_trips": 17.0,
+  "on_time_departures": 12.0,
+  "boardings": 209
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-25",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 396
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-26",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 395
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-27",
+  "departed_trips": 22.0,
+  "on_time_departures": 14.0,
+  "boardings": 384
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-28",
+  "departed_trips": 24.0,
+  "on_time_departures": 16.0,
+  "boardings": 382
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-29",
+  "departed_trips": 23.0,
+  "on_time_departures": 17.0,
+  "boardings": 386
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-30",
+  "departed_trips": 12.0,
+  "on_time_departures": 8.0,
+  "boardings": 110
+ },
+ {
+  "route_id": "R01",
+  "date": "2026-10-31",
+  "departed_trips": 17.0,
+  "on_time_departures": 8.0,
+  "boardings": 237
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-06",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 236
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-07",
+  "departed_trips": 24.0,
+  "on_time_departures": 15.0,
+  "boardings": 203
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-08",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 198
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-09",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 201
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-10",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 218
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-11",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 67
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-12",
+  "departed_trips": 18.0,
+  "on_time_departures": 14.0,
+  "boardings": 130
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-13",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 200
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-14",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 196
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-15",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 206
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-16",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 205
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-17",
+  "departed_trips": 21.0,
+  "on_time_departures": 16.0,
+  "boardings": 159
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-18",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 56
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-19",
+  "departed_trips": 18.0,
+  "on_time_departures": 14.0,
+  "boardings": 131
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-20",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 204
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-21",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 176
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-22",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 217
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-23",
+  "departed_trips": 12.0,
+  "on_time_departures": 10.0,
+  "boardings": 88
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-24",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 196
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-25",
+  "departed_trips": 12.0,
+  "on_time_departures": 11.0,
+  "boardings": 67
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-26",
+  "departed_trips": 18.0,
+  "on_time_departures": 18.0,
+  "boardings": 121
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-27",
+  "departed_trips": 24.0,
+  "on_time_departures": 19.0,
+  "boardings": 195
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-28",
+  "departed_trips": 24.0,
+  "on_time_departures": 23.0,
+  "boardings": 225
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-29",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 191
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-09-30",
+  "departed_trips": 23.0,
+  "on_time_departures": 21.0,
+  "boardings": 211
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-01",
+  "departed_trips": 22.0,
+  "on_time_departures": 19.0,
+  "boardings": 231
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-02",
+  "departed_trips": 12.0,
+  "on_time_departures": 8.0,
+  "boardings": 56
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-03",
+  "departed_trips": 18.0,
+  "on_time_departures": 16.0,
+  "boardings": 108
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-04",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 219
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-05",
+  "departed_trips": 24.0,
+  "on_time_departures": 18.0,
+  "boardings": 221
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-06",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 224
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-07",
+  "departed_trips": 21.0,
+  "on_time_departures": 16.0,
+  "boardings": 186
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-08",
+  "departed_trips": 24.0,
+  "on_time_departures": 19.0,
+  "boardings": 192
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-09",
+  "departed_trips": 12.0,
+  "on_time_departures": 10.0,
+  "boardings": 57
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-10",
+  "departed_trips": 18.0,
+  "on_time_departures": 16.0,
+  "boardings": 107
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-11",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 202
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-12",
+  "departed_trips": 22.0,
+  "on_time_departures": 18.0,
+  "boardings": 209
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-13",
+  "departed_trips": 22.0,
+  "on_time_departures": 16.0,
+  "boardings": 191
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-14",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 206
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-15",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 208
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-16",
+  "departed_trips": 11.0,
+  "on_time_departures": 9.0,
+  "boardings": 44
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-17",
+  "departed_trips": 18.0,
+  "on_time_departures": 15.0,
+  "boardings": 134
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-18",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 224
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-19",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 206
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-20",
+  "departed_trips": 23.0,
+  "on_time_departures": 21.0,
+  "boardings": 198
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-21",
+  "departed_trips": 22.0,
+  "on_time_departures": 20.0,
+  "boardings": 195
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-22",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 188
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-23",
+  "departed_trips": 12.0,
+  "on_time_departures": 11.0,
+  "boardings": 50
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-24",
+  "departed_trips": 17.0,
+  "on_time_departures": 15.0,
+  "boardings": 129
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-25",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 212
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-26",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 195
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-27",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 189
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-28",
+  "departed_trips": 24.0,
+  "on_time_departures": 19.0,
+  "boardings": 219
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-29",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 194
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-30",
+  "departed_trips": 11.0,
+  "on_time_departures": 7.0,
+  "boardings": 58
+ },
+ {
+  "route_id": "R02",
+  "date": "2026-10-31",
+  "departed_trips": 17.0,
+  "on_time_departures": 15.0,
+  "boardings": 132
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-06",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 214
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-07",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 206
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-08",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 196
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-09",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 185
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-10",
+  "departed_trips": 22.0,
+  "on_time_departures": 16.0,
+  "boardings": 151
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-11",
+  "departed_trips": 11.0,
+  "on_time_departures": 9.0,
+  "boardings": 52
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-12",
+  "departed_trips": 18.0,
+  "on_time_departures": 17.0,
+  "boardings": 136
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-13",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 196
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-14",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 204
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-15",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 195
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-16",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 178
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-17",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 203
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-18",
+  "departed_trips": 12.0,
+  "on_time_departures": 10.0,
+  "boardings": 63
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-19",
+  "departed_trips": 17.0,
+  "on_time_departures": 13.0,
+  "boardings": 108
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-20",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 241
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-21",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 210
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-22",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 184
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-23",
+  "departed_trips": 12.0,
+  "on_time_departures": 8.0,
+  "boardings": 84
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-24",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 193
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-25",
+  "departed_trips": 12.0,
+  "on_time_departures": 11.0,
+  "boardings": 66
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-26",
+  "departed_trips": 18.0,
+  "on_time_departures": 15.0,
+  "boardings": 136
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-27",
+  "departed_trips": 24.0,
+  "on_time_departures": 19.0,
+  "boardings": 222
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-28",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 205
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-29",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 203
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-09-30",
+  "departed_trips": 22.0,
+  "on_time_departures": 16.0,
+  "boardings": 198
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-01",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 205
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-02",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 60
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-03",
+  "departed_trips": 17.0,
+  "on_time_departures": 11.0,
+  "boardings": 131
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-04",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 211
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-05",
+  "departed_trips": 22.0,
+  "on_time_departures": 18.0,
+  "boardings": 203
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-06",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 235
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-07",
+  "departed_trips": 22.0,
+  "on_time_departures": 18.0,
+  "boardings": 192
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-08",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 202
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-09",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 64
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-10",
+  "departed_trips": 18.0,
+  "on_time_departures": 13.0,
+  "boardings": 130
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-11",
+  "departed_trips": 23.0,
+  "on_time_departures": 17.0,
+  "boardings": 222
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-12",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 221
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-13",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 189
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-14",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 198
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-15",
+  "departed_trips": 22.0,
+  "on_time_departures": 21.0,
+  "boardings": 198
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-16",
+  "departed_trips": 12.0,
+  "on_time_departures": 11.0,
+  "boardings": 53
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-17",
+  "departed_trips": 17.0,
+  "on_time_departures": 13.0,
+  "boardings": 119
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-18",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 212
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-19",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 196
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-20",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 208
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-21",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 222
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-22",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 234
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-23",
+  "departed_trips": 11.0,
+  "on_time_departures": 10.0,
+  "boardings": 49
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-24",
+  "departed_trips": 17.0,
+  "on_time_departures": 13.0,
+  "boardings": 117
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-25",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 206
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-26",
+  "departed_trips": 24.0,
+  "on_time_departures": 23.0,
+  "boardings": 225
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-27",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 237
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-28",
+  "departed_trips": 23.0,
+  "on_time_departures": 23.0,
+  "boardings": 210
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-29",
+  "departed_trips": 21.0,
+  "on_time_departures": 18.0,
+  "boardings": 196
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-30",
+  "departed_trips": 12.0,
+  "on_time_departures": 10.0,
+  "boardings": 69
+ },
+ {
+  "route_id": "R03",
+  "date": "2026-10-31",
+  "departed_trips": 18.0,
+  "on_time_departures": 17.0,
+  "boardings": 140
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-06",
+  "departed_trips": 35.0,
+  "on_time_departures": 30.0,
+  "boardings": 347
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-07",
+  "departed_trips": 36.0,
+  "on_time_departures": 32.0,
+  "boardings": 360
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-08",
+  "departed_trips": 34.0,
+  "on_time_departures": 31.0,
+  "boardings": 369
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-09",
+  "departed_trips": 36.0,
+  "on_time_departures": 34.0,
+  "boardings": 392
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-10",
+  "departed_trips": 35.0,
+  "on_time_departures": 33.0,
+  "boardings": 365
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-11",
+  "departed_trips": 18.0,
+  "on_time_departures": 15.0,
+  "boardings": 131
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-12",
+  "departed_trips": 25.0,
+  "on_time_departures": 19.0,
+  "boardings": 220
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-13",
+  "departed_trips": 36.0,
+  "on_time_departures": 34.0,
+  "boardings": 346
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-14",
+  "departed_trips": 36.0,
+  "on_time_departures": 34.0,
+  "boardings": 392
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-15",
+  "departed_trips": 35.0,
+  "on_time_departures": 30.0,
+  "boardings": 352
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-16",
+  "departed_trips": 33.0,
+  "on_time_departures": 29.0,
+  "boardings": 356
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-17",
+  "departed_trips": 36.0,
+  "on_time_departures": 35.0,
+  "boardings": 359
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-18",
+  "departed_trips": 18.0,
+  "on_time_departures": 17.0,
+  "boardings": 107
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-19",
+  "departed_trips": 27.0,
+  "on_time_departures": 24.0,
+  "boardings": 212
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-20",
+  "departed_trips": 36.0,
+  "on_time_departures": 31.0,
+  "boardings": 361
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-21",
+  "departed_trips": 36.0,
+  "on_time_departures": 31.0,
+  "boardings": 378
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-22",
+  "departed_trips": 36.0,
+  "on_time_departures": 34.0,
+  "boardings": 375
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-23",
+  "departed_trips": 18.0,
+  "on_time_departures": 14.0,
+  "boardings": 133
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-24",
+  "departed_trips": 34.0,
+  "on_time_departures": 31.0,
+  "boardings": 389
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-25",
+  "departed_trips": 17.0,
+  "on_time_departures": 15.0,
+  "boardings": 113
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-26",
+  "departed_trips": 27.0,
+  "on_time_departures": 23.0,
+  "boardings": 249
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-27",
+  "departed_trips": 35.0,
+  "on_time_departures": 31.0,
+  "boardings": 392
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-28",
+  "departed_trips": 35.0,
+  "on_time_departures": 29.0,
+  "boardings": 337
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-29",
+  "departed_trips": 36.0,
+  "on_time_departures": 32.0,
+  "boardings": 385
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-09-30",
+  "departed_trips": 36.0,
+  "on_time_departures": 33.0,
+  "boardings": 382
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-01",
+  "departed_trips": 35.0,
+  "on_time_departures": 30.0,
+  "boardings": 394
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-02",
+  "departed_trips": 18.0,
+  "on_time_departures": 18.0,
+  "boardings": 127
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-03",
+  "departed_trips": 27.0,
+  "on_time_departures": 25.0,
+  "boardings": 220
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-04",
+  "departed_trips": 36.0,
+  "on_time_departures": 31.0,
+  "boardings": 349
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-05",
+  "departed_trips": 36.0,
+  "on_time_departures": 33.0,
+  "boardings": 374
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-06",
+  "departed_trips": 35.0,
+  "on_time_departures": 33.0,
+  "boardings": 380
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-07",
+  "departed_trips": 35.0,
+  "on_time_departures": 33.0,
+  "boardings": 338
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-08",
+  "departed_trips": 36.0,
+  "on_time_departures": 36.0,
+  "boardings": 349
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-09",
+  "departed_trips": 18.0,
+  "on_time_departures": 15.0,
+  "boardings": 114
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-10",
+  "departed_trips": 27.0,
+  "on_time_departures": 24.0,
+  "boardings": 223
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-11",
+  "departed_trips": 35.0,
+  "on_time_departures": 33.0,
+  "boardings": 373
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-12",
+  "departed_trips": 35.0,
+  "on_time_departures": 34.0,
+  "boardings": 413
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-13",
+  "departed_trips": 35.0,
+  "on_time_departures": 31.0,
+  "boardings": 358
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-14",
+  "departed_trips": 35.0,
+  "on_time_departures": 31.0,
+  "boardings": 342
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-15",
+  "departed_trips": 36.0,
+  "on_time_departures": 31.0,
+  "boardings": 354
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-16",
+  "departed_trips": 18.0,
+  "on_time_departures": 17.0,
+  "boardings": 124
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-17",
+  "departed_trips": 25.0,
+  "on_time_departures": 23.0,
+  "boardings": 191
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-18",
+  "departed_trips": 35.0,
+  "on_time_departures": 31.0,
+  "boardings": 370
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-19",
+  "departed_trips": 34.0,
+  "on_time_departures": 31.0,
+  "boardings": 362
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-20",
+  "departed_trips": 36.0,
+  "on_time_departures": 34.0,
+  "boardings": 366
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-21",
+  "departed_trips": 34.0,
+  "on_time_departures": 34.0,
+  "boardings": 391
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-22",
+  "departed_trips": 35.0,
+  "on_time_departures": 32.0,
+  "boardings": 372
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-23",
+  "departed_trips": 18.0,
+  "on_time_departures": 15.0,
+  "boardings": 104
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-24",
+  "departed_trips": 26.0,
+  "on_time_departures": 24.0,
+  "boardings": 204
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-25",
+  "departed_trips": 35.0,
+  "on_time_departures": 30.0,
+  "boardings": 386
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-26",
+  "departed_trips": 36.0,
+  "on_time_departures": 33.0,
+  "boardings": 383
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-27",
+  "departed_trips": 36.0,
+  "on_time_departures": 31.0,
+  "boardings": 393
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-28",
+  "departed_trips": 36.0,
+  "on_time_departures": 31.0,
+  "boardings": 368
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-29",
+  "departed_trips": 36.0,
+  "on_time_departures": 33.0,
+  "boardings": 387
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-30",
+  "departed_trips": 18.0,
+  "on_time_departures": 16.0,
+  "boardings": 133
+ },
+ {
+  "route_id": "R04",
+  "date": "2026-10-31",
+  "departed_trips": 27.0,
+  "on_time_departures": 23.0,
+  "boardings": 236
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-06",
+  "departed_trips": 24.0,
+  "on_time_departures": 19.0,
+  "boardings": 403
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-07",
+  "departed_trips": 24.0,
+  "on_time_departures": 13.0,
+  "boardings": 369
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-08",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 386
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-09",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 405
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-10",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 423
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-11",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 146
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-12",
+  "departed_trips": 18.0,
+  "on_time_departures": 12.0,
+  "boardings": 238
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-13",
+  "departed_trips": 22.0,
+  "on_time_departures": 15.0,
+  "boardings": 367
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-14",
+  "departed_trips": 24.0,
+  "on_time_departures": 16.0,
+  "boardings": 420
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-15",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 433
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-16",
+  "departed_trips": 22.0,
+  "on_time_departures": 15.0,
+  "boardings": 385
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-17",
+  "departed_trips": 23.0,
+  "on_time_departures": 17.0,
+  "boardings": 378
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-18",
+  "departed_trips": 12.0,
+  "on_time_departures": 11.0,
+  "boardings": 115
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-19",
+  "departed_trips": 18.0,
+  "on_time_departures": 13.0,
+  "boardings": 243
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-20",
+  "departed_trips": 24.0,
+  "on_time_departures": 18.0,
+  "boardings": 410
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-21",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 382
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-22",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 417
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-23",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 148
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-24",
+  "departed_trips": 22.0,
+  "on_time_departures": 12.0,
+  "boardings": 379
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-25",
+  "departed_trips": 11.0,
+  "on_time_departures": 5.0,
+  "boardings": 121
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-26",
+  "departed_trips": 18.0,
+  "on_time_departures": 12.0,
+  "boardings": 238
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-27",
+  "departed_trips": 24.0,
+  "on_time_departures": 19.0,
+  "boardings": 389
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-28",
+  "departed_trips": 24.0,
+  "on_time_departures": 19.0,
+  "boardings": 402
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-29",
+  "departed_trips": 22.0,
+  "on_time_departures": 13.0,
+  "boardings": 387
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-09-30",
+  "departed_trips": 23.0,
+  "on_time_departures": 16.0,
+  "boardings": 354
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-01",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 347
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-02",
+  "departed_trips": 12.0,
+  "on_time_departures": 6.0,
+  "boardings": 133
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-03",
+  "departed_trips": 16.0,
+  "on_time_departures": 13.0,
+  "boardings": 206
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-04",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 423
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-05",
+  "departed_trips": 24.0,
+  "on_time_departures": 19.0,
+  "boardings": 398
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-06",
+  "departed_trips": 24.0,
+  "on_time_departures": 14.0,
+  "boardings": 414
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-07",
+  "departed_trips": 23.0,
+  "on_time_departures": 21.0,
+  "boardings": 394
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-08",
+  "departed_trips": 24.0,
+  "on_time_departures": 18.0,
+  "boardings": 393
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-09",
+  "departed_trips": 12.0,
+  "on_time_departures": 8.0,
+  "boardings": 131
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-10",
+  "departed_trips": 18.0,
+  "on_time_departures": 9.0,
+  "boardings": 247
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-11",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 377
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-12",
+  "departed_trips": 23.0,
+  "on_time_departures": 16.0,
+  "boardings": 384
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-13",
+  "departed_trips": 24.0,
+  "on_time_departures": 14.0,
+  "boardings": 419
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-14",
+  "departed_trips": 24.0,
+  "on_time_departures": 14.0,
+  "boardings": 411
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-15",
+  "departed_trips": 22.0,
+  "on_time_departures": 18.0,
+  "boardings": 395
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-16",
+  "departed_trips": 12.0,
+  "on_time_departures": 11.0,
+  "boardings": 124
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-17",
+  "departed_trips": 17.0,
+  "on_time_departures": 14.0,
+  "boardings": 230
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-18",
+  "departed_trips": 21.0,
+  "on_time_departures": 15.0,
+  "boardings": 331
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-19",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 414
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-20",
+  "departed_trips": 22.0,
+  "on_time_departures": 18.0,
+  "boardings": 377
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-21",
+  "departed_trips": 22.0,
+  "on_time_departures": 15.0,
+  "boardings": 367
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-22",
+  "departed_trips": 23.0,
+  "on_time_departures": 17.0,
+  "boardings": 391
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-23",
+  "departed_trips": 11.0,
+  "on_time_departures": 6.0,
+  "boardings": 103
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-24",
+  "departed_trips": 17.0,
+  "on_time_departures": 12.0,
+  "boardings": 216
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-25",
+  "departed_trips": 22.0,
+  "on_time_departures": 18.0,
+  "boardings": 380
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-26",
+  "departed_trips": 24.0,
+  "on_time_departures": 18.0,
+  "boardings": 397
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-27",
+  "departed_trips": 21.0,
+  "on_time_departures": 14.0,
+  "boardings": 362
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-28",
+  "departed_trips": 23.0,
+  "on_time_departures": 17.0,
+  "boardings": 384
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-29",
+  "departed_trips": 24.0,
+  "on_time_departures": 16.0,
+  "boardings": 414
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-30",
+  "departed_trips": 12.0,
+  "on_time_departures": 8.0,
+  "boardings": 106
+ },
+ {
+  "route_id": "R05",
+  "date": "2026-10-31",
+  "departed_trips": 17.0,
+  "on_time_departures": 11.0,
+  "boardings": 253
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-06",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 212
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-07",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 211
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-08",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 223
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-09",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 196
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-10",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 220
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-11",
+  "departed_trips": 12.0,
+  "on_time_departures": 11.0,
+  "boardings": 69
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-12",
+  "departed_trips": 18.0,
+  "on_time_departures": 13.0,
+  "boardings": 116
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-13",
+  "departed_trips": 21.0,
+  "on_time_departures": 14.0,
+  "boardings": 181
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-14",
+  "departed_trips": 23.0,
+  "on_time_departures": 17.0,
+  "boardings": 215
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-15",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 204
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-16",
+  "departed_trips": 24.0,
+  "on_time_departures": 18.0,
+  "boardings": 215
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-17",
+  "departed_trips": 22.0,
+  "on_time_departures": 19.0,
+  "boardings": 193
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-18",
+  "departed_trips": 12.0,
+  "on_time_departures": 11.0,
+  "boardings": 64
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-19",
+  "departed_trips": 18.0,
+  "on_time_departures": 16.0,
+  "boardings": 141
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-20",
+  "departed_trips": 24.0,
+  "on_time_departures": 19.0,
+  "boardings": 206
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-21",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 202
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-22",
+  "departed_trips": 22.0,
+  "on_time_departures": 22.0,
+  "boardings": 193
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-23",
+  "departed_trips": 12.0,
+  "on_time_departures": 10.0,
+  "boardings": 71
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-24",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 192
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-25",
+  "departed_trips": 12.0,
+  "on_time_departures": 10.0,
+  "boardings": 54
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-26",
+  "departed_trips": 18.0,
+  "on_time_departures": 16.0,
+  "boardings": 117
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-27",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 212
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-28",
+  "departed_trips": 22.0,
+  "on_time_departures": 20.0,
+  "boardings": 190
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-29",
+  "departed_trips": 24.0,
+  "on_time_departures": 18.0,
+  "boardings": 209
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-09-30",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 197
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-01",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 204
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-02",
+  "departed_trips": 11.0,
+  "on_time_departures": 9.0,
+  "boardings": 63
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-03",
+  "departed_trips": 18.0,
+  "on_time_departures": 17.0,
+  "boardings": 127
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-04",
+  "departed_trips": 24.0,
+  "on_time_departures": 19.0,
+  "boardings": 185
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-05",
+  "departed_trips": 22.0,
+  "on_time_departures": 20.0,
+  "boardings": 178
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-06",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 241
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-07",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 208
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-08",
+  "departed_trips": 23.0,
+  "on_time_departures": 15.0,
+  "boardings": 185
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-09",
+  "departed_trips": 12.0,
+  "on_time_departures": 12.0,
+  "boardings": 60
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-10",
+  "departed_trips": 17.0,
+  "on_time_departures": 14.0,
+  "boardings": 128
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-11",
+  "departed_trips": 24.0,
+  "on_time_departures": 19.0,
+  "boardings": 214
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-12",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 205
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-13",
+  "departed_trips": 24.0,
+  "on_time_departures": 23.0,
+  "boardings": 176
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-14",
+  "departed_trips": 24.0,
+  "on_time_departures": 18.0,
+  "boardings": 206
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-15",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 213
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-16",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 54
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-17",
+  "departed_trips": 17.0,
+  "on_time_departures": 14.0,
+  "boardings": 137
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-18",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 206
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-19",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 186
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-20",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 230
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-21",
+  "departed_trips": 24.0,
+  "on_time_departures": 23.0,
+  "boardings": 202
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-22",
+  "departed_trips": 22.0,
+  "on_time_departures": 18.0,
+  "boardings": 214
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-23",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 73
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-24",
+  "departed_trips": 18.0,
+  "on_time_departures": 16.0,
+  "boardings": 132
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-25",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 209
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-26",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 211
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-27",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 216
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-28",
+  "departed_trips": 22.0,
+  "on_time_departures": 19.0,
+  "boardings": 215
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-29",
+  "departed_trips": 22.0,
+  "on_time_departures": 21.0,
+  "boardings": 196
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-30",
+  "departed_trips": 11.0,
+  "on_time_departures": 11.0,
+  "boardings": 63
+ },
+ {
+  "route_id": "R06",
+  "date": "2026-10-31",
+  "departed_trips": 17.0,
+  "on_time_departures": 13.0,
+  "boardings": 128
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-06",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 244
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-07",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 245
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-08",
+  "departed_trips": 24.0,
+  "on_time_departures": 18.0,
+  "boardings": 258
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-09",
+  "departed_trips": 22.0,
+  "on_time_departures": 20.0,
+  "boardings": 228
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-10",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 257
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-11",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 87
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-12",
+  "departed_trips": 17.0,
+  "on_time_departures": 14.0,
+  "boardings": 170
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-13",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 263
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-14",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 268
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-15",
+  "departed_trips": 22.0,
+  "on_time_departures": 19.0,
+  "boardings": 255
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-16",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 268
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-17",
+  "departed_trips": 24.0,
+  "on_time_departures": 16.0,
+  "boardings": 285
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-18",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 76
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-19",
+  "departed_trips": 18.0,
+  "on_time_departures": 18.0,
+  "boardings": 170
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-20",
+  "departed_trips": 23.0,
+  "on_time_departures": 22.0,
+  "boardings": 245
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-21",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 290
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-22",
+  "departed_trips": 23.0,
+  "on_time_departures": 21.0,
+  "boardings": 274
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-23",
+  "departed_trips": 12.0,
+  "on_time_departures": 10.0,
+  "boardings": 96
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-24",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 269
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-25",
+  "departed_trips": 12.0,
+  "on_time_departures": 10.0,
+  "boardings": 92
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-26",
+  "departed_trips": 18.0,
+  "on_time_departures": 15.0,
+  "boardings": 152
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-27",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 242
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-28",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 261
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-29",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 260
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-09-30",
+  "departed_trips": 24.0,
+  "on_time_departures": 19.0,
+  "boardings": 249
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-01",
+  "departed_trips": 20.0,
+  "on_time_departures": 18.0,
+  "boardings": 235
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-02",
+  "departed_trips": 11.0,
+  "on_time_departures": 7.0,
+  "boardings": 61
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-03",
+  "departed_trips": 18.0,
+  "on_time_departures": 15.0,
+  "boardings": 149
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-04",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 261
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-05",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 271
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-06",
+  "departed_trips": 23.0,
+  "on_time_departures": 22.0,
+  "boardings": 256
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-07",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 291
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-08",
+  "departed_trips": 23.0,
+  "on_time_departures": 21.0,
+  "boardings": 235
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-09",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 86
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-10",
+  "departed_trips": 18.0,
+  "on_time_departures": 12.0,
+  "boardings": 169
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-11",
+  "departed_trips": 24.0,
+  "on_time_departures": 23.0,
+  "boardings": 282
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-12",
+  "departed_trips": 22.0,
+  "on_time_departures": 16.0,
+  "boardings": 249
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-13",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 271
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-14",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 262
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-15",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 265
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-16",
+  "departed_trips": 11.0,
+  "on_time_departures": 10.0,
+  "boardings": 91
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-17",
+  "departed_trips": 17.0,
+  "on_time_departures": 13.0,
+  "boardings": 157
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-18",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 268
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-19",
+  "departed_trips": 23.0,
+  "on_time_departures": 17.0,
+  "boardings": 273
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-20",
+  "departed_trips": 24.0,
+  "on_time_departures": 19.0,
+  "boardings": 270
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-21",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 264
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-22",
+  "departed_trips": 23.0,
+  "on_time_departures": 21.0,
+  "boardings": 267
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-23",
+  "departed_trips": 12.0,
+  "on_time_departures": 11.0,
+  "boardings": 68
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-24",
+  "departed_trips": 18.0,
+  "on_time_departures": 16.0,
+  "boardings": 144
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-25",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 279
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-26",
+  "departed_trips": 24.0,
+  "on_time_departures": 18.0,
+  "boardings": 285
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-27",
+  "departed_trips": 23.0,
+  "on_time_departures": 21.0,
+  "boardings": 272
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-28",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 274
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-29",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 270
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-30",
+  "departed_trips": 12.0,
+  "on_time_departures": 10.0,
+  "boardings": 84
+ },
+ {
+  "route_id": "R07",
+  "date": "2026-10-31",
+  "departed_trips": 18.0,
+  "on_time_departures": 11.0,
+  "boardings": 169
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-06",
+  "departed_trips": 34.0,
+  "on_time_departures": 33.0,
+  "boardings": 360
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-07",
+  "departed_trips": 36.0,
+  "on_time_departures": 31.0,
+  "boardings": 372
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-08",
+  "departed_trips": 33.0,
+  "on_time_departures": 27.0,
+  "boardings": 325
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-09",
+  "departed_trips": 35.0,
+  "on_time_departures": 33.0,
+  "boardings": 367
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-10",
+  "departed_trips": 34.0,
+  "on_time_departures": 31.0,
+  "boardings": 378
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-11",
+  "departed_trips": 18.0,
+  "on_time_departures": 16.0,
+  "boardings": 109
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-12",
+  "departed_trips": 26.0,
+  "on_time_departures": 26.0,
+  "boardings": 194
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-13",
+  "departed_trips": 36.0,
+  "on_time_departures": 31.0,
+  "boardings": 385
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-14",
+  "departed_trips": 34.0,
+  "on_time_departures": 29.0,
+  "boardings": 347
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-15",
+  "departed_trips": 36.0,
+  "on_time_departures": 32.0,
+  "boardings": 376
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-16",
+  "departed_trips": 35.0,
+  "on_time_departures": 30.0,
+  "boardings": 347
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-17",
+  "departed_trips": 35.0,
+  "on_time_departures": 32.0,
+  "boardings": 368
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-18",
+  "departed_trips": 18.0,
+  "on_time_departures": 18.0,
+  "boardings": 128
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-19",
+  "departed_trips": 26.0,
+  "on_time_departures": 23.0,
+  "boardings": 221
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-20",
+  "departed_trips": 36.0,
+  "on_time_departures": 31.0,
+  "boardings": 366
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-21",
+  "departed_trips": 35.0,
+  "on_time_departures": 32.0,
+  "boardings": 338
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-22",
+  "departed_trips": 34.0,
+  "on_time_departures": 31.0,
+  "boardings": 376
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-23",
+  "departed_trips": 18.0,
+  "on_time_departures": 17.0,
+  "boardings": 112
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-24",
+  "departed_trips": 36.0,
+  "on_time_departures": 32.0,
+  "boardings": 393
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-25",
+  "departed_trips": 17.0,
+  "on_time_departures": 13.0,
+  "boardings": 107
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-26",
+  "departed_trips": 25.0,
+  "on_time_departures": 22.0,
+  "boardings": 176
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-27",
+  "departed_trips": 35.0,
+  "on_time_departures": 32.0,
+  "boardings": 337
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-28",
+  "departed_trips": 36.0,
+  "on_time_departures": 33.0,
+  "boardings": 347
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-29",
+  "departed_trips": 36.0,
+  "on_time_departures": 34.0,
+  "boardings": 388
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-09-30",
+  "departed_trips": 35.0,
+  "on_time_departures": 29.0,
+  "boardings": 361
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-01",
+  "departed_trips": 35.0,
+  "on_time_departures": 28.0,
+  "boardings": 353
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-02",
+  "departed_trips": 18.0,
+  "on_time_departures": 16.0,
+  "boardings": 104
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-03",
+  "departed_trips": 25.0,
+  "on_time_departures": 22.0,
+  "boardings": 202
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-04",
+  "departed_trips": 36.0,
+  "on_time_departures": 32.0,
+  "boardings": 400
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-05",
+  "departed_trips": 35.0,
+  "on_time_departures": 31.0,
+  "boardings": 346
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-06",
+  "departed_trips": 36.0,
+  "on_time_departures": 31.0,
+  "boardings": 401
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-07",
+  "departed_trips": 36.0,
+  "on_time_departures": 32.0,
+  "boardings": 383
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-08",
+  "departed_trips": 35.0,
+  "on_time_departures": 29.0,
+  "boardings": 339
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-09",
+  "departed_trips": 17.0,
+  "on_time_departures": 15.0,
+  "boardings": 105
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-10",
+  "departed_trips": 27.0,
+  "on_time_departures": 25.0,
+  "boardings": 228
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-11",
+  "departed_trips": 36.0,
+  "on_time_departures": 32.0,
+  "boardings": 354
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-12",
+  "departed_trips": 35.0,
+  "on_time_departures": 32.0,
+  "boardings": 389
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-13",
+  "departed_trips": 36.0,
+  "on_time_departures": 28.0,
+  "boardings": 370
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-14",
+  "departed_trips": 36.0,
+  "on_time_departures": 31.0,
+  "boardings": 399
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-15",
+  "departed_trips": 35.0,
+  "on_time_departures": 32.0,
+  "boardings": 355
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-16",
+  "departed_trips": 17.0,
+  "on_time_departures": 15.0,
+  "boardings": 121
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-17",
+  "departed_trips": 26.0,
+  "on_time_departures": 18.0,
+  "boardings": 238
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-18",
+  "departed_trips": 33.0,
+  "on_time_departures": 28.0,
+  "boardings": 369
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-19",
+  "departed_trips": 34.0,
+  "on_time_departures": 30.0,
+  "boardings": 361
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-20",
+  "departed_trips": 36.0,
+  "on_time_departures": 31.0,
+  "boardings": 388
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-21",
+  "departed_trips": 36.0,
+  "on_time_departures": 33.0,
+  "boardings": 358
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-22",
+  "departed_trips": 35.0,
+  "on_time_departures": 30.0,
+  "boardings": 388
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-23",
+  "departed_trips": 17.0,
+  "on_time_departures": 13.0,
+  "boardings": 117
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-24",
+  "departed_trips": 27.0,
+  "on_time_departures": 24.0,
+  "boardings": 224
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-25",
+  "departed_trips": 35.0,
+  "on_time_departures": 34.0,
+  "boardings": 371
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-26",
+  "departed_trips": 35.0,
+  "on_time_departures": 32.0,
+  "boardings": 372
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-27",
+  "departed_trips": 36.0,
+  "on_time_departures": 30.0,
+  "boardings": 378
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-28",
+  "departed_trips": 35.0,
+  "on_time_departures": 33.0,
+  "boardings": 388
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-29",
+  "departed_trips": 35.0,
+  "on_time_departures": 31.0,
+  "boardings": 344
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-30",
+  "departed_trips": 17.0,
+  "on_time_departures": 17.0,
+  "boardings": 104
+ },
+ {
+  "route_id": "R08",
+  "date": "2026-10-31",
+  "departed_trips": 26.0,
+  "on_time_departures": 22.0,
+  "boardings": 243
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-06",
+  "departed_trips": 22.0,
+  "on_time_departures": 14.0,
+  "boardings": 349
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-07",
+  "departed_trips": 22.0,
+  "on_time_departures": 10.0,
+  "boardings": 400
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-08",
+  "departed_trips": 24.0,
+  "on_time_departures": 14.0,
+  "boardings": 387
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-09",
+  "departed_trips": 23.0,
+  "on_time_departures": 12.0,
+  "boardings": 361
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-10",
+  "departed_trips": 21.0,
+  "on_time_departures": 12.0,
+  "boardings": 369
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-11",
+  "departed_trips": 12.0,
+  "on_time_departures": 11.0,
+  "boardings": 107
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-12",
+  "departed_trips": 17.0,
+  "on_time_departures": 13.0,
+  "boardings": 230
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-13",
+  "departed_trips": 24.0,
+  "on_time_departures": 16.0,
+  "boardings": 393
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-14",
+  "departed_trips": 22.0,
+  "on_time_departures": 13.0,
+  "boardings": 389
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-15",
+  "departed_trips": 23.0,
+  "on_time_departures": 14.0,
+  "boardings": 378
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-16",
+  "departed_trips": 23.0,
+  "on_time_departures": 13.0,
+  "boardings": 370
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-17",
+  "departed_trips": 24.0,
+  "on_time_departures": 13.0,
+  "boardings": 409
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-18",
+  "departed_trips": 11.0,
+  "on_time_departures": 6.0,
+  "boardings": 116
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-19",
+  "departed_trips": 18.0,
+  "on_time_departures": 11.0,
+  "boardings": 231
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-20",
+  "departed_trips": 24.0,
+  "on_time_departures": 15.0,
+  "boardings": 428
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-21",
+  "departed_trips": 23.0,
+  "on_time_departures": 17.0,
+  "boardings": 404
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-22",
+  "departed_trips": 24.0,
+  "on_time_departures": 14.0,
+  "boardings": 441
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-23",
+  "departed_trips": 12.0,
+  "on_time_departures": 8.0,
+  "boardings": 143
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-24",
+  "departed_trips": 23.0,
+  "on_time_departures": 12.0,
+  "boardings": 427
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-25",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 132
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-26",
+  "departed_trips": 18.0,
+  "on_time_departures": 10.0,
+  "boardings": 245
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-27",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 371
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-28",
+  "departed_trips": 22.0,
+  "on_time_departures": 12.0,
+  "boardings": 386
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-29",
+  "departed_trips": 19.0,
+  "on_time_departures": 12.0,
+  "boardings": 312
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-09-30",
+  "departed_trips": 24.0,
+  "on_time_departures": 14.0,
+  "boardings": 369
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-01",
+  "departed_trips": 23.0,
+  "on_time_departures": 13.0,
+  "boardings": 378
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-02",
+  "departed_trips": 12.0,
+  "on_time_departures": 7.0,
+  "boardings": 116
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-03",
+  "departed_trips": 17.0,
+  "on_time_departures": 9.0,
+  "boardings": 234
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-04",
+  "departed_trips": 24.0,
+  "on_time_departures": 15.0,
+  "boardings": 406
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-05",
+  "departed_trips": 24.0,
+  "on_time_departures": 16.0,
+  "boardings": 0
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-06",
+  "departed_trips": 24.0,
+  "on_time_departures": 19.0,
+  "boardings": 0
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-07",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 0
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-08",
+  "departed_trips": 23.0,
+  "on_time_departures": 17.0,
+  "boardings": 0
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-09",
+  "departed_trips": 11.0,
+  "on_time_departures": 8.0,
+  "boardings": 106
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-10",
+  "departed_trips": 18.0,
+  "on_time_departures": 13.0,
+  "boardings": 236
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-11",
+  "departed_trips": 22.0,
+  "on_time_departures": 15.0,
+  "boardings": 337
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-12",
+  "departed_trips": 23.0,
+  "on_time_departures": 15.0,
+  "boardings": 375
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-13",
+  "departed_trips": 23.0,
+  "on_time_departures": 13.0,
+  "boardings": 407
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-14",
+  "departed_trips": 23.0,
+  "on_time_departures": 13.0,
+  "boardings": 382
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-15",
+  "departed_trips": 24.0,
+  "on_time_departures": 16.0,
+  "boardings": 379
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-16",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 120
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-17",
+  "departed_trips": 17.0,
+  "on_time_departures": 11.0,
+  "boardings": 233
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-18",
+  "departed_trips": 24.0,
+  "on_time_departures": 18.0,
+  "boardings": 422
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-19",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 384
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-20",
+  "departed_trips": 24.0,
+  "on_time_departures": 15.0,
+  "boardings": 389
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-21",
+  "departed_trips": 22.0,
+  "on_time_departures": 7.0,
+  "boardings": 365
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-22",
+  "departed_trips": 23.0,
+  "on_time_departures": 17.0,
+  "boardings": 397
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-23",
+  "departed_trips": 9.0,
+  "on_time_departures": 3.0,
+  "boardings": 105
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-24",
+  "departed_trips": 18.0,
+  "on_time_departures": 14.0,
+  "boardings": 251
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-25",
+  "departed_trips": 24.0,
+  "on_time_departures": 12.0,
+  "boardings": 427
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-26",
+  "departed_trips": 23.0,
+  "on_time_departures": 15.0,
+  "boardings": 412
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-27",
+  "departed_trips": 24.0,
+  "on_time_departures": 11.0,
+  "boardings": 395
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-28",
+  "departed_trips": 24.0,
+  "on_time_departures": 13.0,
+  "boardings": 382
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-29",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 430
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-30",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 111
+ },
+ {
+  "route_id": "R09",
+  "date": "2026-10-31",
+  "departed_trips": 17.0,
+  "on_time_departures": 10.0,
+  "boardings": 213
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-06",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 171
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-07",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 166
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-08",
+  "departed_trips": 22.0,
+  "on_time_departures": 20.0,
+  "boardings": 204
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-09",
+  "departed_trips": 22.0,
+  "on_time_departures": 20.0,
+  "boardings": 174
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-10",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 219
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-11",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 72
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-12",
+  "departed_trips": 18.0,
+  "on_time_departures": 15.0,
+  "boardings": 130
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-13",
+  "departed_trips": 21.0,
+  "on_time_departures": 18.0,
+  "boardings": 197
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-14",
+  "departed_trips": 24.0,
+  "on_time_departures": 23.0,
+  "boardings": 207
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-15",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 183
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-16",
+  "departed_trips": 21.0,
+  "on_time_departures": 17.0,
+  "boardings": 179
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-17",
+  "departed_trips": 24.0,
+  "on_time_departures": 13.0,
+  "boardings": 222
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-18",
+  "departed_trips": 12.0,
+  "on_time_departures": 11.0,
+  "boardings": 64
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-19",
+  "departed_trips": 18.0,
+  "on_time_departures": 12.0,
+  "boardings": 124
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-20",
+  "departed_trips": 24.0,
+  "on_time_departures": 18.0,
+  "boardings": 198
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-21",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 192
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-22",
+  "departed_trips": 24.0,
+  "on_time_departures": 16.0,
+  "boardings": 216
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-23",
+  "departed_trips": 12.0,
+  "on_time_departures": 10.0,
+  "boardings": 79
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-24",
+  "departed_trips": 21.0,
+  "on_time_departures": 18.0,
+  "boardings": 163
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-25",
+  "departed_trips": 11.0,
+  "on_time_departures": 11.0,
+  "boardings": 52
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-26",
+  "departed_trips": 18.0,
+  "on_time_departures": 14.0,
+  "boardings": 131
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-27",
+  "departed_trips": 22.0,
+  "on_time_departures": 19.0,
+  "boardings": 179
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-28",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 226
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-29",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 212
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-09-30",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 186
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-01",
+  "departed_trips": 23.0,
+  "on_time_departures": 16.0,
+  "boardings": 189
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-02",
+  "departed_trips": 10.0,
+  "on_time_departures": 9.0,
+  "boardings": 51
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-03",
+  "departed_trips": 17.0,
+  "on_time_departures": 12.0,
+  "boardings": 118
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-04",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 190
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-05",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 0
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-06",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 0
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-07",
+  "departed_trips": 23.0,
+  "on_time_departures": 21.0,
+  "boardings": 0
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-08",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 0
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-09",
+  "departed_trips": 12.0,
+  "on_time_departures": 8.0,
+  "boardings": 53
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-10",
+  "departed_trips": 17.0,
+  "on_time_departures": 15.0,
+  "boardings": 119
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-11",
+  "departed_trips": 22.0,
+  "on_time_departures": 16.0,
+  "boardings": 173
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-12",
+  "departed_trips": 23.0,
+  "on_time_departures": 22.0,
+  "boardings": 199
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-13",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 199
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-14",
+  "departed_trips": 23.0,
+  "on_time_departures": 17.0,
+  "boardings": 193
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-15",
+  "departed_trips": 24.0,
+  "on_time_departures": 16.0,
+  "boardings": 203
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-16",
+  "departed_trips": 11.0,
+  "on_time_departures": 10.0,
+  "boardings": 59
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-17",
+  "departed_trips": 17.0,
+  "on_time_departures": 16.0,
+  "boardings": 119
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-18",
+  "departed_trips": 20.0,
+  "on_time_departures": 17.0,
+  "boardings": 192
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-19",
+  "departed_trips": 23.0,
+  "on_time_departures": 17.0,
+  "boardings": 188
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-20",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 183
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-21",
+  "departed_trips": 21.0,
+  "on_time_departures": 14.0,
+  "boardings": 192
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-22",
+  "departed_trips": 24.0,
+  "on_time_departures": 18.0,
+  "boardings": 187
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-23",
+  "departed_trips": 12.0,
+  "on_time_departures": 10.0,
+  "boardings": 52
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-24",
+  "departed_trips": 17.0,
+  "on_time_departures": 15.0,
+  "boardings": 127
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-25",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 176
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-26",
+  "departed_trips": 24.0,
+  "on_time_departures": 19.0,
+  "boardings": 216
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-27",
+  "departed_trips": 21.0,
+  "on_time_departures": 17.0,
+  "boardings": 186
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-28",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 199
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-29",
+  "departed_trips": 23.0,
+  "on_time_departures": 17.0,
+  "boardings": 197
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-30",
+  "departed_trips": 12.0,
+  "on_time_departures": 7.0,
+  "boardings": 61
+ },
+ {
+  "route_id": "R10",
+  "date": "2026-10-31",
+  "departed_trips": 16.0,
+  "on_time_departures": 14.0,
+  "boardings": 126
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-06",
+  "departed_trips": 22.0,
+  "on_time_departures": 19.0,
+  "boardings": 205
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-07",
+  "departed_trips": 23.0,
+  "on_time_departures": 21.0,
+  "boardings": 177
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-08",
+  "departed_trips": 24.0,
+  "on_time_departures": 23.0,
+  "boardings": 200
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-09",
+  "departed_trips": 22.0,
+  "on_time_departures": 19.0,
+  "boardings": 168
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-10",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 174
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-11",
+  "departed_trips": 11.0,
+  "on_time_departures": 9.0,
+  "boardings": 55
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-12",
+  "departed_trips": 17.0,
+  "on_time_departures": 16.0,
+  "boardings": 105
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-13",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 214
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-14",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 180
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-15",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 204
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-16",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 167
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-17",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 176
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-18",
+  "departed_trips": 12.0,
+  "on_time_departures": 12.0,
+  "boardings": 75
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-19",
+  "departed_trips": 18.0,
+  "on_time_departures": 15.0,
+  "boardings": 148
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-20",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 213
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-21",
+  "departed_trips": 24.0,
+  "on_time_departures": 18.0,
+  "boardings": 187
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-22",
+  "departed_trips": 23.0,
+  "on_time_departures": 21.0,
+  "boardings": 212
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-23",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 68
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-24",
+  "departed_trips": 23.0,
+  "on_time_departures": 17.0,
+  "boardings": 213
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-25",
+  "departed_trips": 11.0,
+  "on_time_departures": 10.0,
+  "boardings": 58
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-26",
+  "departed_trips": 17.0,
+  "on_time_departures": 12.0,
+  "boardings": 124
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-27",
+  "departed_trips": 21.0,
+  "on_time_departures": 19.0,
+  "boardings": 173
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-28",
+  "departed_trips": 23.0,
+  "on_time_departures": 21.0,
+  "boardings": 164
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-29",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 172
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-09-30",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 214
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-01",
+  "departed_trips": 23.0,
+  "on_time_departures": 15.0,
+  "boardings": 197
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-02",
+  "departed_trips": 11.0,
+  "on_time_departures": 10.0,
+  "boardings": 58
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-03",
+  "departed_trips": 18.0,
+  "on_time_departures": 15.0,
+  "boardings": 130
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-04",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 190
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-05",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 0
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-06",
+  "departed_trips": 24.0,
+  "on_time_departures": 18.0,
+  "boardings": 0
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-07",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 0
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-08",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 0
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-09",
+  "departed_trips": 11.0,
+  "on_time_departures": 10.0,
+  "boardings": 56
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-10",
+  "departed_trips": 17.0,
+  "on_time_departures": 16.0,
+  "boardings": 119
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-11",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 184
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-12",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 191
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-13",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 197
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-14",
+  "departed_trips": 24.0,
+  "on_time_departures": 23.0,
+  "boardings": 202
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-15",
+  "departed_trips": 22.0,
+  "on_time_departures": 21.0,
+  "boardings": 172
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-16",
+  "departed_trips": 12.0,
+  "on_time_departures": 9.0,
+  "boardings": 78
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-17",
+  "departed_trips": 17.0,
+  "on_time_departures": 12.0,
+  "boardings": 137
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-18",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 173
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-19",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 207
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-20",
+  "departed_trips": 22.0,
+  "on_time_departures": 20.0,
+  "boardings": 182
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-21",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 211
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-22",
+  "departed_trips": 21.0,
+  "on_time_departures": 17.0,
+  "boardings": 166
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-23",
+  "departed_trips": 11.0,
+  "on_time_departures": 10.0,
+  "boardings": 61
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-24",
+  "departed_trips": 17.0,
+  "on_time_departures": 14.0,
+  "boardings": 121
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-25",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 193
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-26",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 197
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-27",
+  "departed_trips": 24.0,
+  "on_time_departures": 16.0,
+  "boardings": 200
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-28",
+  "departed_trips": 23.0,
+  "on_time_departures": 16.0,
+  "boardings": 162
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-29",
+  "departed_trips": 22.0,
+  "on_time_departures": 17.0,
+  "boardings": 179
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-30",
+  "departed_trips": 11.0,
+  "on_time_departures": 11.0,
+  "boardings": 56
+ },
+ {
+  "route_id": "R11",
+  "date": "2026-10-31",
+  "departed_trips": 18.0,
+  "on_time_departures": 14.0,
+  "boardings": 129
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-06",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 186
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-07",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 195
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-08",
+  "departed_trips": 21.0,
+  "on_time_departures": 19.0,
+  "boardings": 169
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-09",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 197
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-10",
+  "departed_trips": 24.0,
+  "on_time_departures": 22.0,
+  "boardings": 186
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-11",
+  "departed_trips": 11.0,
+  "on_time_departures": 9.0,
+  "boardings": 62
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-12",
+  "departed_trips": 18.0,
+  "on_time_departures": 15.0,
+  "boardings": 125
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-13",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 213
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-14",
+  "departed_trips": 22.0,
+  "on_time_departures": 19.0,
+  "boardings": 207
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-15",
+  "departed_trips": 21.0,
+  "on_time_departures": 16.0,
+  "boardings": 177
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-16",
+  "departed_trips": 23.0,
+  "on_time_departures": 21.0,
+  "boardings": 188
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-17",
+  "departed_trips": 22.0,
+  "on_time_departures": 18.0,
+  "boardings": 192
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-18",
+  "departed_trips": 10.0,
+  "on_time_departures": 8.0,
+  "boardings": 52
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-19",
+  "departed_trips": 17.0,
+  "on_time_departures": 11.0,
+  "boardings": 111
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-20",
+  "departed_trips": 23.0,
+  "on_time_departures": 19.0,
+  "boardings": 225
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-21",
+  "departed_trips": 22.0,
+  "on_time_departures": 17.0,
+  "boardings": 197
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-22",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 206
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-23",
+  "departed_trips": 11.0,
+  "on_time_departures": 9.0,
+  "boardings": 30
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-24",
+  "departed_trips": 22.0,
+  "on_time_departures": 21.0,
+  "boardings": 187
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-25",
+  "departed_trips": 11.0,
+  "on_time_departures": 11.0,
+  "boardings": 58
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-26",
+  "departed_trips": 17.0,
+  "on_time_departures": 12.0,
+  "boardings": 117
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-27",
+  "departed_trips": 22.0,
+  "on_time_departures": 15.0,
+  "boardings": 187
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-28",
+  "departed_trips": 24.0,
+  "on_time_departures": 18.0,
+  "boardings": 201
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-29",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 185
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-09-30",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 200
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-01",
+  "departed_trips": 21.0,
+  "on_time_departures": 21.0,
+  "boardings": 158
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-02",
+  "departed_trips": 11.0,
+  "on_time_departures": 8.0,
+  "boardings": 67
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-03",
+  "departed_trips": 17.0,
+  "on_time_departures": 13.0,
+  "boardings": 100
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-04",
+  "departed_trips": 23.0,
+  "on_time_departures": 14.0,
+  "boardings": 205
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-05",
+  "departed_trips": 22.0,
+  "on_time_departures": 17.0,
+  "boardings": 0
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-06",
+  "departed_trips": 24.0,
+  "on_time_departures": 19.0,
+  "boardings": 0
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-07",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 0
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-08",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 0
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-09",
+  "departed_trips": 12.0,
+  "on_time_departures": 11.0,
+  "boardings": 66
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-10",
+  "departed_trips": 16.0,
+  "on_time_departures": 15.0,
+  "boardings": 116
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-11",
+  "departed_trips": 23.0,
+  "on_time_departures": 22.0,
+  "boardings": 169
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-12",
+  "departed_trips": 24.0,
+  "on_time_departures": 20.0,
+  "boardings": 171
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-13",
+  "departed_trips": 22.0,
+  "on_time_departures": 18.0,
+  "boardings": 189
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-14",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 216
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-15",
+  "departed_trips": 22.0,
+  "on_time_departures": 21.0,
+  "boardings": 191
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-16",
+  "departed_trips": 10.0,
+  "on_time_departures": 8.0,
+  "boardings": 45
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-17",
+  "departed_trips": 18.0,
+  "on_time_departures": 16.0,
+  "boardings": 116
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-18",
+  "departed_trips": 23.0,
+  "on_time_departures": 16.0,
+  "boardings": 214
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-19",
+  "departed_trips": 23.0,
+  "on_time_departures": 20.0,
+  "boardings": 218
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-20",
+  "departed_trips": 22.0,
+  "on_time_departures": 20.0,
+  "boardings": 198
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-21",
+  "departed_trips": 23.0,
+  "on_time_departures": 17.0,
+  "boardings": 190
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-22",
+  "departed_trips": 22.0,
+  "on_time_departures": 15.0,
+  "boardings": 169
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-23",
+  "departed_trips": 12.0,
+  "on_time_departures": 11.0,
+  "boardings": 42
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-24",
+  "departed_trips": 18.0,
+  "on_time_departures": 15.0,
+  "boardings": 136
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-25",
+  "departed_trips": 23.0,
+  "on_time_departures": 17.0,
+  "boardings": 208
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-26",
+  "departed_trips": 24.0,
+  "on_time_departures": 17.0,
+  "boardings": 223
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-27",
+  "departed_trips": 24.0,
+  "on_time_departures": 21.0,
+  "boardings": 216
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-28",
+  "departed_trips": 23.0,
+  "on_time_departures": 18.0,
+  "boardings": 202
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-29",
+  "departed_trips": 21.0,
+  "on_time_departures": 18.0,
+  "boardings": 187
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-30",
+  "departed_trips": 12.0,
+  "on_time_departures": 10.0,
+  "boardings": 64
+ },
+ {
+  "route_id": "R12",
+  "date": "2026-10-31",
+  "departed_trips": 17.0,
+  "on_time_departures": 12.0,
+  "boardings": 113
+ }
+]

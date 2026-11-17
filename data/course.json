@@ -1,0 +1,984 @@
+{
+  "v": 1,
+  "engine": "1.0.0",
+  "build": {
+    "at": "2026-11-15T18:46:23Z",
+    "version": "2027.1.0",
+    "commit": "6720e14"
+  },
+  "lang": "en",
+  "dir": "ltr",
+  "langs": [
+    "en"
+  ],
+  "alt": {},
+  "course": {
+    "id": "ds-307",
+    "code": "DS-307",
+    "version": "2027.1.0",
+    "title": "Metrics, Semantic Models and Dashboards",
+    "tagline": "Define each number once, model it, show it to the person who decides, and test the agent that answers questions about it",
+    "description": "Participants take over performance reporting for Wadi Noor Transit, a fictional bus operator whose three reports give three different on-time figures. On a synthetic warehouse of trips, boardings and routes they write governed metric definitions, build a semantic model that defines each metric once, design a dashboard for one decision within a load-time budget, trace an anomaly to its source, and test a conversational analytics agent on certified questions with and without the semantic layer. Platform-scale semantic layer design is DS-408.",
+    "track": "data-science",
+    "track_name": "Data Science Track",
+    "level": 300,
+    "badge": {
+      "name": "Data Science",
+      "level": "Associate"
+    },
+    "audience": "Practitioners. Data scientists and analysts who have completed the level 200 set or can show equivalent work: an analysis they framed, carried out and explained to a stakeholder.",
+    "prerequisites": [
+      "FN-104 SQL and Data Wrangling",
+      "DS-203 Exploratory Analysis and Visualisation",
+      "Writes SQL with joins, grouping and window functions",
+      "Has built a chart-based report for others"
+    ],
+    "url": "https://sdaiaacademy.github.io/ds-307/",
+    "repo": "SDAIAAcademy/ds-307",
+    "home": "../index.html",
+    "format": "intensive",
+    "format_note": "Intensive: 4 teaching days of four sessions and a capstone day, with guided pre-work and a tracked follow-up task",
+    "shape": "4 teaching days + capstone day",
+    "hours": {
+      "instruction": 6,
+      "lab": 7,
+      "guided_self_study": 6,
+      "assessment": 1,
+      "capstone": 6,
+      "total": 26
+    },
+    "unit": "day",
+    "outcomes": [
+      {
+        "id": "LO1",
+        "text": "Explain why reports built on one warehouse disagree on the same measure, given three operator reports with different on-time figures",
+        "level": "Awareness",
+        "evidence": "a diagnosis naming the definitional cause of each difference"
+      },
+      {
+        "id": "LO2",
+        "text": "Draft metric definitions stating formula, grain, filters, time logic, owner and limits, given twelve business questions and the data dictionary",
+        "level": "Applied",
+        "evidence": "a metric catalogue that passes a peer checklist and reconciles to source totals"
+      },
+      {
+        "id": "LO3",
+        "text": "Implement a star-schema semantic model with a slowly changing route dimension and each metric defined once, given the synthetic transit warehouse",
+        "level": "Applied",
+        "evidence": "reference values returned for 25 test queries"
+      },
+      {
+        "id": "LO4",
+        "text": "Analyse a metric anomaly by drill-down and segmentation to find its source, given a seeded drop in weekly ridership",
+        "level": "Applied",
+        "evidence": "an anomaly note naming the cause, affected segments and correction"
+      },
+      {
+        "id": "LO5",
+        "text": "Design a dashboard for a named audience and decision within a load-time budget, given the operations director's brief and a three-second budget",
+        "level": "Performance",
+        "evidence": "a dashboard, a one-page rationale and recorded timings, scored on a rubric"
+      },
+      {
+        "id": "LO6",
+        "text": "Evaluate a conversational analytics agent against governed metrics and decide which question types it may answer unreviewed, given 40 certified questions and a stated tolerance for wrong figures",
+        "level": "Performance",
+        "evidence": "a memo with accuracy by question type and configuration, plausible wrong answers and a go or no-go decision"
+      }
+    ],
+    "case_study": {
+      "name": "Wadi Noor Transit",
+      "summary": "A fictional city bus operator with twelve routes from three depots, whose operations, planning and board reports give three different on-time figures for the same month. A synthetic warehouse (January to October 2026, fixed seed) holds about 85,000 trips, 329,000 timepoint arrivals, 849,000 card taps, 2,400 complaints and 121,000 fare sales, with planted problems for every session."
+    },
+    "days": [
+      {
+        "id": "day1",
+        "kind": "day",
+        "n": 1,
+        "number": 1,
+        "label": "Day 1",
+        "title": "Define the numbers",
+        "subtitle": "Three reports, one warehouse: definitions someone else can compute",
+        "shape": "4 sessions · 4 labs",
+        "deck": "../slides/day1.html",
+        "md": "../slides/day1.md",
+        "url": "https://sdaiaacademy.github.io/ds-307/slides/day1.html",
+        "sessions": [
+          {
+            "n": 1,
+            "label": "Session 1",
+            "title": "Why three reports disagree",
+            "summary": "What makes three reports on one warehouse give three numbers",
+            "outcomes": [
+              "Name the four places two definitions of one measure can differ",
+              "Reproduce a published figure from its written rule",
+              "Explain a gap between two figures one rule at a time"
+            ],
+            "lo": [
+              "LO1"
+            ],
+            "minutes": 50,
+            "lab": {
+              "id": "1.1",
+              "title": "Three on-time figures",
+              "summary": "Compute the operations, planning and board on-time figures for September from their written rules, walk from one to the next one rule at a time, and write the diagnosis.",
+              "minutes": 25,
+              "href": "../labs/D1_1_three_on_time.ipynb",
+              "steps": [
+                {
+                  "text": "Compute the operations figure from its rule",
+                  "minutes": 6
+                },
+                {
+                  "text": "Compute the planning and board figures",
+                  "minutes": 7
+                },
+                {
+                  "text": "Walk from one figure to the next, one rule at a time",
+                  "minutes": 8
+                },
+                {
+                  "text": "Write the diagnosis: one cause per difference",
+                  "minutes": 4
+                }
+              ],
+              "stretch": "Which figure answers the question the operations director asks every Sunday?"
+            }
+          },
+          {
+            "n": 2,
+            "label": "Session 2",
+            "title": "Anatomy of a metric definition",
+            "summary": "The eight parts of a definition someone else can compute",
+            "outcomes": [
+              "Write a definition with formula, grain, filters, time logic, owner and limits",
+              "Tell taps, cards and journeys apart",
+              "Reconcile a definition to the source totals"
+            ],
+            "lo": [
+              "LO2"
+            ],
+            "minutes": 50,
+            "lab": {
+              "id": "1.2",
+              "title": "Four ridership definitions",
+              "summary": "Count four ridership numbers for one week, write each as a governed definition, run the peer checklist and reconcile every definition to the source totals.",
+              "minutes": 25,
+              "href": "../labs/D1_2_ridership_metrics.ipynb",
+              "steps": [
+                {
+                  "text": "Count four ridership numbers for one week",
+                  "minutes": 6
+                },
+                {
+                  "text": "Write the four definitions in the catalogue template",
+                  "minutes": 8
+                },
+                {
+                  "text": "Run the peer checklist",
+                  "minutes": 5
+                },
+                {
+                  "text": "Reconcile each definition to the source totals",
+                  "minutes": 6
+                }
+              ],
+              "stretch": "Add the Arabic name and a limits line to each definition"
+            }
+          },
+          {
+            "n": 3,
+            "label": "Session 3",
+            "title": "Ratios, distinct counts and time logic",
+            "summary": "Ratios, distinct counts and the calendar inside a metric",
+            "outcomes": [
+              "Compute a ratio of sums and say why it differs from a mean of ratios",
+              "Explain why distinct counts do not add across periods",
+              "Test a metric against hand-computed values"
+            ],
+            "lo": [
+              "LO2"
+            ],
+            "minutes": 50,
+            "lab": {
+              "id": "1.3",
+              "title": "Two ratio metrics, tested",
+              "summary": "Implement the on-time rate and the cancellation rate as functions and test them against hand-computed values and the network totals; see why weekly distinct cards do not add to a month.",
+              "minutes": 25,
+              "href": "../labs/D1_3_ratio_metrics.ipynb",
+              "steps": [
+                {
+                  "text": "Hand-compute the on-time rate of a small example",
+                  "minutes": 5
+                },
+                {
+                  "text": "Implement the two ratio metrics",
+                  "minutes": 8
+                },
+                {
+                  "text": "Test them against the hand values and the network",
+                  "minutes": 6
+                },
+                {
+                  "text": "Show that weekly distinct cards do not add to a month",
+                  "minutes": 6
+                }
+              ],
+              "stretch": "The same two metrics by Hijri month"
+            }
+          },
+          {
+            "n": 4,
+            "label": "Session 4",
+            "title": "Metric trees",
+            "summary": "From one goal metric to the drivers a team can move",
+            "outcomes": [
+              "Decompose a goal metric into drivers that multiply back to it",
+              "Add a guardrail that a driver could harm",
+              "Assign an owner to each node"
+            ],
+            "lo": [
+              "LO2"
+            ],
+            "minutes": 50,
+            "lab": {
+              "id": "1.4",
+              "title": "A network metric tree",
+              "summary": "Build a tree from weekly boardings to three drivers and a guardrail, reconcile it for two weeks and say which driver moved.",
+              "minutes": 25,
+              "href": "../labs/D1_4_metric_tree.ipynb",
+              "steps": [
+                {
+                  "text": "Choose the goal and its decomposition",
+                  "minutes": 5
+                },
+                {
+                  "text": "Compute the three drivers for two weeks",
+                  "minutes": 8
+                },
+                {
+                  "text": "Reconcile the tree to the goal",
+                  "minutes": 6
+                },
+                {
+                  "text": "Add the guardrail and the owners",
+                  "minutes": 6
+                }
+              ],
+              "stretch": "Attribute the week-on-week change to each driver with log changes"
+            }
+          }
+        ]
+      },
+      {
+        "id": "day2",
+        "kind": "day",
+        "n": 2,
+        "number": 2,
+        "label": "Day 2",
+        "title": "Model once",
+        "subtitle": "One semantic model in which each metric is defined once",
+        "shape": "4 sessions · 4 labs",
+        "deck": "../slides/day2.html",
+        "md": "../slides/day2.md",
+        "url": "https://sdaiaacademy.github.io/ds-307/slides/day2.html",
+        "sessions": [
+          {
+            "n": 1,
+            "label": "Session 1",
+            "title": "Star schemas for analysis",
+            "summary": "Facts at a stated grain, dimensions that describe them",
+            "outcomes": [
+              "State the grain of each fact table",
+              "Prove a key by counting",
+              "Draw the star of a subject area"
+            ],
+            "lo": [
+              "LO3"
+            ],
+            "minutes": 50,
+            "lab": {
+              "id": "2.1",
+              "title": "Facts, dimensions and their grain",
+              "summary": "Name the grain of each warehouse table, prove it with key tests, draw the star and find the dimension whose natural key is not unique.",
+              "minutes": 25,
+              "href": "../labs/D2_1_star_schema.ipynb",
+              "steps": [
+                {
+                  "text": "Name the grain of each table",
+                  "minutes": 5
+                },
+                {
+                  "text": "Prove the grains with key tests",
+                  "minutes": 8
+                },
+                {
+                  "text": "Draw the star: facts, dimensions, keys",
+                  "minutes": 6
+                },
+                {
+                  "text": "Find the dimension whose natural key fails",
+                  "minutes": 6
+                }
+              ],
+              "stretch": "Check that dates conform across the two facts"
+            }
+          },
+          {
+            "n": 2,
+            "label": "Session 2",
+            "title": "Changing dimensions and calendars",
+            "summary": "Type 2 history for a re-routed line, and two calendars in one date table",
+            "outcomes": [
+              "Join a fact to the dimension version valid on its date",
+              "Compare a route before and after a change",
+              "Report by Hijri month and in Ramadan from one date table"
+            ],
+            "lo": [
+              "LO3"
+            ],
+            "minutes": 50,
+            "lab": {
+              "id": "2.2",
+              "title": "A re-routed line and two calendars",
+              "summary": "Query the re-routed R07 through the type 2 route dimension and report ridership by Hijri month and in Ramadan from the dual-calendar date table.",
+              "minutes": 25,
+              "href": "../labs/D2_2_route_history.ipynb",
+              "steps": [
+                {
+                  "text": "Read the two versions of R07",
+                  "minutes": 4
+                },
+                {
+                  "text": "Join trips to the version valid on the service date",
+                  "minutes": 8
+                },
+                {
+                  "text": "Compare boardings per kilometre before and after",
+                  "minutes": 6
+                },
+                {
+                  "text": "Report ridership by Hijri month and in Ramadan",
+                  "minutes": 7
+                }
+              ],
+              "stretch": "Eid days against ordinary Fridays"
+            }
+          },
+          {
+            "n": 3,
+            "label": "Session 3",
+            "title": "Fan-out and join paths",
+            "summary": "Fan and chasm traps, and the test that catches them",
+            "outcomes": [
+              "Recognise a join that repeats rows",
+              "Write a reconciliation test against a source total",
+              "Aggregate each fact before joining"
+            ],
+            "lo": [
+              "LO3"
+            ],
+            "minutes": 50,
+            "lab": {
+              "id": "2.3",
+              "title": "The double-counting join",
+              "summary": "Find the join that inflates boardings in a route report, write a reconciliation test that fails on it, and fix the query by aggregating before joining.",
+              "minutes": 25,
+              "href": "../labs/D2_3_fan_out.ipynb",
+              "steps": [
+                {
+                  "text": "Run the route report as written",
+                  "minutes": 5
+                },
+                {
+                  "text": "Find the join that repeats rows",
+                  "minutes": 6
+                },
+                {
+                  "text": "Write a reconciliation test that fails on it",
+                  "minutes": 6
+                },
+                {
+                  "text": "Fix the query by aggregating before joining",
+                  "minutes": 8
+                }
+              ],
+              "stretch": "Ask the semantic layer for the same report and read its refusal"
+            }
+          },
+          {
+            "n": 4,
+            "label": "Session 4",
+            "title": "Metrics in an open specification",
+            "summary": "A semantic model as an open document: datasets, relationships, metrics",
+            "outcomes": [
+              "Write datasets, fields, relationships and metrics in an Apache Ossie document",
+              "Tell a dataset-scoped from a model-scoped metric",
+              "Validate a model and run test queries against it"
+            ],
+            "lo": [
+              "LO3"
+            ],
+            "minutes": 50,
+            "lab": {
+              "id": "2.4",
+              "title": "Five metrics in the semantic layer",
+              "summary": "Validate the starter model against the Ossie schema, add five catalogue metrics, and run the 25 test queries against their reference values.",
+              "minutes": 25,
+              "href": "../labs/D2_4_semantic_layer.ipynb",
+              "steps": [
+                {
+                  "text": "Validate the starter model",
+                  "minutes": 4
+                },
+                {
+                  "text": "Add the three boardings metrics",
+                  "minutes": 7
+                },
+                {
+                  "text": "Add the two model-level ratios",
+                  "minutes": 6
+                },
+                {
+                  "text": "Run the 25 test queries",
+                  "minutes": 8
+                }
+              ],
+              "stretch": "Run the same queries as the East depot manager"
+            }
+          }
+        ]
+      },
+      {
+        "id": "day3",
+        "kind": "day",
+        "n": 3,
+        "number": 3,
+        "label": "Day 3",
+        "title": "Show and investigate",
+        "subtitle": "A dashboard for one decision, and an anomaly traced to its source",
+        "shape": "4 sessions · 4 labs",
+        "deck": "../slides/day3.html",
+        "md": "../slides/day3.md",
+        "url": "https://sdaiaacademy.github.io/ds-307/slides/day3.html",
+        "sessions": [
+          {
+            "n": 1,
+            "label": "Session 1",
+            "title": "Dashboards start from a decision",
+            "summary": "One audience, one decision, few panels",
+            "outcomes": [
+              "Turn a brief into a decision, an audience and a cadence",
+              "Give every panel a comparison",
+              "Cut a dashboard to the panels the decision needs"
+            ],
+            "lo": [
+              "LO5"
+            ],
+            "minutes": 50,
+            "lab": {
+              "id": "3.1",
+              "title": "A wireframe from the brief",
+              "summary": "Turn the operations director's brief into a wireframe specification of at most six panels, each with its question, metric, comparison and owner, and run the brief checker.",
+              "minutes": 25,
+              "href": "../labs/D3_1_wireframe.ipynb",
+              "steps": [
+                {
+                  "text": "Read the brief: audience, decision, cadence",
+                  "minutes": 5
+                },
+                {
+                  "text": "Turn each question into a panel with a comparison",
+                  "minutes": 10
+                },
+                {
+                  "text": "Cut to six panels and order them",
+                  "minutes": 5
+                },
+                {
+                  "text": "Run the brief checker",
+                  "minutes": 5
+                }
+              ],
+              "stretch": "One panel for a reader who reads Arabic only"
+            }
+          },
+          {
+            "n": 2,
+            "label": "Session 2",
+            "title": "Comparisons and bilingual layout",
+            "summary": "Targets, prior periods and a layout that works in two directions",
+            "outcomes": [
+              "Show a number against a target and a prior period",
+              "Lay out the same panel in Arabic and English",
+              "Suppress small counts before publishing"
+            ],
+            "lo": [
+              "LO5"
+            ],
+            "minutes": 50,
+            "lab": {
+              "id": "3.2",
+              "title": "Three bilingual panels",
+              "summary": "Build three panels from the semantic layer with targets and prior periods, render them in Arabic and English, and suppress small counts.",
+              "minutes": 25,
+              "href": "../labs/D3_2_bilingual_panels.ipynb",
+              "steps": [
+                {
+                  "text": "Query the three panels from the semantic layer",
+                  "minutes": 6
+                },
+                {
+                  "text": "Add a target and the prior period",
+                  "minutes": 7
+                },
+                {
+                  "text": "Render the panels in Arabic and English",
+                  "minutes": 8
+                },
+                {
+                  "text": "Suppress small counts and check the layout",
+                  "minutes": 4
+                }
+              ],
+              "stretch": "Check the colours for colour-blind readers"
+            }
+          },
+          {
+            "n": 3,
+            "label": "Session 3",
+            "title": "Load time is a design constraint",
+            "summary": "Where the seconds go, and how to get them back",
+            "outcomes": [
+              "Measure a dashboard tile by tile",
+              "Replace per-tile queries with one grouped query",
+              "Pre-aggregate to the grain the panels need, keeping the parts of each ratio"
+            ],
+            "lo": [
+              "LO5"
+            ],
+            "minutes": 50,
+            "lab": {
+              "id": "3.3",
+              "title": "Under three seconds",
+              "summary": "Time a slow dashboard panel by panel, find where the time goes, pre-aggregate a daily table and bring the whole page under the three-second budget.",
+              "minutes": 25,
+              "href": "../labs/D3_3_load_time.ipynb",
+              "steps": [
+                {
+                  "text": "Time the tile-by-tile dashboard",
+                  "minutes": 5
+                },
+                {
+                  "text": "Build a route-day table with the parts of each ratio",
+                  "minutes": 8
+                },
+                {
+                  "text": "Redraw the dashboard from the table and time it",
+                  "minutes": 7
+                },
+                {
+                  "text": "Prove the numbers did not change, and date the data",
+                  "minutes": 5
+                }
+              ],
+              "stretch": "Refresh only the newest day"
+            }
+          },
+          {
+            "n": 4,
+            "label": "Session 4",
+            "title": "Investigating an anomaly",
+            "summary": "Drill down, segment, and separate data from demand",
+            "outcomes": [
+              "Drill a change down a tree of segments",
+              "Tell a data fault from a change in demand",
+              "Write an anomaly note with cause, segments and correction"
+            ],
+            "lo": [
+              "LO4"
+            ],
+            "minutes": 50,
+            "lab": {
+              "id": "3.4",
+              "title": "The October ridership drop",
+              "summary": "Drill into the seeded drop in weekly ridership, segment it by depot, route, day, fare type and vehicle, restate the week and write the anomaly note.",
+              "minutes": 25,
+              "href": "../labs/D3_4_ridership_drop.ipynb",
+              "steps": [
+                {
+                  "text": "Confirm the drop on the dashboard metric",
+                  "minutes": 4
+                },
+                {
+                  "text": "Drill down by depot, route and day",
+                  "minutes": 7
+                },
+                {
+                  "text": "Segment by fare type and vehicle",
+                  "minutes": 6
+                },
+                {
+                  "text": "Restate the week and write the note",
+                  "minutes": 8
+                }
+              ],
+              "stretch": "The September on-time paradox by route type"
+            }
+          }
+        ]
+      },
+      {
+        "id": "day4",
+        "kind": "day",
+        "n": 4,
+        "number": 4,
+        "label": "Day 4",
+        "title": "Let an agent answer",
+        "subtitle": "A conversational agent tested on certified questions",
+        "shape": "4 sessions · 4 labs",
+        "deck": "../slides/day4.html",
+        "md": "../slides/day4.md",
+        "url": "https://sdaiaacademy.github.io/ds-307/slides/day4.html",
+        "sessions": [
+          {
+            "n": 1,
+            "label": "Session 1",
+            "title": "From question to query",
+            "summary": "How an agent turns a question into SQL, and how to watch it",
+            "outcomes": [
+              "Describe the steps from a question to a query",
+              "Log every query an agent runs",
+              "Judge an answer against a governed figure"
+            ],
+            "lo": [
+              "LO6"
+            ],
+            "minutes": 50,
+            "lab": {
+              "id": "4.1",
+              "title": "Ten questions, raw schema",
+              "summary": "Run Nabih on ten questions against the raw warehouse schema, log the SQL it writes, mark each answer against the governed figure and name each error.",
+              "minutes": 25,
+              "href": "../labs/D4_1_agent_raw.ipynb",
+              "steps": [
+                {
+                  "text": "Read the schema the agent is given",
+                  "minutes": 4
+                },
+                {
+                  "text": "Run the agent on ten questions and log its SQL",
+                  "minutes": 8
+                },
+                {
+                  "text": "Mark each answer against the governed figure",
+                  "minutes": 8
+                },
+                {
+                  "text": "Name what went wrong in each wrong answer",
+                  "minutes": 5
+                }
+              ],
+              "stretch": "Change one line of the instruction and run again"
+            }
+          },
+          {
+            "n": 2,
+            "label": "Session 2",
+            "title": "Certified questions",
+            "summary": "Answers you would sign, and questions the agent must refuse",
+            "outcomes": [
+              "Write a certified answer with value, query and tolerance",
+              "Write a refusal with its reason",
+              "Mark the fields an agent may never read"
+            ],
+            "lo": [
+              "LO6"
+            ],
+            "minutes": 50,
+            "lab": {
+              "id": "4.2",
+              "title": "Ten certified answers",
+              "summary": "Write certified answers for ten questions: eight with value, query, time logic and tolerance, and two the agent should refuse, with the reason.",
+              "minutes": 25,
+              "href": "../labs/D4_2_certified_answers.ipynb",
+              "steps": [
+                {
+                  "text": "Certify the metric questions",
+                  "minutes": 10
+                },
+                {
+                  "text": "Add tolerances and the time logic",
+                  "minutes": 5
+                },
+                {
+                  "text": "Write the two refusals",
+                  "minutes": 5
+                },
+                {
+                  "text": "Check your set against the supplied key",
+                  "minutes": 5
+                }
+              ],
+              "stretch": "Three of the questions in Arabic"
+            }
+          },
+          {
+            "n": 3,
+            "label": "Session 3",
+            "title": "With and without the semantic layer",
+            "summary": "The same agent with the semantic layer as its tool",
+            "outcomes": [
+              "Score agent answers against certified ones",
+              "Classify wrong answers by error type",
+              "Compare accuracy by question type and configuration"
+            ],
+            "lo": [
+              "LO6"
+            ],
+            "minutes": 50,
+            "lab": {
+              "id": "4.3",
+              "title": "Forty questions, two configurations",
+              "summary": "Score a batch run of 40 certified questions in both configurations, classify every error and compare accuracy by question type.",
+              "minutes": 25,
+              "href": "../labs/D4_3_score_configs.ipynb",
+              "steps": [
+                {
+                  "text": "Load the batch run and the certified set",
+                  "minutes": 3
+                },
+                {
+                  "text": "Score each answer",
+                  "minutes": 8
+                },
+                {
+                  "text": "Classify each wrong answer by error type",
+                  "minutes": 8
+                },
+                {
+                  "text": "Accuracy by question type and configuration",
+                  "minutes": 6
+                }
+              ],
+              "stretch": "Find the wrong answers a reader would believe"
+            }
+          },
+          {
+            "n": 4,
+            "label": "Session 4",
+            "title": "What the agent may answer",
+            "summary": "A go or no-go decision per question type",
+            "outcomes": [
+              "Set a tolerance for wrong figures",
+              "Decide per question type: answer, review or refuse",
+              "Write the decision with its evidence"
+            ],
+            "lo": [
+              "LO6"
+            ],
+            "minutes": 50,
+            "lab": {
+              "id": "4.4",
+              "title": "The go or no-go memo",
+              "summary": "From a supplied scoring table, decide per question type whether the agent answers alone, with review, or not at all, and draft the memo.",
+              "minutes": 25,
+              "href": "../labs/D4_4_go_no_go.ipynb",
+              "steps": [
+                {
+                  "text": "Read the scoring table and the tolerance",
+                  "minutes": 4
+                },
+                {
+                  "text": "Decide per question type",
+                  "minutes": 8
+                },
+                {
+                  "text": "Draft the memo with its evidence",
+                  "minutes": 10
+                },
+                {
+                  "text": "Check the memo against the checklist",
+                  "minutes": 3
+                }
+              ],
+              "stretch": "Name the result that would change your decision"
+            }
+          }
+        ]
+      },
+      {
+        "id": "capstone",
+        "kind": "capstone",
+        "n": 5,
+        "number": null,
+        "label": "Capstone",
+        "title": "Capstone: fares and concessions",
+        "subtitle": "Ten-minute reviews: a six-minute walk-through, then four minutes in which the assessor picks a dashboard figure and you trace it to source rows",
+        "shape": "",
+        "deck": "../slides/capstone.html",
+        "md": "../slides/capstone.md",
+        "url": "https://sdaiaacademy.github.io/ds-307/slides/capstone.html",
+        "sessions": []
+      }
+    ],
+    "capstone": {
+      "summary": "Catalogue, semantic model, dashboard and agent memo for a second subject area (fares and concessions), in a public repository whose README reports measured query accuracy and load times, defended in a ten-minute review",
+      "submission": "A public GitHub repository for the fares and concessions area: the metric catalogue, the Apache Ossie model with its test queries, the dashboard with its one-page rationale, the agent memo, and a README that reports the measured query accuracy and the load times and says how to rerun them.",
+      "talk_minutes": 6,
+      "qa_minutes": 4,
+      "rubric": [
+        {
+          "criterion": "Catalogue",
+          "weight": 25
+        },
+        {
+          "criterion": "Semantic model",
+          "weight": 25
+        },
+        {
+          "criterion": "Dashboard",
+          "weight": 20
+        },
+        {
+          "criterion": "Agent evaluation",
+          "weight": 20
+        },
+        {
+          "criterion": "Reproducibility",
+          "weight": 10
+        }
+      ]
+    },
+    "labs": {
+      "kind": "notebooks",
+      "base": "labs/"
+    },
+    "tools": [
+      {
+        "slot": "Analytical SQL engine",
+        "examples": [
+          "DuckDB",
+          "PostgreSQL"
+        ]
+      },
+      {
+        "slot": "Semantic layer and metric definitions",
+        "examples": [
+          "MetricFlow",
+          "Cube Core",
+          "Apache Ossie (Open Semantic Interchange) files"
+        ]
+      },
+      {
+        "slot": "Dashboard tool",
+        "examples": [
+          "Apache Superset",
+          "Metabase",
+          "an enterprise BI tool"
+        ]
+      },
+      {
+        "slot": "Language model through a chat-completions style endpoint",
+        "examples": [
+          "a locally served open-weight model",
+          "a free hosted open-weight model"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "group": "National references",
+        "items": [
+          {
+            "title": "NDMO Data Management and Personal Data Protection Standards (Business Intelligence and Analytics domain)",
+            "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/DataManagementPersonalDataProtectionStandards.pdf"
+          },
+          {
+            "title": "NDMO Data Classification Policy",
+            "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/DataClassificationPolicy.pdf"
+          },
+          {
+            "title": "Personal Data Protection Law",
+            "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/PersonalDataProtectionLaw.pdf"
+          },
+          {
+            "title": "Implementing Regulation of the Personal Data Protection Law",
+            "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/ImplementingRegulationPersonalDataProtectionLaw.pdf"
+          },
+          {
+            "title": "SDAIA Generative AI Guidelines for Government",
+            "url": "https://sdaia.gov.sa/en/SDAIA/about/Files/GenAIGuidelinesForGovernmentENCompressed.pdf"
+          }
+        ]
+      },
+      {
+        "group": "Semantic layers and metric definitions",
+        "items": [
+          {
+            "title": "Apache Ossie (Incubating): the new name for Open Semantic Interchange",
+            "url": "https://ossie.apache.org/updates/ossie-enters-apache-incubator/"
+          },
+          {
+            "title": "Apache Ossie core specification (spec.md) and JSON Schema",
+            "url": "https://github.com/apache/ossie/blob/main/core-spec/spec.md"
+          },
+          {
+            "title": "Apache Ossie converters (dbt, Cube, Snowflake, Polaris and others)",
+            "url": "https://github.com/apache/ossie-converters"
+          },
+          {
+            "title": "MetricFlow",
+            "url": "https://github.com/dbt-labs/metricflow"
+          },
+          {
+            "title": "Cube Core",
+            "url": "https://github.com/cube-js/cube"
+          }
+        ]
+      },
+      {
+        "group": "Engines, dashboards and libraries",
+        "items": [
+          {
+            "title": "DuckDB on PyPI",
+            "url": "https://pypi.org/project/duckdb/"
+          },
+          {
+            "title": "DuckDB documentation: window functions",
+            "url": "https://duckdb.org/docs/stable/sql/functions/window_functions"
+          },
+          {
+            "title": "Apache Superset",
+            "url": "https://github.com/apache/superset"
+          },
+          {
+            "title": "Metabase",
+            "url": "https://github.com/metabase/metabase"
+          },
+          {
+            "title": "Vega-Altair",
+            "url": "https://altair-viz.github.io/"
+          },
+          {
+            "title": "hijridate: Hijri and Gregorian dates on the Umm al-Qura calendar",
+            "url": "https://pypi.org/project/hijridate/"
+          }
+        ]
+      },
+      {
+        "group": "Conversational analytics",
+        "items": [
+          {
+            "title": "Lei et al., Spider 2.0: Evaluating Language Models on Real-World Enterprise Text-to-SQL Workflows (ICLR 2025)",
+            "url": "https://arxiv.org/abs/2411.07763"
+          },
+          {
+            "title": "OpenRouter: the list of models, with the free ones",
+            "url": "https://openrouter.ai/models?max_price=0"
+          }
+        ]
+      }
+    ]
+  }
+}

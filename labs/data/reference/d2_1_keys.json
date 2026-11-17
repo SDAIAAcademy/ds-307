@@ -1,0 +1,24 @@
+{
+ "fct_trip": [
+  "trip_id"
+ ],
+ "fct_timepoint": [
+  "trip_id",
+  "tp_seq"
+ ],
+ "fct_boarding": [
+  "tap_id"
+ ],
+ "fct_complaint": [
+  "complaint_id"
+ ],
+ "dim_route": [
+  "route_key"
+ ],
+ "dim_date": [
+  "date"
+ ],
+ "dim_vehicle": [
+  "vehicle_id"
+ ]
+}

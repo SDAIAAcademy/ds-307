@@ -1,0 +1,230 @@
+{
+ "on_time": [
+  {
+   "route_id": "R01",
+   "route_name_en": "Al-Nakheel to City Centre",
+   "route_name_ar": "النخيل - وسط المدينة",
+   "on_time_rate": 0.6643835616438356,
+   "departed_trips": 146.0,
+   "usual": 0.6960950764006791,
+   "target": 0.85
+  },
+  {
+   "route_id": "R02",
+   "route_name_en": "Al-Wurud Loop",
+   "route_name_ar": "دائري الورود",
+   "on_time_rate": 0.777027027027027,
+   "departed_trips": 148.0,
+   "usual": 0.8519793459552496,
+   "target": 0.85
+  },
+  {
+   "route_id": "R03",
+   "route_name_en": "University Feeder",
+   "route_name_ar": "خط الجامعة",
+   "on_time_rate": 0.903448275862069,
+   "departed_trips": 145.0,
+   "usual": 0.8167808219178082,
+   "target": 0.85
+  },
+  {
+   "route_id": "R04",
+   "route_name_en": "North Express",
+   "route_name_ar": "السريع الشمالي",
+   "on_time_rate": 0.8794642857142857,
+   "departed_trips": 224.0,
+   "usual": 0.9115646258503401,
+   "target": 0.85
+  },
+  {
+   "route_id": "R05",
+   "route_name_en": "Central Trunk",
+   "route_name_ar": "الخط الرئيس الأوسط",
+   "on_time_rate": 0.7132867132867133,
+   "departed_trips": 143.0,
+   "usual": 0.7253886010362695,
+   "target": 0.85
+  },
+  {
+   "route_id": "R06",
+   "route_name_en": "Old Souq Feeder",
+   "route_name_ar": "خط السوق القديم",
+   "on_time_rate": 0.875,
+   "departed_trips": 144.0,
+   "usual": 0.8364565587734242,
+   "target": 0.85
+  },
+  {
+   "route_id": "R07",
+   "route_name_en": "Al-Rawdah Hospital Feeder",
+   "route_name_ar": "خط مستشفى الروضة",
+   "on_time_rate": 0.8243243243243243,
+   "departed_trips": 148.0,
+   "usual": 0.8421955403087479,
+   "target": 0.85
+  },
+  {
+   "route_id": "R08",
+   "route_name_en": "Airport Express",
+   "route_name_ar": "سريع المطار",
+   "on_time_rate": 0.908675799086758,
+   "departed_trips": 219.0,
+   "usual": 0.8694665153234961,
+   "target": 0.85
+  },
+  {
+   "route_id": "R09",
+   "route_name_en": "East Trunk",
+   "route_name_ar": "الخط الرئيس الشرقي",
+   "on_time_rate": 0.6081081081081081,
+   "departed_trips": 148.0,
+   "usual": 0.6567944250871081,
+   "target": 0.85
+  },
+  {
+   "route_id": "R10",
+   "route_name_en": "Industrial Area Feeder",
+   "route_name_ar": "خط المنطقة الصناعية",
+   "on_time_rate": 0.7746478873239436,
+   "departed_trips": 142.0,
+   "usual": 0.8167539267015707,
+   "target": 0.85
+  },
+  {
+   "route_id": "R11",
+   "route_name_en": "Al-Faisaliyah Feeder",
+   "route_name_ar": "خط الفيصلية",
+   "on_time_rate": 0.7638888888888888,
+   "departed_trips": 144.0,
+   "usual": 0.8546712802768166,
+   "target": 0.85
+  },
+  {
+   "route_id": "R12",
+   "route_name_en": "East Schools Feeder",
+   "route_name_ar": "خط مدارس الشرق",
+   "on_time_rate": 0.7847222222222222,
+   "departed_trips": 144.0,
+   "usual": 0.8129370629370629,
+   "target": 0.85
+  }
+ ],
+ "crowding": [
+  {
+   "route_id": "R01",
+   "route_name_en": "Al-Nakheel to City Centre",
+   "route_name_ar": "النخيل - وسط المدينة",
+   "boardings_per_departed_trip": 15.684931506849315,
+   "prior": 16.61744966442953
+  },
+  {
+   "route_id": "R02",
+   "route_name_en": "Al-Wurud Loop",
+   "route_name_ar": "دائري الورود",
+   "boardings_per_departed_trip": 8.10135135135135,
+   "prior": 8.150684931506849
+  },
+  {
+   "route_id": "R03",
+   "route_name_en": "University Feeder",
+   "route_name_ar": "خط الجامعة",
+   "boardings_per_departed_trip": 8.848275862068965,
+   "prior": 8.479452054794521
+  },
+  {
+   "route_id": "R04",
+   "route_name_en": "North Express",
+   "route_name_ar": "السريع الشمالي",
+   "boardings_per_departed_trip": 10.205357142857142,
+   "prior": 9.94954128440367
+  },
+  {
+   "route_id": "R05",
+   "route_name_en": "Central Trunk",
+   "route_name_ar": "الخط الرئيس الأوسط",
+   "boardings_per_departed_trip": 16.055944055944057,
+   "prior": 15.707142857142857
+  },
+  {
+   "route_id": "R06",
+   "route_name_en": "Old Souq Feeder",
+   "route_name_ar": "خط السوق القديم",
+   "boardings_per_departed_trip": 8.597222222222221,
+   "prior": 8.45578231292517
+  },
+  {
+   "route_id": "R07",
+   "route_name_en": "Al-Rawdah Hospital Feeder",
+   "route_name_ar": "خط مستشفى الروضة",
+   "boardings_per_departed_trip": 11.033783783783784,
+   "prior": 10.5
+  },
+  {
+   "route_id": "R08",
+   "route_name_en": "Airport Express",
+   "route_name_ar": "سريع المطار",
+   "boardings_per_departed_trip": 10.045662100456621,
+   "prior": 10.114678899082568
+  },
+  {
+   "route_id": "R09",
+   "route_name_en": "East Trunk",
+   "route_name_ar": "الخط الرئيس الشرقي",
+   "boardings_per_departed_trip": 16.013513513513512,
+   "prior": 16.174825174825173
+  },
+  {
+   "route_id": "R10",
+   "route_name_en": "Industrial Area Feeder",
+   "route_name_ar": "خط المنطقة الصناعية",
+   "boardings_per_departed_trip": 8.17605633802817,
+   "prior": 7.950354609929078
+  },
+  {
+   "route_id": "R11",
+   "route_name_en": "Al-Faisaliyah Feeder",
+   "route_name_ar": "خط الفيصلية",
+   "boardings_per_departed_trip": 7.75,
+   "prior": 7.839160839160839
+  },
+  {
+   "route_id": "R12",
+   "route_name_en": "East Schools Feeder",
+   "route_name_ar": "خط مدارس الشرق",
+   "boardings_per_departed_trip": 8.42361111111111,
+   "prior": 8.160839160839162
+  }
+ ],
+ "complaints": [
+  {
+   "category": "accessibility",
+   "complaints": 6,
+   "usual": 6.0
+  },
+  {
+   "category": "card",
+   "complaints": 5,
+   "usual": 8.5
+  },
+  {
+   "category": "cleanliness",
+   "complaints": 6,
+   "usual": 3.5
+  },
+  {
+   "category": "crowding",
+   "complaints": 14,
+   "usual": 7.75
+  },
+  {
+   "category": "driver",
+   "complaints": 6,
+   "usual": 7.5
+  },
+  {
+   "category": "late",
+   "complaints": 13,
+   "usual": 19.25
+  }
+ ]
+}

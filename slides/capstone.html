@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-ax="deck" data-track="data-science">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capstone · Capstone: fares and concessions · Metrics, Semantic Models and Dashboards</title>
+<meta name="generator" content="SDAIA Academy engine 1.0.0">
+<link rel="icon" href="../_engine/icon.svg">
+<link rel="alternate" type="text/markdown" href="capstone.md">
+<link rel="describedby" href="../llms.txt">
+<link rel="stylesheet" href="../_engine/academy.css">
+</head>
+<body>
+<div class="deck" data-course="Metrics, Semantic Models and Dashboards" data-track="data-science" data-day="Capstone">
+<section class="slide title" id="title" data-auto="title" data-label="Welcome" data-n="1">
+  <div class="kicker">SDAIA Academy · Metrics, Semantic Models and Dashboards</div>
+  <h1>Capstone: fares and concessions</h1>
+  <p class="lead mt">Capstone: Ten-minute reviews: a six-minute walk-through, then four minutes in which the assessor picks a dashboard figure and you trace it to source rows</p>
+  <div class="meta"><span class="track">Data Science Track</span><span>4 teaching days + capstone day</span><span>6 min talk and demo · 4 min Q&amp;A</span><span>DS-307</span></div>
+  <aside class="notes">Today is theirs: keep your own talking to the opening and the closing. Confirm the running order and the demo setup (screen sharing, accounts, a recorded backup) first.</aside>
+</section>
+
+<section class="slide" id="agenda" data-label="Agenda" data-n="2">
+  <div class="kicker">Capstone</div>
+  <h2>How the presentations run</h2>
+  <div class="agenda">
+    <div class="item now"><div><b>Expectations and final prep</b><small>the rubric, a last rehearsal, then the first presentations</small></div></div>
+    <div class="item"><div><b>Presentations</b><small>each one timed, with questions after it</small></div></div>
+    <div class="item"><div><b>Review and closing</b><small>peer feedback, the trainer's review, what next</small></div></div>
+  </div>
+</section>
+
+<section class="slide" id="rubric" data-label="The rubric" data-n="3">
+  <div class="kicker">How presentations are scored</div>
+  <h2>The rubric</h2>
+  <div class="bars">
+    <div class="row"><span>Catalogue</span><div class="bar c-teal" style="--w:100%"></div><span class="val">25%</span></div>
+    <div class="row"><span>Semantic model</span><div class="bar c-cyan" style="--w:100%"></div><span class="val">25%</span></div>
+    <div class="row"><span>Dashboard</span><div class="bar c-coral" style="--w:80%"></div><span class="val">20%</span></div>
+    <div class="row"><span>Agent evaluation</span><div class="bar c-purple" style="--w:80%"></div><span class="val">20%</span></div>
+    <div class="row"><span>Reproducibility</span><div class="bar c-amber" style="--w:40%"></div><span class="val">10%</span></div>
+  </div>
+  <div class="callout tip mt"><b>Show results from at least two measured runs.</b> A claim without a number is a plan, not a result.</div>
+  <aside class="notes">Walk through each criterion with one example of what full marks look like: for the model, 15 or more independent test queries passing and the Restricted fields enforced by a role; for the agent, accuracy by type with an interval and a decision per type. The brief is labs/capstone/README.md.</aside>
+</section>
+
+<section class="slide" id="format" data-label="Format" data-n="4">
+  <div class="kicker">Format</div>
+  <h2>Ten minutes each: six of walk-through, four of live trace</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>1 · The decision</h4><p class="small mb0">Yasmeen's question, the catalogue and the model. One slide each.</p></div>
+    <div class="card c-cyan"><h4>2 · What you measured</h4><p class="small mb0">Test queries passed, load time, agent accuracy by type.</p></div>
+    <div class="card c-coral"><h4>3 · The live trace</h4><p class="small mb0">The assessor picks a dashboard figure; you reconcile it to source rows.</p></div>
+  </div>
+  <div class="callout note mt"><b>Peer feedback.</b> After each review, everyone writes one strength, one question and one suggestion.</div>
+  <aside class="notes"><p>The walk-through is six minutes, strictly. The trace is the assessment of authorship: the participant opens their repository, finds the metric in the model, runs its compiled SQL and a hand-written count from the warehouse, and shows they agree. Pick figures that cross a join or a calendar, such as concession passes in a Hijri month.</p></aside>
+</section>
+
+<section class="slide" id="live-trace" data-label="The live trace" data-n="5">
+  <div class="kicker">The live trace</div>
+  <h2>From a figure on the dashboard to the rows behind it</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>1 · Figure</b>the assessor points at one number</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>2 · Metric</b>its definition in the catalogue and the model</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>3 · SQL</b>the compiled query, run live</div>
+    <div class="arrow">→</div>
+    <div class="step c-purple"><b>4 · Rows</b>an independent count that agrees</div>
+  </div>
+  <aside class="notes"><p>Four minutes. A participant who cannot find the metric's definition in their own model within a minute loses most of this part; one who finds a difference and explains it honestly keeps most of it. The rubric weight is the 20% of the live review in the course assessment.</p></aside>
+</section>
+
+<section class="slide order" id="running-order" data-label="Running order" data-n="6">
+  <div class="kicker">Running order</div>
+  <h2>Who presents when</h2>
+  <table class="t small">
+    <tr><th>#</th><th>Presenter</th><th>Project</th></tr>
+    <tr><td>1</td><td><input placeholder="name"></td><td><input placeholder="Project"></td></tr>
+    <tr><td>2</td><td><input placeholder="name"></td><td><input placeholder="Project"></td></tr>
+    <tr><td>3</td><td><input placeholder="name"></td><td><input placeholder="Project"></td></tr>
+    <tr><td>4</td><td><input placeholder="name"></td><td><input placeholder="Project"></td></tr>
+    <tr><td>5</td><td><input placeholder="name"></td><td><input placeholder="Project"></td></tr>
+    <tr><td>6</td><td><input placeholder="name"></td><td><input placeholder="Project"></td></tr>
+    <tr><td>7</td><td><input placeholder="name"></td><td><input placeholder="Project"></td></tr>
+    <tr><td>8</td><td><input placeholder="name"></td><td><input placeholder="Project"></td></tr>
+  </table>
+  <aside class="notes">Type the names in at the start; the fields can be edited live and are not saved, so keep the list in your notes too.</aside>
+</section>
+
+<section class="slide dark" id="final-prep" data-label="Before the first presentation" data-n="7">
+  <div class="kicker">Before the first presentation</div>
+  <h1>Final prep · 20 minutes</h1>
+  <div class="timer" data-minutes="20"></div>
+  <p class="lead">Rehearse once, record a backup, try the demo on this screen.</p>
+  <aside class="notes">Press T to start the timer. Breaks are not slides: press B when the room needs one.</aside>
+</section>
+
+<section class="slide dark presenting" id="now-presenting" data-label="Now presenting" data-n="8">
+  <div class="kicker center">Now presenting</div>
+  <div class="center"><input placeholder="Presenter · project"></div>
+  <div class="timers mt">
+    <div><h3>Walk-through</h3><div class="timer" data-minutes="6"></div></div>
+    <div><h3>Live trace</h3><div class="timer" data-minutes="4"></div></div>
+  </div>
+  <aside class="notes">Type the presenter's name and press T to start the walk-through timer, then the trace timer. Reuse this slide for every presenter.</aside>
+</section>
+
+<section class="slide" id="review" data-label="Trainer review" data-n="9">
+  <div class="kicker">Trainer review</div>
+  <h2>What the presentations showed</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Strongest patterns</h4><p class="small mb0">What several projects got right.</p></div>
+    <div class="card c-coral"><h4>Common gaps</h4><p class="small mb0">What most projects would fix next.</p></div>
+    <div class="card c-purple"><h4>One surprise</h4><p class="small mb0">Something nobody expected.</p></div>
+  </div>
+  <aside class="notes">Fill these in from your scoring notes during the last break. Name projects for strengths; keep gaps anonymous.</aside>
+</section>
+
+<section class="slide" id="what-next" data-label="After the course" data-n="10">
+  <div class="kicker">After the course</div>
+  <h2>Keep going</h2>
+  <ul class="bullets">
+    <li><b>Your project stays yours:</b> keep it reproducible and add the next improvement you named today</li>
+    <li><b>Follow-up task:</b> three governed definitions and ten certified questions for a measure your own team reports (<code>labs/followup/README.md</code>)</li>
+    <li><b>Next Academy course:</b> DS-408 Analytics Products: Semantic Layers and Conversational Analytics</li>
+  </ul>
+</section>
+
+<section class="slide dark" id="thanks" data-label="Thank you" data-n="11">
+  <div class="kicker">SDAIA Academy</div>
+  <h1>Thank you</h1>
+  <p class="lead">Metrics, Semantic Models and Dashboards</p>
+</section>
+</div>
+<script type="application/json" id="academy-data">{"v":1,"engine":"1.0.0","build":{"at":"2026-11-15T18:46:23Z","version":"2027.1.0","commit":"6720e14"},"course":{"id":"ds-307","code":"DS-307","title":"Metrics, Semantic Models and Dashboards","track":"data-science","lang":"en","dir":"ltr","url":"https://sdaiaacademy.github.io/ds-307/","repo":"SDAIAAcademy/ds-307","home":"../index.html"},"deck":{"id":"capstone","kind":"capstone","day":5,"label":"Capstone","title":"Capstone: fares and concessions","prev":"day4.html","next":null,"md":"capstone.md","alt":{}},"sessions":[],"slides":[{"id":"title","n":1,"title":"Capstone: fares and concessions","kind":"title","session":0,"hash":"9c385e7a","md":"#### [capstone#title] Capstone: fares and concessions\n\n*SDAIA Academy · Metrics, Semantic Models and Dashboards*\n\nCapstone: Ten-minute reviews: a six-minute walk-through, then four minutes in which the assessor picks a dashboard figure and you trace it to source rows\n\nData Science Track · 4 teaching days + capstone day · 6 min talk and demo · 4 min Q&A · DS-307","notes":"Today is theirs: keep your own talking to the opening and the closing. Confirm the running order and the demo setup (screen sharing, accounts, a recorded backup) first.","minutes":null,"lo":[]},{"id":"agenda","n":2,"title":"How the presentations run","kind":"content","session":0,"hash":"4b16b03e","md":"#### [capstone#agenda] How the presentations run\n\n*Capstone*\n\n- **Expectations and final prep**: the rubric, a last rehearsal, then the first presentations\n- **Presentations**: each one timed, with questions after it\n- **Review and closing**: peer feedback, the trainer's review, what next","notes":"","minutes":null,"lo":[]},{"id":"rubric","n":3,"title":"The rubric","kind":"content","session":0,"hash":"acbb9886","md":"#### [capstone#rubric] The rubric\n\n*How presentations are scored*\n\n| Item | Value |\n| --- | --- |\n| Catalogue | 25% |\n| Semantic model | 25% |\n| Dashboard | 20% |\n| Agent evaluation | 20% |\n| Reproducibility | 10% |\n\n> **Show results from at least two measured runs.** A claim without a number is a plan, not a result.","notes":"Walk through each criterion with one example of what full marks look like: for the model, 15 or more independent test queries passing and the Restricted fields enforced by a role; for the agent, accuracy by type with an interval and a decision per type. The brief is labs/capstone/README.md.","minutes":null,"lo":[]},{"id":"format","n":4,"title":"Ten minutes each: six of walk-through, four of live trace","kind":"content","session":0,"hash":"3356533b","md":"#### [capstone#format] Ten minutes each: six of walk-through, four of live trace\n\n*Format*\n\n- **1 · The decision.** Yasmeen's question, the catalogue and the model. One slide each.\n- **2 · What you measured.** Test queries passed, load time, agent accuracy by type.\n- **3 · The live trace.** The assessor picks a dashboard figure; you reconcile it to source rows.\n\n> **Peer feedback.** After each review, everyone writes one strength, one question and one suggestion.","notes":"The walk-through is six minutes, strictly. The trace is the assessment of authorship: the participant opens their repository, finds the metric in the model, runs its compiled SQL and a hand-written count from the warehouse, and shows they agree. Pick figures that cross a join or a calendar, such as concession passes in a Hijri month.","minutes":null,"lo":[]},{"id":"live-trace","n":5,"title":"From a figure on the dashboard to the rows behind it","kind":"content","session":0,"hash":"e686ed52","md":"#### [capstone#live-trace] From a figure on the dashboard to the rows behind it\n\n*The live trace*\n\n1. **1 · Figure** the assessor points at one number\n2. **2 · Metric** its definition in the catalogue and the model\n3. **3 · SQL** the compiled query, run live\n4. **4 · Rows** an independent count that agrees","notes":"Four minutes. A participant who cannot find the metric's definition in their own model within a minute loses most of this part; one who finds a difference and explains it honestly keeps most of it. The rubric weight is the 20% of the live review in the course assessment.","minutes":null,"lo":[]},{"id":"running-order","n":6,"title":"Who presents when","kind":"order","session":0,"hash":"20432938","md":"#### [capstone#running-order] Who presents when\n\n*Running order*\n\n| # | Presenter | Project |\n| --- | --- | --- |\n| 1 |  |  |\n| 2 |  |  |\n| 3 |  |  |\n| 4 |  |  |\n| 5 |  |  |\n| 6 |  |  |\n| 7 |  |  |\n| 8 |  |  |","notes":"Type the names in at the start; the fields can be edited live and are not saved, so keep the list in your notes too.","minutes":null,"lo":[]},{"id":"final-prep","n":7,"title":"Final prep · 20 minutes","kind":"content","session":0,"hash":"cbb54b3e","md":"#### [capstone#final-prep] Final prep · 20 minutes\n\n*Before the first presentation*\n\nRehearse once, record a backup, try the demo on this screen.","notes":"Press T to start the timer. Breaks are not slides: press B when the room needs one.","minutes":null,"lo":[]},{"id":"now-presenting","n":8,"title":"Walk-through","kind":"presenting","session":0,"hash":"71e1e848","md":"#### [capstone#now-presenting] Walk-through\n\n*Now presenting*\n\n##### Live trace","notes":"Type the presenter's name and press T to start the walk-through timer, then the trace timer. Reuse this slide for every presenter.","minutes":null,"lo":[]},{"id":"review","n":9,"title":"What the presentations showed","kind":"content","session":0,"hash":"c8c581b8","md":"#### [capstone#review] What the presentations showed\n\n*Trainer review*\n\n- **Strongest patterns.** What several projects got right.\n- **Common gaps.** What most projects would fix next.\n- **One surprise.** Something nobody expected.","notes":"Fill these in from your scoring notes during the last break. Name projects for strengths; keep gaps anonymous.","minutes":null,"lo":[]},{"id":"what-next","n":10,"title":"Keep going","kind":"content","session":0,"hash":"6d37aa91","md":"#### [capstone#what-next] Keep going\n\n*After the course*\n\n- **Your project stays yours:** keep it reproducible and add the next improvement you named today\n- **Follow-up task:** three governed definitions and ten certified questions for a measure your own team reports (`labs/followup/README.md`)\n- **Next Academy course:** DS-408 Analytics Products: Semantic Layers and Conversational Analytics","notes":"","minutes":null,"lo":[]},{"id":"thanks","n":11,"title":"Thank you","kind":"content","session":0,"hash":"ba51ab63","md":"#### [capstone#thanks] Thank you\n\n*SDAIA Academy*\n\nMetrics, Semantic Models and Dashboards","notes":"","minutes":null,"lo":[]}],"activities":[],"ai":{"context":{"course":"../context/course.md","courseJs":"../context/course.js","day":"capstone.md","llms":"../llms.txt"},"tasks":[],"tools":[]},"bridge":{"allowedOrigins":[]},"features":{},"strings":{}}</script>
+<script src="../_engine/academy.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+# Metrics, Semantic Models and Dashboards
+
+> Define each number once, model it, show it to the person who decides, and test the agent that answers questions about it. SDAIA Academy course DS-307, version 2027.1.0, in English.
+
+Each slide is a heading such as "#### [day1#slide-id] Title": cite slides by that id, and each citation is a link (slides/day1.html#slide-id). These files are what a trainee sees: no speaker notes and no answer keys.
+
+## Course
+
+- [Course page](https://sdaiaacademy.github.io/ds-307/index.md): overview, outcomes, schedule and labs; the page itself is https://sdaiaacademy.github.io/ds-307/index.html
+- [The whole course](https://sdaiaacademy.github.io/ds-307/llms-full.txt): every unit, session and slide in one file, about 19,031 tokens
+- [Practice questions](https://sdaiaacademy.github.io/ds-307/practice.html): questions to check yourself, with feedback after each answer
+
+## Slides
+
+- [Day 1: Define the numbers](https://sdaiaacademy.github.io/ds-307/slides/day1.md): Three reports, one warehouse: definitions someone else can compute; sessions: Why three reports disagree, Anatomy of a metric definition, Ratios, distinct counts and time logic, Metric trees; page: https://sdaiaacademy.github.io/ds-307/slides/day1.html; about 5,433 tokens
+- [Day 2: Model once](https://sdaiaacademy.github.io/ds-307/slides/day2.md): One semantic model in which each metric is defined once; sessions: Star schemas for analysis, Changing dimensions and calendars, Fan-out and join paths, Metrics in an open specification; page: https://sdaiaacademy.github.io/ds-307/slides/day2.html; about 4,486 tokens
+- [Day 3: Show and investigate](https://sdaiaacademy.github.io/ds-307/slides/day3.md): A dashboard for one decision, and an anomaly traced to its source; sessions: Dashboards start from a decision, Comparisons and bilingual layout, Load time is a design constraint, Investigating an anomaly; page: https://sdaiaacademy.github.io/ds-307/slides/day3.html; about 4,296 tokens
+- [Day 4: Let an agent answer](https://sdaiaacademy.github.io/ds-307/slides/day4.md): A conversational agent tested on certified questions; sessions: From question to query, Certified questions, With and without the semantic layer, What the agent may answer; page: https://sdaiaacademy.github.io/ds-307/slides/day4.html; about 3,613 tokens
+- [Capstone: Capstone: fares and concessions](https://sdaiaacademy.github.io/ds-307/slides/capstone.md): Ten-minute reviews: a six-minute walk-through, then four minutes in which the assessor picks a dashboard figure and you trace it to source rows; page: https://sdaiaacademy.github.io/ds-307/slides/capstone.html; about 842 tokens
+
+## Labs
+
+- [Lab 1.1: Three on-time figures](https://sdaiaacademy.github.io/ds-307/labs/D1_1_three_on_time.ipynb): Day 1, Session 1, 25 min
+- [Lab 1.2: Four ridership definitions](https://sdaiaacademy.github.io/ds-307/labs/D1_2_ridership_metrics.ipynb): Day 1, Session 2, 25 min
+- [Lab 1.3: Two ratio metrics, tested](https://sdaiaacademy.github.io/ds-307/labs/D1_3_ratio_metrics.ipynb): Day 1, Session 3, 25 min
+- [Lab 1.4: A network metric tree](https://sdaiaacademy.github.io/ds-307/labs/D1_4_metric_tree.ipynb): Day 1, Session 4, 25 min
+- [Lab 2.1: Facts, dimensions and their grain](https://sdaiaacademy.github.io/ds-307/labs/D2_1_star_schema.ipynb): Day 2, Session 1, 25 min
+- [Lab 2.2: A re-routed line and two calendars](https://sdaiaacademy.github.io/ds-307/labs/D2_2_route_history.ipynb): Day 2, Session 2, 25 min
+- [Lab 2.3: The double-counting join](https://sdaiaacademy.github.io/ds-307/labs/D2_3_fan_out.ipynb): Day 2, Session 3, 25 min
+- [Lab 2.4: Five metrics in the semantic layer](https://sdaiaacademy.github.io/ds-307/labs/D2_4_semantic_layer.ipynb): Day 2, Session 4, 25 min
+- [Lab 3.1: A wireframe from the brief](https://sdaiaacademy.github.io/ds-307/labs/D3_1_wireframe.ipynb): Day 3, Session 1, 25 min
+- [Lab 3.2: Three bilingual panels](https://sdaiaacademy.github.io/ds-307/labs/D3_2_bilingual_panels.ipynb): Day 3, Session 2, 25 min
+- [Lab 3.3: Under three seconds](https://sdaiaacademy.github.io/ds-307/labs/D3_3_load_time.ipynb): Day 3, Session 3, 25 min
+- [Lab 3.4: The October ridership drop](https://sdaiaacademy.github.io/ds-307/labs/D3_4_ridership_drop.ipynb): Day 3, Session 4, 25 min
+- [Lab 4.1: Ten questions, raw schema](https://sdaiaacademy.github.io/ds-307/labs/D4_1_agent_raw.ipynb): Day 4, Session 1, 25 min
+- [Lab 4.2: Ten certified answers](https://sdaiaacademy.github.io/ds-307/labs/D4_2_certified_answers.ipynb): Day 4, Session 2, 25 min
+- [Lab 4.3: Forty questions, two configurations](https://sdaiaacademy.github.io/ds-307/labs/D4_3_score_configs.ipynb): Day 4, Session 3, 25 min
+- [Lab 4.4: The go or no-go memo](https://sdaiaacademy.github.io/ds-307/labs/D4_4_go_no_go.ipynb): Day 4, Session 4, 25 min
+
+## Context files
+
+- [context/course.md](https://sdaiaacademy.github.io/ds-307/context/course.md): the whole course, for an assistant that takes a file, about 19,031 tokens
+- [context/day1.md](https://sdaiaacademy.github.io/ds-307/context/day1.md): Day 1, about 5,433 tokens
+- [context/day2.md](https://sdaiaacademy.github.io/ds-307/context/day2.md): Day 2, about 4,486 tokens
+- [context/day3.md](https://sdaiaacademy.github.io/ds-307/context/day3.md): Day 3, about 4,296 tokens
+- [context/day4.md](https://sdaiaacademy.github.io/ds-307/context/day4.md): Day 4, about 3,613 tokens
+- [context/capstone.md](https://sdaiaacademy.github.io/ds-307/context/capstone.md): Capstone, about 842 tokens

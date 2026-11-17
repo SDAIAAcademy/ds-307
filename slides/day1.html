@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-ax="deck" data-track="data-science">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 1 · Define the numbers · Metrics, Semantic Models and Dashboards</title>
+<meta name="generator" content="SDAIA Academy engine 1.0.0">
+<link rel="icon" href="../_engine/icon.svg">
+<link rel="alternate" type="text/markdown" href="day1.md">
+<link rel="describedby" href="../llms.txt">
+<link rel="stylesheet" href="../_engine/academy.css">
+</head>
+<body>
+<div class="deck" data-course="Metrics, Semantic Models and Dashboards" data-track="data-science" data-day="Day 1">
+<!-- ======================= OPENING ======================= -->
+<section class="slide title" id="title" data-auto="title" data-label="Welcome" data-n="1">
+  <div class="kicker">SDAIA Academy · Metrics, Semantic Models and Dashboards</div>
+  <h1>Define the numbers</h1>
+  <p class="lead mt">Day 1: Three reports, one warehouse: definitions someone else can compute</p>
+  <div class="meta"><span class="track">Data Science Track</span><span>4 teaching days + capstone day</span><span>4 sessions · 4 labs</span><span>DS-307</span></div>
+  <aside class="notes"><p>Welcome the room. Ask two questions by show of hands: who has been asked "why does your number differ from theirs?" in the last month, and who has written a metric definition that someone else used without asking them. The prerequisites are FN-104 (SQL with joins and windows) and DS-203 (exploratory analysis and charts): today assumes both and does not reteach them. Rhythm: four sessions, each about 25 minutes of ideas and a 25-minute lab.</p></aside>
+</section>
+
+<section class="slide" id="four-days-one-operator" data-label="The week" data-n="2">
+  <div class="kicker">The course at a glance</div>
+  <h2>Four days from a disputed number to an agent you can trust with it</h2>
+  <div class="cols cols-4 gap-s">
+    <div class="card c-teal"><h4>Day 1 · Define</h4><p class="small mb0">Why reports disagree, definitions, ratios, metric trees.</p></div>
+    <div class="card c-cyan"><h4>Day 2 · Model</h4><p class="small mb0">Star schemas, a route that changed, fan-out, and each metric defined once in an open specification.</p></div>
+    <div class="card c-coral"><h4>Day 3 · Show</h4><p class="small mb0">A dashboard for one decision under three seconds; an anomaly traced.</p></div>
+    <div class="card c-purple"><h4>Day 4 · Test</h4><p class="small mb0">An agent on certified questions, and a go or no-go.</p></div>
+  </div>
+  <div class="callout tip mt"><b>Day 5 · Capstone.</b> The same four pieces for a second subject area, fares and concessions, defended in a ten-minute review with a live trace of one figure.</div>
+  <aside class="notes"><p>One sentence per day; do not teach yet. The capstone rubric weights the catalogue 25, the semantic model 25, the dashboard 20, the agent evaluation 20 and reproducibility 10. Each day builds one of those pieces on the network area, so that the capstone repeats them on fares.</p></aside>
+</section>
+
+<section class="slide" id="how-we-work" data-label="How we work" data-n="3">
+  <div class="kicker">How this course works</div>
+  <h2>Every number you show this week can be traced to its definition and its rows</h2>
+  <div class="cols cols-3 gap-s">
+    <div class="card c-navy"><h4>Reproduce first</h4><p class="small mb0">Before you argue about a number, compute it again from its written rule.</p></div>
+    <div class="card c-teal"><h4>Define once</h4><p class="small mb0">One name, one formula, one owner. A second meaning gets a second name.</p></div>
+    <div class="card c-coral"><h4>Test it</h4><p class="small mb0">Hand-computed values, source totals and reference queries, every day.</p></div>
+  </div>
+  <div class="callout warn small mt"><b>AI policy.</b> AI off for the first lab of each day and for the supervised check. A tutor in the other labs, explaining errors without writing your definitions. In the capstone an assistant may draft; every drafted definition carries a verification note. On Day 4 the agent is under test, not your helper.</div>
+  <aside class="notes"><p>Say the policy and why: the supervised check at the end asks for definitions, grain and joins in a locked console, so the skill has to be in the participant's hands. The policy comes from the catalog entry. Labs 1.1, 2.1, 3.1 and 4.1 are AI-off; each lab says so in its first cell.</p></aside>
+</section>
+
+<section class="slide" id="wadi-noor-transit" data-label="Case study" data-n="4">
+  <div class="kicker">One case study all week</div>
+  <h2>Wadi Noor Transit: twelve bus routes, three depots, three on-time figures</h2>
+  <p class="lead">A fictional city bus operator (<span class="ar">نقل وادي نور</span>). Synthetic data from January to October 2026. You are the new performance reporting analyst.</p>
+  <div class="cols cols-3 gap-s mt-s">
+    <div class="card c-teal flat"><h4>Mashael Al-Saadi</h4><p class="small mb0">Operations director. Decides every Sunday where the reserve buses and supervisors go.</p></div>
+    <div class="card c-cyan flat"><h4>Three report owners</h4><p class="small mb0">Tawfiq Al-Sahafi (control centre), Dhuha Al-Rowais (planning), Yasmeen Al-Jaafari (board pack).</p></div>
+    <div class="card c-coral flat"><h4>Muneer and Haneen</h4><p class="small mb0">Muneer Al-Thaqafi owns the warehouse; Haneen Al-Shamrani owns data classification.</p></div>
+  </div>
+  <aside class="notes"><p>All data is synthetic, written by labs/prepare_data.py with a fixed seed. Names of people are invented; no real operator, route or rider. Day 4 adds Nabih (نبيه), the conversational analytics agent under test. Planted problems wait in the data: do not reveal them.</p></aside>
+</section>
+
+<section class="slide" id="the-warehouse" data-label="The warehouse" data-n="5">
+  <div class="kicker">What you work on</div>
+  <h2>Five facts, six dimensions, one embedded analytical database</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Fact table</th><th class="num">Rows</th><th>One row is</th></tr>
+      <tr><td><code>fct_trip</code></td><td class="num">85,010</td><td>a scheduled trip</td></tr>
+      <tr><td><code>fct_timepoint</code></td><td class="num">329,188</td><td>a trip at one of four timepoints</td></tr>
+      <tr><td><code>fct_boarding</code></td><td class="num">848,501</td><td>a card tap at a validator</td></tr>
+      <tr><td><code>fct_complaint</code></td><td class="num">2,400</td><td>a complaint</td></tr>
+      <tr><td><code>fct_fare_sale</code></td><td class="num">121,133</td><td>a pass sold (capstone)</td></tr>
+    </table>
+    <div class="stack">
+      <div class="card c-teal flat"><h4>DuckDB in the notebook</h4><p class="small mb0"><code>W.db()</code> opens the Parquet files as read-only views. PostgreSQL would serve the same queries.</p></div>
+      <div class="card c-purple flat"><h4>Dimensions</h4><p class="small mb0">Dates with both calendars, routes with history, vehicles, depots, fare types and products.</p></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Counts are from the generated data. The data dictionary is labs/data/catalogue/data_dictionary.md: give participants a minute with it. Two columns are Restricted: card_id and complaint_text. Ask: which table would you count to answer "how many riders last week"? Do not answer; Session 2 does.</p></aside>
+</section>
+
+<section class="slide" id="setup-check" data-label="Setup" data-n="6">
+  <div class="kicker">Lab environment</div>
+  <h2>Run the setup check before the first lab</h2>
+  <div class="cols cols-2">
+    <ol class="bullets">
+      <li>In <b>Google Colab</b>: open a lab from the course page; its first cell clones the course and installs what it needs.</li>
+      <li>On a laptop: install <b>uv</b>, then the commands on the right.</li>
+      <li>Run <code>00_setup_check.ipynb</code>. Every lab starts from supplied data, never from another lab of the same day.</li>
+    </ol>
+    <pre class="code s" data-file="terminal (local option)"><code class="language-bash">git <span class="hljs-built_in">clone</span> https://github.com/SDAIAAcademy/ds-307
+<span class="hljs-built_in">cd</span> ds-307/labs
+uv <span class="hljs-built_in">sync</span>
+uv run jupyter lab</code></pre>
+  </div>
+  <aside class="notes"><p>No model key is needed until Day 4, and even then the labs run on a scripted stand-in without one. Common failures: a proxy that blocks the package index (use Colab); on Windows a folder path that is too long (git config core.longpaths true, and a short UV_PROJECT_ENVIRONMENT, see labs/README.md); a terminal that cannot print Arabic (run in Jupyter, or set PYTHONUTF8=1). Check that the pre-work notebook was done.</p></aside>
+</section>
+
+<section class="slide" id="agenda" data-auto="agenda" data-label="Agenda" data-n="7">
+  <div class="kicker">Today</div>
+  <h2>Define the numbers</h2>
+  <div class="agenda"><div class="item"><div><b>Session 1 · Why three reports disagree</b><small>What makes three reports on one warehouse give three numbers</small></div></div><div class="item"><div><b>Session 2 · Anatomy of a metric definition</b><small>The eight parts of a definition someone else can compute</small></div></div><div class="item"><div><b>Session 3 · Ratios, distinct counts and time logic</b><small>Ratios, distinct counts and the calendar inside a metric</small></div></div><div class="item"><div><b>Session 4 · Metric trees</b><small>From one goal metric to the drivers a team can move</small></div></div></div>
+</section>
+
+<!-- ======================= SESSION 1 ======================= -->
+<section class="slide section" id="s1" data-auto="section" data-session="1" data-n="8">
+  <div class="kicker">Session 1</div>
+  <h1>Why three reports disagree</h1>
+  <ul class="bullets outcomes"><li>Name the four places two definitions of one measure can differ</li><li>Reproduce a published figure from its written rule</li><li>Explain a gap between two figures one rule at a time</li></ul>
+  <div class="sess-no">01</div>
+</section>
+
+<section class="slide" id="three-figures" data-lo="LO1" data-n="9" data-session="1">
+  <div class="kicker">The problem you inherit</div>
+  <h2>One warehouse, one month, three on-time figures</h2>
+  <div class="cols cols-3">
+    <div class="stat center"><div class="big">80.7%</div><div class="lbl">Operations report, September</div></div>
+    <div class="stat center"><div class="big">66.0%</div><div class="lbl">Planning service review, September</div></div>
+    <div class="stat center"><div class="big">58.4%</div><div class="lbl">Board pack, September meeting</div></div>
+  </div>
+  <p class="lead center mt">Nobody made an arithmetic error. Each figure is right for its own rule.</p>
+  <aside class="notes"><p>Figures are from Lab 1.1's run on the synthetic warehouse. Ask the room before showing the next slide: "Which one is right?" Collect two or three answers. The point of the session is that the question is wrong: each figure answers a different question, and the problem is that all three are called "on-time performance".</p></aside>
+</section>
+
+<section class="slide" id="rules-as-written" data-lo="LO1" data-n="10" data-session="1">
+  <div class="kicker">Read the rules, not the totals</div>
+  <h2>The three owners wrote three different rules under one name</h2>
+  <table class="t small">
+    <tr><th>Report</th><th>Counts</th><th>On time means</th><th>Cancelled trips</th><th>Period</th></tr>
+    <tr><td>Operations (Tawfiq)</td><td>trips</td><td>left the first stop 1 min early to 5 late</td><td>left out</td><td>September</td></tr>
+    <tr><td>Planning (Dhuha)</td><td>timepoint arrivals</td><td>1 min early to 5 late, at every timepoint</td><td>no arrivals to count</td><td>September</td></tr>
+    <tr><td>Board (Yasmeen)</td><td>trips</td><td>reached the terminus at most 5 min late</td><td>count as late</td><td>Rabi al-Thani 1448</td></tr>
+  </table>
+  <p class="small mt-s">Source: <code>labs/data/reports/three_reports.yaml</code>, the sentence under each report.</p>
+  <aside class="notes"><p>Read one row aloud. Ask participants to spot every column where two rows differ before the next slide names them. Rabi al-Thani 1448 runs from 12 September to 11 October 2026 in the Umm al-Qura calendar, so the board's "September" is mostly a different month.</p></aside>
+</section>
+
+<section class="slide" id="four-places" data-lo="LO1" data-n="11" data-session="1">
+  <div class="kicker">Where definitions differ</div>
+  <h2>Two definitions of one measure differ in four places</h2>
+  <div class="cols cols-4 gap-s">
+    <div class="card c-teal"><h4>Grain</h4><p class="small mb0">What is counted: trips, timepoint arrivals, riders, cards.</p></div>
+    <div class="card c-cyan"><h4>Rule</h4><p class="small mb0">Where it is measured and the tolerance: first stop or terminus, early allowed or not.</p></div>
+    <div class="card c-coral"><h4>Filter</h4><p class="small mb0">What enters the denominator: cancelled trips, partial trips, holidays.</p></div>
+    <div class="card c-purple"><h4>Period</h4><p class="small mb0">Which dates: Gregorian month, Hijri month, a Sunday week or an ISO week.</p></div>
+  </div>
+  <div class="callout tip mt"><b>Use it as a checklist.</b> Two figures that disagree differ in at least one of these four. Find which before you look for a bug.</div>
+  <aside class="notes"><p>These four headings are the vocabulary of the diagnosis in Lab 1.1, where "rule" is split into "point measured" and "tolerance". Arithmetic errors and bad data exist, but they are rarer than definitional differences, and they show up only after the definitions match.</p></aside>
+</section>
+
+<section class="slide" id="reconciliation-walk" data-lo="LO1" data-n="12" data-session="1">
+  <div class="kicker">A reconciliation walk</div>
+  <h2>Change one rule at a time and the gap explains itself</h2>
+  <div class="bars">
+    <div class="row"><span>Operations rules</span><div class="bar c-teal" style="--w:80.7%"></div><span class="val">80.7%</span></div>
+    <div class="row"><span>Measured at the terminus</span><div class="bar c-coral" style="--w:50.4%"></div><span class="val">50.4%</span></div>
+    <div class="row"><span>Early arrivals allowed</span><div class="bar c-cyan" style="--w:59.7%"></div><span class="val">59.7%</span></div>
+    <div class="row"><span>Cancelled trips count as late</span><div class="bar c-amber" style="--w:58.0%"></div><span class="val">58.0%</span></div>
+    <div class="row"><span>Hijri month, not September</span><div class="bar c-purple" style="--w:58.4%"></div><span class="val">58.4%</span></div>
+  </div>
+  <aside class="notes"><p>From Lab 1.1, in this order: terminus (-30.3 points), early arrivals (+9.4), cancelled as late (-1.7), Hijri month (+0.4). The walk ends exactly on the board figure. Warn the room: the size of each step depends on the order, because the rules interact. State the order whenever you show a walk. The operations-to-planning walk is one step: the unit, from trips to timepoint arrivals.</p></aside>
+</section>
+
+<section class="slide" id="grain-changes-question" data-lo="LO1" data-n="13" data-session="1">
+  <div class="kicker">The biggest step</div>
+  <h2>Counting timepoints, not trips, asks a different question</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>Per trip, at the first stop</h4><p class="small mb0">"Did the bus leave when the timetable said?" The rider waiting at the start can plan on it.</p></div>
+    <div class="card c-cyan"><h4>Per timepoint arrival</h4><p class="small mb0">"Was the bus on time along the way?" Delays build up, so later timepoints pull the figure down.</p></div>
+  </div>
+  <div class="callout note mt"><b>Neither is wrong.</b> Planning's 66.0% is the honest answer to its own question. The fault is the shared name.</div>
+  <aside class="notes"><p>Ask: which question does Mashael need answered every Sunday? Usually the trip-level one for reliability at the start, read beside the cancellation rate. Keep the debate short; Session 2 resolves it by giving each definition its own name.</p></aside>
+</section>
+
+<section class="slide" id="cost-of-disagreement" data-lo="LO1" data-n="14" data-session="1">
+  <div class="kicker">Why it matters</div>
+  <h2>A disputed number spends the meeting on the number, not the decision</h2>
+  <ul class="bullets">
+    <li>Three figures invite each team to <b>quote the one that suits it</b></li>
+    <li>Every new report adds a definition nobody wrote down</li>
+    <li>An agent asked "what was on-time performance?" will pick one, and <b>not say which</b></li>
+    <li>The fix is not a fourth report: it is one catalogue, one owner per metric</li>
+  </ul>
+  <aside class="notes"><p>The agent line foreshadows Day 4: a conversational agent has no way to know which of three definitions is meant unless the semantic layer tells it. Ask whether anyone has seen a meeting go this way.</p></aside>
+</section>
+
+<section class="slide" id="diagnosis-table" data-lo="LO1" data-n="15" data-session="1">
+  <div class="kicker">What you hand over</div>
+  <h2>The diagnosis names a definitional cause for each difference</h2>
+  <table class="t">
+    <tr><th>Difference</th><th>Causes, in walk order</th></tr>
+    <tr><td>Operations 80.7% vs planning 66.0%</td><td>grain (trips vs timepoint arrivals)</td></tr>
+    <tr><td>Operations 80.7% vs board 58.4%</td><td>point measured, tolerance, cancelled trips, period</td></tr>
+  </table>
+  <p class="small mt-s">This table, with the walk behind it, is the evidence for the first course outcome.</p>
+  <aside class="notes"><p>The diagnosis is short on purpose: one cause per difference, in the vocabulary of the four places. It is not a judgement of which report is better. That recommendation belongs in Session 2, as a catalogue entry.</p></aside>
+</section>
+
+<section class="slide" id="checkpoint-1" data-lo="LO1" data-n="16" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>Why is the planning figure lower?</h2>
+  <div class="quiz" data-type="single" data-lo="LO1" data-id="checkpoint-1-q1">
+    <p class="lead">Operations reports 80.7% and planning 66.0% for the same September, on the same warehouse, both with a tolerance of one minute early to five late. What explains most of the gap?</p>
+    <div class="opts">
+      <div class="opt" data-why="Assumes a disagreement is a data fault; both queries read the same rows" data-k="A">Planning reads a stale copy of the data</div>
+      <div class="opt" data-ok data-k="B">Planning counts every timepoint arrival, where delays have built up</div>
+      <div class="opt" data-why="The planning rule never mentions cancelled trips; a cancelled trip has no arrivals to count" data-k="C">Planning counts cancelled trips as late</div>
+      <div class="opt" data-why="Both reports use the calendar month of September" data-k="D">Planning reports a Hijri month</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> Planning's unit is the timepoint arrival, not the trip. Later timepoints carry the delay built up along the route, so the share falls. One rule, the grain, explains the whole gap.</div>
+  </div>
+  <aside class="notes"><p>Answer: B. If many choose the stale copy, return to the rules slide: the same warehouse, so look at the rule first. If many choose cancelled trips, point out that is the board's rule.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-1-1" data-auto="lab" data-lab="1.1" data-label="Lab 1.1" data-n="17" data-session="1">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 1.1 · 25 min</div><h2>Three on-time figures</h2><p class="lead small">Compute the operations, planning and board on-time figures for September from their written rules, walk from one to the next one rule at a time, and write the diagnosis.</p><a class="nb" href="../labs/D1_1_three_on_time.ipynb">D1_1_three_on_time.ipynb</a></div><ul class="checklist"><li>Compute the operations figure from its rule <span class="min">6 min</span></li><li>Compute the planning and board figures <span class="min">7 min</span></li><li>Walk from one figure to the next, one rule at a time <span class="min">8 min</span></li><li>Write the diagnosis: one cause per difference <span class="min">4 min</span></li><li class="stretch">✱ Stretch: Which figure answers the question the operations director asks every Sunday?</li></ul></div>
+  <aside class="notes"><p>AI-off. Walk the room after five minutes: the usual blocker is the board figure, where participants forget that cancelled and partial trips stay in the denominator, or filter on Gregorian September instead of hijri_month_key = '1448-04'. The checks compare with the published figures to one decimal. The stretch asks which figure answers Mashael's Sunday question: the trip-level departure figure, read beside the cancellation rate.</p></aside>
+</section>
+
+<!-- ======================= SESSION 2 ======================= -->
+<section class="slide section" id="s2" data-auto="section" data-session="2" data-n="18">
+  <div class="kicker">Session 2</div>
+  <h1>Anatomy of a metric definition</h1>
+  <ul class="bullets outcomes"><li>Write a definition with formula, grain, filters, time logic, owner and limits</li><li>Tell taps, cards and journeys apart</li><li>Reconcile a definition to the source totals</li></ul>
+  <div class="sess-no">02</div>
+</section>
+
+<section class="slide" id="ridership-four-numbers" data-lo="LO2" data-n="19" data-session="2">
+  <div class="kicker">One word, four numbers</div>
+  <h2>"Ridership last week" is four different numbers</h2>
+  <div class="bars">
+    <div class="row"><span>Card taps</span><div class="bar c-teal" style="--w:100%"></div><span class="val">19,826</span></div>
+    <div class="row"><span>Linked journeys</span><div class="bar c-cyan" style="--w:81.9%"></div><span class="val">16,231</span></div>
+    <div class="row"><span>Card-days</span><div class="bar c-coral" style="--w:70.6%"></div><span class="val">13,992</span></div>
+    <div class="row"><span>Different cards</span><div class="bar c-purple" style="--w:49.8%"></div><span class="val">9,864</span></div>
+  </div>
+  <p class="small mt-s">The week of 13 to 19 September 2026, from Lab 1.2.</p>
+  <aside class="notes"><p>Ask the room which number belongs in a press release about "riders". None is a count of people: a card is not a person (shared cards, lost cards, two cards per person). Unique cards is the nearest, and it must say what it counts.</p></aside>
+</section>
+
+<section class="slide" id="taps-cards-journeys" data-lo="LO2" data-n="20" data-session="2">
+  <div class="kicker">Counting units in transit</div>
+  <h2>A tap, a journey and a card count different things</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>Tap</b>one card at one validator, every boarding</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>Journey</b>taps of one card within 60 minutes linked as one trip</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>Card-day</b>one card that travelled on a day</div>
+    <div class="arrow">→</div>
+    <div class="step c-purple"><b>Card</b>one card seen in the period</div>
+  </div>
+  <div class="callout warn mt"><b>The trap.</b> Each step to the right is distinct within its period, so it is no longer additive: card-days add across days, cards do not.</div>
+  <aside class="notes"><p>The 60-minute transfer window is Wadi Noor's fare rule (a transfer within 60 minutes is free), so the journey definition borrows it. A different window is a different metric, with a different name. Session 3 shows the non-additivity with numbers.</p></aside>
+</section>
+
+<section class="slide" id="eight-parts" data-lo="LO2" data-n="21" data-session="2">
+  <div class="kicker">Anatomy of a definition</div>
+  <h2>A definition someone else can compute has eight parts</h2>
+  <div class="cols cols-2">
+    <ol class="bullets tight small">
+      <li><b>Name</b> and the <b>question</b> it answers</li>
+      <li><b>Formula</b>: one aggregate, or a ratio of two</li>
+      <li><b>Grain</b>: what one counted row is</li>
+      <li><b>Filters</b>: what is in and out</li>
+    </ol>
+    <ol class="bullets tight small" start="5">
+      <li><b>Time logic</b>: which date, which calendar, which week</li>
+      <li><b>Unit</b> of the result</li>
+      <li><b>Owner</b>: a person and their role</li>
+      <li><b>Limits</b>: what it must not be used for</li>
+    </ol>
+  </div>
+  <div class="callout tip mt"><b>The test.</b> Give it to a colleague: if they compute your number without asking you anything, it is a definition.</div>
+  <aside class="notes"><p>The catalogue template in the labs has these eight parts plus the table the formula runs on. The peer checklist, W.lint(), checks that each part is present and has the right shape; the colleague checks that it means what it says. Both are needed for the LO2 evidence.</p></aside>
+</section>
+
+<section class="slide" id="one-definition" data-lo="LO2" data-n="22" data-session="2">
+  <div class="kicker">An entry of the catalogue</div>
+  <h2>The journeys definition, as the catalogue holds it</h2>
+  <pre class="code s" data-file="labs/data/catalogue/metric_catalogue.yaml"><code class="language-yaml"><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">journeys</span>
+  <span class="hljs-attr">question:</span> <span class="hljs-string">How</span> <span class="hljs-string">many</span> <span class="hljs-string">journeys</span> <span class="hljs-string">did</span> <span class="hljs-string">riders</span> <span class="hljs-string">make,</span> <span class="hljs-string">counting</span> <span class="hljs-string">a</span> <span class="hljs-string">transfer</span> <span class="hljs-string">as</span> <span class="hljs-string">part</span> <span class="hljs-string">of</span> <span class="hljs-string">one</span> <span class="hljs-string">journey?</span>
+  <span class="hljs-attr">formula:</span> <span class="hljs-string">SUM(journey_start)</span>
+  <span class="hljs-attr">table:</span> <span class="hljs-string">boarding_linked</span>
+  <span class="hljs-attr">grain:</span> <span class="hljs-string">one</span> <span class="hljs-string">card</span> <span class="hljs-string">tap,</span> <span class="hljs-string">journey_start</span> <span class="hljs-string">=</span> <span class="hljs-number">1</span> <span class="hljs-string">when</span> <span class="hljs-string">the</span> <span class="hljs-string">card</span> <span class="hljs-string">made</span> <span class="hljs-literal">no</span> <span class="hljs-string">tap</span> <span class="hljs-string">in</span> <span class="hljs-string">the</span> <span class="hljs-number">60</span> <span class="hljs-string">minutes</span> <span class="hljs-string">before</span>
+  <span class="hljs-attr">filters:</span> <span class="hljs-string">none</span>
+  <span class="hljs-attr">time_logic:</span> <span class="hljs-string">service_date</span> <span class="hljs-string">of</span> <span class="hljs-string">the</span> <span class="hljs-string">tap;</span> <span class="hljs-string">the</span> <span class="hljs-number">60</span><span class="hljs-string">-minute</span> <span class="hljs-string">look-back</span> <span class="hljs-string">crosses</span> <span class="hljs-string">midnight</span>
+  <span class="hljs-attr">unit:</span> <span class="hljs-string">journeys</span>
+  <span class="hljs-attr">owner:</span> <span class="hljs-string">Dhuha</span> <span class="hljs-string">Al-Rowais,</span> <span class="hljs-string">network</span> <span class="hljs-string">planning</span> <span class="hljs-string">manager</span>
+  <span class="hljs-attr">limits:</span> <span class="hljs-string">a</span> <span class="hljs-string">return</span> <span class="hljs-string">trip</span> <span class="hljs-string">within</span> <span class="hljs-number">60</span> <span class="hljs-string">minutes</span> <span class="hljs-string">counts</span> <span class="hljs-string">as</span> <span class="hljs-string">a</span> <span class="hljs-string">transfer</span></code></pre>
+  <aside class="notes"><p>Point at time_logic: a tap shortly after midnight can be linked to one before it, so the look-back crosses the day boundary while the tap is counted on its own service date. Point at limits: it names a known undercount (quick returns), which protects the reader from over-reading the number.</p></aside>
+</section>
+
+<section class="slide" id="owner-and-change" data-lo="LO2" data-n="23" data-session="2">
+  <div class="kicker">Owners and change control</div>
+  <h2>An owner decides what the metric means; a change gets a new version</h2>
+  <ul class="bullets">
+    <li>The <b>owner</b> answers questions about the definition and approves changes</li>
+    <li>A change that moves the number is announced, dated and versioned</li>
+    <li>A second meaning is a <b>second metric</b> with its own name and owner</li>
+    <li>The board's measure stays, renamed <code>terminal_on_time_rate</code>, owned by Yasmeen</li>
+  </ul>
+  <aside class="notes"><p>This is how the three figures are resolved without anyone losing: on_time_rate (Tawfiq), timepoint_on_time_rate (Dhuha) and terminal_on_time_rate (Yasmeen) are three metrics with three names. The dashboard and the agent use the names. The change log itself (pull requests on metric files, review in continuous integration) is DS-408's subject; here it is a dated line in the catalogue.</p></aside>
+</section>
+
+<section class="slide" id="reconcile-to-source" data-lo="LO2" data-n="24" data-session="2">
+  <div class="kicker">Proof, not belief</div>
+  <h2>A definition reconciles when its formula, run as written, gives the source total</h2>
+  <div class="cols cols-2">
+    <pre class="code s" data-file="Lab 1.2 · reconcile"><code class="language-python"><span class="hljs-keyword">for</span> d <span class="hljs-keyword">in</span> defs:
+    got = W.measure(con, d, *WEEK)
+    W.check(got == counts[d[<span class="hljs-string">&quot;name&quot;</span>]], d[<span class="hljs-string">&quot;name&quot;</span>])</code></pre>
+    <ul class="bullets small">
+      <li>Run the formula on the table the definition names, for the period</li>
+      <li>Compare with the count taken directly from the source</li>
+      <li>Add a sum test: <b>taps by route plus taps without a route equal all taps</b></li>
+    </ul>
+  </div>
+  <aside class="notes"><p>The sum test matters on Day 3: in October some taps have no route, and a definition that silently drops them under-reports. "Taps without a route are counted" is written in the filters line of the taps definition for exactly that reason.</p></aside>
+</section>
+
+<section class="slide" id="dictionary-classification" data-lo="LO2" data-n="25" data-session="2">
+  <div class="kicker">Responsible use, from the first definition</div>
+  <h2>The dictionary marks what a metric may count but never show</h2>
+  <div class="cols cols-2">
+    <ul class="bullets small">
+      <li><code>card_id</code> is pseudonymous personal data: <b>Restricted</b></li>
+      <li>Counting distinct cards is allowed; listing them is not</li>
+      <li>The PDPL limits personal data to the minimum the purpose needs</li>
+      <li>Counts of cards are not shown below 10</li>
+    </ul>
+    <div class="card c-purple"><h4>Four levels</h4><p class="small mb0">The NDMO Data Classification Policy has four: Top Secret, Secret, Restricted, Public. Label every field the catalogue uses.</p></div>
+  </div>
+  <aside class="notes"><p>Haneen Al-Shamrani, the data governance officer, owns the classification register. Which level a field gets is the organisation's decision under the policy; the course labels card numbers and complaint text Restricted as a working example. Sources: Personal Data Protection Law (personal data limited to the minimum necessary for the purpose); NDMO Data Classification Policy (the four levels).</p></aside>
+</section>
+
+<section class="slide" id="checkpoint-2" data-lo="LO2" data-n="26" data-session="2">
+  <div class="kicker">Checkpoint</div>
+  <h2>Which definition can a colleague compute without asking?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2" data-id="checkpoint-2-q1">
+    <p class="lead">Four drafts of "weekly riders". Which one could Muneer compute for any week and get the number you would get?</p>
+    <div class="opts">
+      <div class="opt" data-why="Names a table but not the week: Sunday or Monday start, service date or tap time" data-k="A">Distinct cards in fct_boarding per week</div>
+      <div class="opt" data-why="A formula without a grain or a period: which rows, which dates?" data-k="B">COUNT(DISTINCT card_id)</div>
+      <div class="opt" data-why="Names the purpose, not the computation: two analysts would write two queries" data-k="C">Riders who used the network last week, owned by planning</div>
+      <div class="opt" data-ok data-k="D">COUNT(DISTINCT card_id) on fct_boarding, by service_date, weeks Sunday to Saturday</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> Only the last states the formula, the table that sets the grain, the date that places a tap in a week, and the week's first day. It still needs an owner and limits to enter the catalogue.</div>
+  </div>
+  <aside class="notes"><p>Answer: D. Wrong choices each miss a part of the eight: the time logic, the grain and period, or the formula. If the room picks A, ask "which week?" and show that ISO weeks start on Monday.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-1-2" data-auto="lab" data-lab="1.2" data-label="Lab 1.2" data-n="27" data-session="2">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 1.2 · 25 min</div><h2>Four ridership definitions</h2><p class="lead small">Count four ridership numbers for one week, write each as a governed definition, run the peer checklist and reconcile every definition to the source totals.</p><a class="nb" href="../labs/D1_2_ridership_metrics.ipynb">D1_2_ridership_metrics.ipynb</a></div><ul class="checklist"><li>Count four ridership numbers for one week <span class="min">6 min</span></li><li>Write the four definitions in the catalogue template <span class="min">8 min</span></li><li>Run the peer checklist <span class="min">5 min</span></li><li>Reconcile each definition to the source totals <span class="min">6 min</span></li><li class="stretch">✱ Stretch: Add the Arabic name and a limits line to each definition</li></ul></div>
+  <aside class="notes"><p>AI-tutor: an assistant may explain a DuckDB error, not write the YAML. Common problems: YAML indentation (two spaces under the dash); COUNT(DISTINCT card_id, service_date) without the brackets, which DuckDB reads differently; grain lines that do not start with "one". The safety net supplies the reference definitions, so the reconciliation cells run for everyone.</p></aside>
+</section>
+
+<!-- ======================= SESSION 3 ======================= -->
+<section class="slide section" id="s3" data-auto="section" data-session="3" data-n="28">
+  <div class="kicker">Session 3</div>
+  <h1>Ratios, distinct counts and time logic</h1>
+  <ul class="bullets outcomes"><li>Compute a ratio of sums and say why it differs from a mean of ratios</li><li>Explain why distinct counts do not add across periods</li><li>Test a metric against hand-computed values</li></ul>
+  <div class="sess-no">03</div>
+</section>
+
+<section class="slide" id="ratio-of-sums" data-lo="LO2" data-n="29" data-session="3">
+  <div class="kicker">Ratios</div>
+  <h2>A network rate is a ratio of sums, not a mean of route rates</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Route</th><th class="num">Departed</th><th class="num">On time</th><th class="num">Rate</th></tr>
+      <tr><td>A</td><td class="num">100</td><td class="num">90</td><td class="num">90%</td></tr>
+      <tr><td>B</td><td class="num">10</td><td class="num">5</td><td class="num">50%</td></tr>
+      <tr><td>C</td><td class="num">40</td><td class="num">30</td><td class="num">75%</td></tr>
+      <tr class="hl"><td>Network</td><td class="num">150</td><td class="num">125</td><td class="num">83.3%</td></tr>
+    </table>
+    <div class="stack">
+      <div class="stat"><div class="big">71.7%</div><div class="lbl">mean of the three route rates</div></div>
+      <div class="card c-coral flat"><h4>Not the network</h4><p class="small mb0">The mean gives route B's ten trips the weight of route A's hundred.</p></div>
+    </div>
+  </div>
+  <aside class="notes"><p>The toy example of Lab 1.3; participants compute it by hand first. On the real September network the gap is smaller: 80.7% as a ratio of sums against 79.9% as a mean of the twelve route rates, because routes are closer in size. The rule does not change with the size of the gap.</p></aside>
+</section>
+
+<section class="slide" id="when-mean-of-ratios" data-lo="LO2" data-n="30" data-session="3">
+  <div class="kicker">When the mean is right</div>
+  <h2>A mean of ratios answers "how does a typical route do?"</h2>
+  <ul class="bullets">
+    <li>Network performance: <b>ratio of sums</b>, each trip counted once</li>
+    <li>The typical route: <b>mean of route ratios</b>, each route counted once</li>
+    <li>Both are legitimate; they are <b>two metrics</b> with two names</li>
+    <li>A dashboard that averages a column of percentages has chosen the second without saying so</li>
+  </ul>
+  <aside class="notes"><p>The last bullet is the common way this goes wrong: an export of route rates, then AVERAGE in a spreadsheet. Ask participants to name a report at their own workplace that averages percentages.</p></aside>
+</section>
+
+<section class="slide" id="distinct-not-additive" data-lo="LO2" data-n="31" data-session="3">
+  <div class="kicker">Distinct counts</div>
+  <h2>Weekly distinct cards do not add up to a month</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Week starting</th><th class="num">Distinct cards</th></tr>
+      <tr><td><time>2026-09-06</time></td><td class="num">9,909</td></tr>
+      <tr><td><time>2026-09-13</time></td><td class="num">9,864</td></tr>
+      <tr><td><time>2026-09-20</time></td><td class="num">9,257</td></tr>
+      <tr><td><time>2026-09-27</time></td><td class="num">9,734</td></tr>
+    </table>
+    <div class="stack">
+      <div class="stat"><div class="big">38,764</div><div class="lbl">the four weeks added</div></div>
+      <div class="stat"><div class="big">22,962</div><div class="lbl">distinct over the four weeks</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p>From Lab 1.3. A card that travels every week is counted four times in the sum and once in the four-week count. Any total of a distinct count must be computed again over the longer period, never summed. Semantic layers mark such metrics as non-additive for this reason.</p></aside>
+</section>
+
+<section class="slide" id="snapshots-and-flows" data-lo="LO2" data-n="32" data-session="3">
+  <div class="kicker">Flows and snapshots</div>
+  <h2>Flows add over time; snapshots do not</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>Flow</h4><p class="small mb0">Taps, trips, complaints: events in a period. A month is the sum of its days.</p></div>
+    <div class="card c-coral"><h4>Snapshot</h4><p class="small mb0">Active passes, buses in service, open complaints: a state on a date. A month is a chosen day, or an average of days, never a sum.</p></div>
+  </div>
+  <div class="callout warn mt"><b>State the rule.</b> A snapshot metric's time logic names the day it is taken: the last day of the period, or the mean of daily values.</div>
+  <aside class="notes"><p>The capstone's fares area has a snapshot: active 30-day passes on a date. Participants will meet it there. Ask for one more snapshot from the room's own work: headcount, open tickets, stock on hand.</p></aside>
+</section>
+
+<section class="slide" id="time-logic" data-lo="LO2" data-n="33" data-session="3">
+  <div class="kicker">Time logic</div>
+  <h2>Which date, which week, which calendar</h2>
+  <table class="t small">
+    <tr><th>Choice</th><th>At Wadi Noor</th><th>What goes wrong otherwise</th></tr>
+    <tr><td>The date that places a row</td><td>the service date of the trip</td><td>a trip after midnight lands on the next day</td></tr>
+    <tr><td>The week</td><td>Sunday to Saturday</td><td>ISO weeks start on Monday and split the working week</td></tr>
+    <tr><td>The month</td><td>Gregorian unless a Hijri month is named</td><td>Ramadan and the Eids move eleven days a year</td></tr>
+    <tr><td>Like with like</td><td>compare holiday timetables with holidays</td><td>National Day looks like a fall in demand</td></tr>
+  </table>
+  <aside class="notes"><p>Each row is a line of time_logic in the catalogue. Hijri months come from dim_date, built with the Umm al-Qura calendar; FN-104 showed the conversion, Day 2 builds the dual-calendar date dimension. The last row is the subject of Lab 1.4.</p></aside>
+</section>
+
+<section class="slide" id="test-a-metric" data-lo="LO2" data-n="34" data-session="3">
+  <div class="kicker">Testing a metric</div>
+  <h2>Test a metric on an example you computed by hand, then on the source</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>1 · By hand</b>a toy of three routes, with fractions on paper</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>2 · Same rows</b>the toy as a table the function can read</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>3 · Equal</b>the function returns the hand value exactly</div>
+    <div class="arrow">→</div>
+    <div class="step c-purple"><b>4 · Network</b>the function on September, against a reference</div>
+  </div>
+  <div class="callout tip mt"><b>Also test what it must not equal.</b> The toy's ratio of sums must differ from its mean of ratios: a test that would pass with the wrong formula proves nothing.</div>
+  <aside class="notes"><p>This is the shape of every test in the course, and the shape of the 25 test queries of Day 2. Lab 1.3 passes a table name to the function so the same code runs on toy_trip and fct_trip.</p></aside>
+</section>
+
+<section class="slide" id="checkpoint-3" data-lo="LO2" data-n="35" data-session="3">
+  <div class="kicker">Checkpoint</div>
+  <h2>How many cards travelled in September?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2" data-id="checkpoint-3-q1">
+    <p class="lead">A dashboard shows distinct cards per week. A manager wants the September total for a funding bid. What do you give?</p>
+    <div class="opts">
+      <div class="opt" data-ok data-k="A">A new distinct count over all of September's service dates</div>
+      <div class="opt" data-why="Distinct counts are not additive: cards that travel every week are counted again each week" data-k="B">The sum of the weekly figures</div>
+      <div class="opt" data-why="An average of weeks is a typical week, not a month; it undercounts cards seen in only some weeks" data-k="C">The average of the weekly figures</div>
+      <div class="opt" data-why="The largest week still misses cards that travelled only in other weeks" data-k="D">The largest weekly figure</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> A distinct count is computed again over the period asked for. In Lab 1.3 the four weeks summed to 38,764 cards, the distinct count over the same four weeks was 22,962.</div>
+  </div>
+  <aside class="notes"><p>Answer: A. Remind the room that "cards" is still not "people": the bid should say so, using the limits line of the definition.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-1-3" data-auto="lab" data-lab="1.3" data-label="Lab 1.3" data-n="36" data-session="3">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 1.3 · 25 min</div><h2>Two ratio metrics, tested</h2><p class="lead small">Implement the on-time rate and the cancellation rate as functions and test them against hand-computed values and the network totals; see why weekly distinct cards do not add to a month.</p><a class="nb" href="../labs/D1_3_ratio_metrics.ipynb">D1_3_ratio_metrics.ipynb</a></div><ul class="checklist"><li>Hand-compute the on-time rate of a small example <span class="min">5 min</span></li><li>Implement the two ratio metrics <span class="min">8 min</span></li><li>Test them against the hand values and the network <span class="min">6 min</span></li><li>Show that weekly distinct cards do not add to a month <span class="min">6 min</span></li><li class="stretch">✱ Stretch: The same two metrics by Hijri month</li></ul></div>
+  <aside class="notes"><p>AI-tutor. Watch for integer division: in DuckDB / on integers returns a fraction (a DOUBLE), but some engines truncate; the hand values are fractions, so a truncating engine fails the toy test, which is the point of testing. Watch for COUNT(*) where the catalogue says COUNT(trip_id). The stretch uses dim_date.hijri_month_key.</p></aside>
+</section>
+
+<!-- ======================= SESSION 4 ======================= -->
+<section class="slide section" id="s4" data-auto="section" data-session="4" data-n="37">
+  <div class="kicker">Session 4</div>
+  <h1>Metric trees</h1>
+  <ul class="bullets outcomes"><li>Decompose a goal metric into drivers that multiply back to it</li><li>Add a guardrail that a driver could harm</li><li>Assign an owner to each node</li></ul>
+  <div class="sess-no">04</div>
+</section>
+
+<section class="slide" id="tree-shape" data-lo="LO2" data-n="38" data-session="4">
+  <div class="kicker">Metric trees</div>
+  <h2>A metric tree links one goal to the drivers that teams can move</h2>
+  <div class="flow">
+    <div class="step c-navy"><b>Goal</b>weekly card taps</div>
+    <div class="arrow">=</div>
+    <div class="step c-teal"><b>Timetable</b>scheduled trips</div>
+    <div class="arrow">×</div>
+    <div class="step c-cyan"><b>Delivery</b>1 − cancellation rate</div>
+    <div class="arrow">×</div>
+    <div class="step c-coral"><b>Demand</b>taps per departed trip</div>
+  </div>
+  <div class="callout note mt"><b>Guardrail.</b> Complaints per 10,000 taps: it watches for harm a driver could do, such as crowding more riders onto each bus.</div>
+  <aside class="notes"><p>Check the algebra with the room: scheduled trips times one minus the cancellation rate is the departed trips; times taps per departed trip is the taps. A tree whose nodes do not combine back to the goal is only a list of related numbers. Each node is a catalogue metric.</p></aside>
+</section>
+
+<section class="slide" id="tree-kinds" data-lo="LO2" data-n="39" data-session="4">
+  <div class="kicker">Two kinds of tree</div>
+  <h2>Multiply for rates and volumes, add for segments</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>Multiplicative</h4><p class="small mb0">Taps = trips × (1 − cancelled) × taps per trip. Changes combine as products; log changes add.</p></div>
+    <div class="card c-cyan"><h4>Additive</h4><p class="small mb0">Taps = North + Central + East. Each segment's change adds to the total; Day 3 drills down this way.</p></div>
+  </div>
+  <div class="callout tip mt"><b>Use both.</b> Multiply to find which driver moved; add to find where it moved.</div>
+  <aside class="notes"><p>The anomaly lab on Day 3 uses the additive form: the drop in weekly ridership is split by depot, then route, then day. The multiplicative form is today's lab.</p></aside>
+</section>
+
+<section class="slide" id="tree-two-weeks" data-lo="LO2" data-n="40" data-session="4">
+  <div class="kicker">The tree on two weeks</div>
+  <h2>Taps fell 8.5%: the timetable explains almost all of it</h2>
+  <table class="t">
+    <tr><th>Node</th><th class="num">Week of 13 Sep</th><th class="num">Week of 20 Sep</th><th class="num">Change</th></tr>
+    <tr><td>Taps (goal)</td><td class="num">19,826</td><td class="num">18,146</td><td class="num">-8.5%</td></tr>
+    <tr class="hl"><td>Scheduled trips</td><td class="num">1,950</td><td class="num">1,794</td><td class="num">-8.0%</td></tr>
+    <tr><td>1 − cancellation rate</td><td class="num">97.0%</td><td class="num">97.7%</td><td class="num">+0.8%</td></tr>
+    <tr><td>Taps per departed trip</td><td class="num">10.48</td><td class="num">10.35</td><td class="num">-1.3%</td></tr>
+  </table>
+  <aside class="notes"><p>From Lab 1.4. The week of 20 September holds National Day, which runs a holiday timetable with half the trips. Demand per bus barely moved. With log changes, the timetable carries 94% of the change. Ask: what would "demand is down" have led Mashael to do?</p></aside>
+</section>
+
+<section class="slide" id="guardrail-and-owners" data-lo="LO2" data-n="41" data-session="4">
+  <div class="kicker">Owners on the nodes</div>
+  <h2>Every node has an owner, and the guardrail has a direction</h2>
+  <table class="t small">
+    <tr><th>Node</th><th>Owner</th></tr>
+    <tr><td>Taps</td><td>Muneer Al-Thaqafi, data platform</td></tr>
+    <tr><td>Scheduled trips, taps per departed trip</td><td>Dhuha Al-Rowais, planning</td></tr>
+    <tr><td>Cancellation rate</td><td>Tawfiq Al-Sahafi, control centre</td></tr>
+    <tr><td>Complaints per 10,000 taps (guardrail, worry if up)</td><td>Yasmeen Al-Jaafari, strategy</td></tr>
+  </table>
+  <aside class="notes"><p>The guardrail moved from 27.7 to 23.1 complaints per 10,000 taps between the two weeks (Lab 1.4): no warning. A guardrail without a stated direction is a decoration. The owners come from the catalogue, so the tree and the catalogue cannot disagree.</p></aside>
+</section>
+
+<section class="slide" id="tree-pitfalls" data-lo="LO2" data-n="42" data-session="4">
+  <div class="kicker">What goes wrong</div>
+  <h2>A tree misleads when its drivers overlap or do not reconcile</h2>
+  <ul class="bullets">
+    <li>Two drivers that count the same thing double its effect</li>
+    <li>A driver measured at another grain or period breaks the product</li>
+    <li>A driver nobody owns is a number nobody acts on</li>
+    <li>A tree with no guardrail rewards crowding, skipping stops or cutting short trips</li>
+  </ul>
+  <aside class="notes"><p>Reconciliation is the test: multiply back and compare with the goal, every week. Lab 1.4 checks it to a millionth of a tap. If a team proposes a driver "on-time rate", ask how it multiplies into taps: it does not, so it belongs beside the tree as a guardrail or a separate goal.</p></aside>
+</section>
+
+<section class="slide" id="nbia-kpis" data-lo="LO2" data-n="43" data-session="4">
+  <div class="kicker">The national standard</div>
+  <h2>The NDMO standards ask for analytics KPIs, measured and registered</h2>
+  <div class="cols cols-2">
+    <ul class="bullets small">
+      <li>The Business Intelligence and Analytics domain has <b>5 controls</b> and <b>10 specifications</b></li>
+      <li>It asks for a plan, prioritised use cases, validation of their outcomes, KPIs and a register</li>
+      <li>A governed catalogue is the register of what each number means</li>
+    </ul>
+    <div class="card c-teal"><h4>For this course</h4><p class="small mb0">Each dashboard is a use case: validate it, and record the metrics it shows with their owners.</p></div>
+  </div>
+  <aside class="notes"><p>Sources: NDMO Data Management and Personal Data Protection Standards, Business Intelligence and Analytics domain (controls BIA.1 to BIA.5). Do not quote clause wording; say what it asks in plain words, as on the slide.</p></aside>
+</section>
+
+<section class="slide" id="checkpoint-4" data-lo="LO2" data-n="44" data-session="4">
+  <div class="kicker">Checkpoint</div>
+  <h2>Which driver belongs in the tree?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2" data-id="checkpoint-4-q1">
+    <p class="lead">The tree is taps = scheduled trips × (1 − cancellation rate) × taps per departed trip. A colleague proposes adding "on-time rate" as a fourth driver. What do you say?</p>
+    <div class="opts">
+      <div class="opt" data-why="A factor that does not appear in the identity breaks the reconciliation: the product no longer equals taps" data-k="A">Add it: punctuality drives demand</div>
+      <div class="opt" data-why="Replacing a factor of the identity with an unrelated rate breaks the product just the same" data-k="B">Replace the cancellation rate with it</div>
+      <div class="opt" data-ok data-k="C">Keep it beside the tree, as a guardrail or its own goal</div>
+      <div class="opt" data-why="Punctuality matters to riders; leaving it out of the review entirely loses it" data-k="D">Leave it out of the review</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The drivers of a multiplicative tree must multiply back to the goal. On-time rate does not appear in the identity, so it would break the reconciliation. It can still be watched beside the tree.</div>
+  </div>
+  <aside class="notes"><p>Answer: C. Some participants will argue punctuality causes demand. Agree, and point out that a causal link is a hypothesis to test, not a factor of an identity.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-1-4" data-auto="lab" data-lab="1.4" data-label="Lab 1.4" data-n="45" data-session="4">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 1.4 · 25 min</div><h2>A network metric tree</h2><p class="lead small">Build a tree from weekly boardings to three drivers and a guardrail, reconcile it for two weeks and say which driver moved.</p><a class="nb" href="../labs/D1_4_metric_tree.ipynb">D1_4_metric_tree.ipynb</a></div><ul class="checklist"><li>Choose the goal and its decomposition <span class="min">5 min</span></li><li>Compute the three drivers for two weeks <span class="min">8 min</span></li><li>Reconcile the tree to the goal <span class="min">6 min</span></li><li>Add the guardrail and the owners <span class="min">6 min</span></li><li class="stretch">✱ Stretch: Attribute the week-on-week change to each driver with log changes</li></ul></div>
+  <aside class="notes"><p>AI-tutor. Most participants finish the reconciliation quickly; the discussion is about the cause. Ask them to look at dim_date for 23 September (National Day). The stretch uses log changes so that the shares add to 100%: the timetable carries 94.2%, demand per bus 14.4%, and fewer cancellations offset 8.6%.</p></aside>
+</section>
+
+<section class="slide" id="wrap-up" data-n="46" data-session="4">
+  <div class="kicker">Day 1 · wrap-up</div>
+  <h2>Three things to keep</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Diagnose before you debug</h4><p class="small mb0">Two figures differ in grain, rule, filter or period before they differ by a bug.</p></div>
+    <div class="card c-coral"><h4>One name, one meaning</h4><p class="small mb0">Eight parts and an owner; a second meaning gets a second name.</p></div>
+    <div class="card c-purple"><h4>Ratios and distinct counts</h4><p class="small mb0">Ratio of sums for a network; distinct counts are computed again, never summed.</p></div>
+  </div>
+  <aside class="notes"><p>Ask each participant to say which of the three they will use at work next week. The catalogue they built today is the input of Day 2.</p></aside>
+</section>
+
+<section class="slide dark" id="next" data-label="Next" data-n="47" data-session="4">
+  <div class="kicker">Next</div>
+  <h2>Day 2: Model once</h2>
+  <p class="lead">Tomorrow the catalogue becomes a star schema and a semantic model in which each metric is defined once. Finish today's labs if you can; Day 2 starts from the supplied catalogue either way.</p>
+  <aside class="notes"><p>Nothing to install. Participants who did not finish Lab 1.2 lose nothing: labs/data/catalogue/metric_catalogue.yaml is the reference state of Day 2.</p></aside>
+</section>
+</div>
+<script type="application/json" id="academy-data">{"v":1,"engine":"1.0.0","build":{"at":"2026-11-15T18:46:23Z","version":"2027.1.0","commit":"6720e14"},"course":{"id":"ds-307","code":"DS-307","title":"Metrics, Semantic Models and Dashboards","track":"data-science","lang":"en","dir":"ltr","url":"https://sdaiaacademy.github.io/ds-307/","repo":"SDAIAAcademy/ds-307","home":"../index.html"},"deck":{"id":"day1","kind":"day","day":1,"label":"Day 1","title":"Define the numbers","prev":null,"next":"day2.html","md":"day1.md","alt":{}},"sessions":[{"n":1,"label":"Session 1","title":"Why three reports disagree","slide":"s1","outcomes":["Name the four places two definitions of one measure can differ","Reproduce a published figure from its written rule","Explain a gap between two figures one rule at a time"],"minutes":50,"lab":{"id":"1.1","title":"Three on-time figures","minutes":25,"href":"../labs/D1_1_three_on_time.ipynb"}},{"n":2,"label":"Session 2","title":"Anatomy of a metric definition","slide":"s2","outcomes":["Write a definition with formula, grain, filters, time logic, owner and limits","Tell taps, cards and journeys apart","Reconcile a definition to the source totals"],"minutes":50,"lab":{"id":"1.2","title":"Four ridership definitions","minutes":25,"href":"../labs/D1_2_ridership_metrics.ipynb"}},{"n":3,"label":"Session 3","title":"Ratios, distinct counts and time logic","slide":"s3","outcomes":["Compute a ratio of sums and say why it differs from a mean of ratios","Explain why distinct counts do not add across periods","Test a metric against hand-computed values"],"minutes":50,"lab":{"id":"1.3","title":"Two ratio metrics, tested","minutes":25,"href":"../labs/D1_3_ratio_metrics.ipynb"}},{"n":4,"label":"Session 4","title":"Metric trees","slide":"s4","outcomes":["Decompose a goal metric into drivers that multiply back to it","Add a guardrail that a driver could harm","Assign an owner to each node"],"minutes":50,"lab":{"id":"1.4","title":"A network metric tree","minutes":25,"href":"../labs/D1_4_metric_tree.ipynb"}}],"slides":[{"id":"title","n":1,"title":"Define the numbers","kind":"title","session":0,"hash":"a315c77f","md":"#### [day1#title] Define the numbers\n\n*SDAIA Academy · Metrics, Semantic Models and Dashboards*\n\nDay 1: Three reports, one warehouse: definitions someone else can compute\n\nData Science Track · 4 teaching days + capstone day · 4 sessions · 4 labs · DS-307","notes":"Welcome the room. Ask two questions by show of hands: who has been asked \"why does your number differ from theirs?\" in the last month, and who has written a metric definition that someone else used without asking them. The prerequisites are FN-104 (SQL with joins and windows) and DS-203 (exploratory analysis and charts): today assumes both and does not reteach them. Rhythm: four sessions, each about 25 minutes of ideas and a 25-minute lab.","minutes":null,"lo":[]},{"id":"four-days-one-operator","n":2,"title":"Four days from a disputed number to an agent you can trust with it","kind":"content","session":0,"hash":"2c5727f2","md":"#### [day1#four-days-one-operator] Four days from a disputed number to an agent you can trust with it\n\n*The course at a glance*\n\n- **Day 1 · Define.** Why reports disagree, definitions, ratios, metric trees.\n- **Day 2 · Model.** Star schemas, a route that changed, fan-out, and each metric defined once in an open specification.\n- **Day 3 · Show.** A dashboard for one decision under three seconds; an anomaly traced.\n- **Day 4 · Test.** An agent on certified questions, and a go or no-go.\n\n> **Day 5 · Capstone.** The same four pieces for a second subject area, fares and concessions, defended in a ten-minute review with a live trace of one figure.","notes":"One sentence per day; do not teach yet. The capstone rubric weights the catalogue 25, the semantic model 25, the dashboard 20, the agent evaluation 20 and reproducibility 10. Each day builds one of those pieces on the network area, so that the capstone repeats them on fares.","minutes":null,"lo":[]},{"id":"how-we-work","n":3,"title":"Every number you show this week can be traced to its definition and its rows","kind":"content","session":0,"hash":"868ab4b5","md":"#### [day1#how-we-work] Every number you show this week can be traced to its definition and its rows\n\n*How this course works*\n\n- **Reproduce first.** Before you argue about a number, compute it again from its written rule.\n- **Define once.** One name, one formula, one owner. A second meaning gets a second name.\n- **Test it.** Hand-computed values, source totals and reference queries, every day.\n\n> **AI policy.** AI off for the first lab of each day and for the supervised check. A tutor in the other labs, explaining errors without writing your definitions. In the capstone an assistant may draft; every drafted definition carries a verification note. On Day 4 the agent is under test, not your helper.","notes":"Say the policy and why: the supervised check at the end asks for definitions, grain and joins in a locked console, so the skill has to be in the participant's hands. The policy comes from the catalog entry. Labs 1.1, 2.1, 3.1 and 4.1 are AI-off; each lab says so in its first cell.","minutes":null,"lo":[]},{"id":"wadi-noor-transit","n":4,"title":"Wadi Noor Transit: twelve bus routes, three depots, three on-time figures","kind":"content","session":0,"hash":"2dc18f2a","md":"#### [day1#wadi-noor-transit] Wadi Noor Transit: twelve bus routes, three depots, three on-time figures\n\n*One case study all week*\n\nA fictional city bus operator (نقل وادي نور). Synthetic data from January to October 2026. You are the new performance reporting analyst.\n\n- **Mashael Al-Saadi.** Operations director. Decides every Sunday where the reserve buses and supervisors go.\n- **Three report owners.** Tawfiq Al-Sahafi (control centre), Dhuha Al-Rowais (planning), Yasmeen Al-Jaafari (board pack).\n- **Muneer and Haneen.** Muneer Al-Thaqafi owns the warehouse; Haneen Al-Shamrani owns data classification.","notes":"All data is synthetic, written by labs/prepare_data.py with a fixed seed. Names of people are invented; no real operator, route or rider. Day 4 adds Nabih (نبيه), the conversational analytics agent under test. Planted problems wait in the data: do not reveal them.","minutes":null,"lo":[]},{"id":"the-warehouse","n":5,"title":"Five facts, six dimensions, one embedded analytical database","kind":"content","session":0,"hash":"649fb757","md":"#### [day1#the-warehouse] Five facts, six dimensions, one embedded analytical database\n\n*What you work on*\n\n| Fact table | Rows | One row is |\n| --- | --- | --- |\n| `fct_trip` | 85,010 | a scheduled trip |\n| `fct_timepoint` | 329,188 | a trip at one of four timepoints |\n| `fct_boarding` | 848,501 | a card tap at a validator |\n| `fct_complaint` | 2,400 | a complaint |\n| `fct_fare_sale` | 121,133 | a pass sold (capstone) |\n\n- **DuckDB in the notebook.** `W.db()` opens the Parquet files as read-only views. PostgreSQL would serve the same queries.\n- **Dimensions.** Dates with both calendars, routes with history, vehicles, depots, fare types and products.","notes":"Counts are from the generated data. The data dictionary is labs/data/catalogue/data_dictionary.md: give participants a minute with it. Two columns are Restricted: card_id and complaint_text. Ask: which table would you count to answer \"how many riders last week\"? Do not answer; Session 2 does.","minutes":null,"lo":[]},{"id":"setup-check","n":6,"title":"Run the setup check before the first lab","kind":"content","session":0,"hash":"0ecdc700","md":"#### [day1#setup-check] Run the setup check before the first lab\n\n*Lab environment*\n\n1. In **Google Colab**: open a lab from the course page; its first cell clones the course and installs what it needs.\n2. On a laptop: install **uv**, then the commands on the right.\n3. Run `00_setup_check.ipynb`. Every lab starts from supplied data, never from another lab of the same day.\n\n```bash\n# file: terminal (local option)\ngit clone https://github.com/SDAIAAcademy/ds-307\ncd ds-307/labs\nuv sync\nuv run jupyter lab\n```","notes":"No model key is needed until Day 4, and even then the labs run on a scripted stand-in without one. Common failures: a proxy that blocks the package index (use Colab); on Windows a folder path that is too long (git config core.longpaths true, and a short UV_PROJECT_ENVIRONMENT, see labs/README.md); a terminal that cannot print Arabic (run in Jupyter, or set PYTHONUTF8=1). Check that the pre-work notebook was done.","minutes":null,"lo":[]},{"id":"agenda","n":7,"title":"Define the numbers","kind":"content","session":0,"hash":"13749586","md":"#### [day1#agenda] Define the numbers\n\n*Today*\n\n- **Session 1 · Why three reports disagree**: What makes three reports on one warehouse give three numbers\n- **Session 2 · Anatomy of a metric definition**: The eight parts of a definition someone else can compute\n- **Session 3 · Ratios, distinct counts and time logic**: Ratios, distinct counts and the calendar inside a metric\n- **Session 4 · Metric trees**: From one goal metric to the drivers a team can move","notes":"","minutes":null,"lo":[]},{"id":"s1","n":8,"title":"Why three reports disagree","kind":"section","session":1,"hash":"ee2f2484","md":"#### [day1#s1] Why three reports disagree\n\n*Session 1*\n\n- Name the four places two definitions of one measure can differ\n- Reproduce a published figure from its written rule\n- Explain a gap between two figures one rule at a time","notes":"","minutes":null,"lo":["LO1"]},{"id":"three-figures","n":9,"title":"One warehouse, one month, three on-time figures","kind":"content","session":1,"hash":"f674fba3","md":"#### [day1#three-figures] One warehouse, one month, three on-time figures\n\n*The problem you inherit*\n\n- **80.7%** Operations report, September\n- **66.0%** Planning service review, September\n- **58.4%** Board pack, September meeting\n\nNobody made an arithmetic error. Each figure is right for its own rule.","notes":"Figures are from Lab 1.1's run on the synthetic warehouse. Ask the room before showing the next slide: \"Which one is right?\" Collect two or three answers. The point of the session is that the question is wrong: each figure answers a different question, and the problem is that all three are called \"on-time performance\".","minutes":null,"lo":["LO1"]},{"id":"rules-as-written","n":10,"title":"The three owners wrote three different rules under one name","kind":"content","session":1,"hash":"5cb35f83","md":"#### [day1#rules-as-written] The three owners wrote three different rules under one name\n\n*Read the rules, not the totals*\n\n| Report | Counts | On time means | Cancelled trips | Period |\n| --- | --- | --- | --- | --- |\n| Operations (Tawfiq) | trips | left the first stop 1 min early to 5 late | left out | September |\n| Planning (Dhuha) | timepoint arrivals | 1 min early to 5 late, at every timepoint | no arrivals to count | September |\n| Board (Yasmeen) | trips | reached the terminus at most 5 min late | count as late | Rabi al-Thani 1448 |\n\nSource: `labs/data/reports/three_reports.yaml`, the sentence under each report.","notes":"Read one row aloud. Ask participants to spot every column where two rows differ before the next slide names them. Rabi al-Thani 1448 runs from 12 September to 11 October 2026 in the Umm al-Qura calendar, so the board's \"September\" is mostly a different month.","minutes":null,"lo":["LO1"]},{"id":"four-places","n":11,"title":"Two definitions of one measure differ in four places","kind":"content","session":1,"hash":"2b03c459","md":"#### [day1#four-places] Two definitions of one measure differ in four places\n\n*Where definitions differ*\n\n- **Grain.** What is counted: trips, timepoint arrivals, riders, cards.\n- **Rule.** Where it is measured and the tolerance: first stop or terminus, early allowed or not.\n- **Filter.** What enters the denominator: cancelled trips, partial trips, holidays.\n- **Period.** Which dates: Gregorian month, Hijri month, a Sunday week or an ISO week.\n\n> **Use it as a checklist.** Two figures that disagree differ in at least one of these four. Find which before you look for a bug.","notes":"These four headings are the vocabulary of the diagnosis in Lab 1.1, where \"rule\" is split into \"point measured\" and \"tolerance\". Arithmetic errors and bad data exist, but they are rarer than definitional differences, and they show up only after the definitions match.","minutes":null,"lo":["LO1"]},{"id":"reconciliation-walk","n":12,"title":"Change one rule at a time and the gap explains itself","kind":"content","session":1,"hash":"6ffa3811","md":"#### [day1#reconciliation-walk] Change one rule at a time and the gap explains itself\n\n*A reconciliation walk*\n\n| Item | Value |\n| --- | --- |\n| Operations rules | 80.7% |\n| Measured at the terminus | 50.4% |\n| Early arrivals allowed | 59.7% |\n| Cancelled trips count as late | 58.0% |\n| Hijri month, not September | 58.4% |","notes":"From Lab 1.1, in this order: terminus (-30.3 points), early arrivals (+9.4), cancelled as late (-1.7), Hijri month (+0.4). The walk ends exactly on the board figure. Warn the room: the size of each step depends on the order, because the rules interact. State the order whenever you show a walk. The operations-to-planning walk is one step: the unit, from trips to timepoint arrivals.","minutes":null,"lo":["LO1"]},{"id":"grain-changes-question","n":13,"title":"Counting timepoints, not trips, asks a different question","kind":"content","session":1,"hash":"4f8f69e0","md":"#### [day1#grain-changes-question] Counting timepoints, not trips, asks a different question\n\n*The biggest step*\n\n- **Per trip, at the first stop.** \"Did the bus leave when the timetable said?\" The rider waiting at the start can plan on it.\n- **Per timepoint arrival.** \"Was the bus on time along the way?\" Delays build up, so later timepoints pull the figure down.\n\n> **Neither is wrong.** Planning's 66.0% is the honest answer to its own question. The fault is the shared name.","notes":"Ask: which question does Mashael need answered every Sunday? Usually the trip-level one for reliability at the start, read beside the cancellation rate. Keep the debate short; Session 2 resolves it by giving each definition its own name.","minutes":null,"lo":["LO1"]},{"id":"cost-of-disagreement","n":14,"title":"A disputed number spends the meeting on the number, not the decision","kind":"content","session":1,"hash":"0d751e41","md":"#### [day1#cost-of-disagreement] A disputed number spends the meeting on the number, not the decision\n\n*Why it matters*\n\n- Three figures invite each team to **quote the one that suits it**\n- Every new report adds a definition nobody wrote down\n- An agent asked \"what was on-time performance?\" will pick one, and **not say which**\n- The fix is not a fourth report: it is one catalogue, one owner per metric","notes":"The agent line foreshadows Day 4: a conversational agent has no way to know which of three definitions is meant unless the semantic layer tells it. Ask whether anyone has seen a meeting go this way.","minutes":null,"lo":["LO1"]},{"id":"diagnosis-table","n":15,"title":"The diagnosis names a definitional cause for each difference","kind":"content","session":1,"hash":"086d6d26","md":"#### [day1#diagnosis-table] The diagnosis names a definitional cause for each difference\n\n*What you hand over*\n\n| Difference | Causes, in walk order |\n| --- | --- |\n| Operations 80.7% vs planning 66.0% | grain (trips vs timepoint arrivals) |\n| Operations 80.7% vs board 58.4% | point measured, tolerance, cancelled trips, period |\n\nThis table, with the walk behind it, is the evidence for the first course outcome.","notes":"The diagnosis is short on purpose: one cause per difference, in the vocabulary of the four places. It is not a judgement of which report is better. That recommendation belongs in Session 2, as a catalogue entry.","minutes":null,"lo":["LO1"]},{"id":"checkpoint-1","n":16,"title":"Why is the planning figure lower?","kind":"quiz","session":1,"hash":"64f01729","md":"#### [day1#checkpoint-1] Why is the planning figure lower?\n\n*Checkpoint*\n\n**Question:** Operations reports 80.7% and planning 66.0% for the same September, on the same warehouse, both with a tolerance of one minute early to five late. What explains most of the gap?\n\n- A. Planning reads a stale copy of the data\n- B. Planning counts every timepoint arrival, where delays have built up\n- C. Planning counts cancelled trips as late\n- D. Planning reports a Hijri month","notes":"Answer: B. If many choose the stale copy, return to the rules slide: the same warehouse, so look at the rule first. If many choose cancelled trips, point out that is the board's rule.","minutes":null,"lo":["LO1"]},{"id":"lab-1-1","n":17,"title":"Three on-time figures","kind":"lab","session":1,"hash":"6d3e9230","md":"#### [day1#lab-1-1] Three on-time figures\n\nLab 1.1 · 25 min\n\nCompute the operations, planning and board on-time figures for September from their written rules, walk from one to the next one rule at a time, and write the diagnosis.\n\n[D1_1_three_on_time.ipynb](https://sdaiaacademy.github.io/ds-307/labs/D1_1_three_on_time.ipynb)\n\n- [ ] Compute the operations figure from its rule (6 min)\n- [ ] Compute the planning and board figures (7 min)\n- [ ] Walk from one figure to the next, one rule at a time (8 min)\n- [ ] Write the diagnosis: one cause per difference (4 min)\n- [ ] ✱ Stretch: Which figure answers the question the operations director asks every Sunday?","notes":"AI-off. Walk the room after five minutes: the usual blocker is the board figure, where participants forget that cancelled and partial trips stay in the denominator, or filter on Gregorian September instead of hijri_month_key = '1448-04'. The checks compare with the published figures to one decimal. The stretch asks which figure answers Mashael's Sunday question: the trip-level departure figure, read beside the cancellation rate.","minutes":null,"lo":[]},{"id":"s2","n":18,"title":"Anatomy of a metric definition","kind":"section","session":2,"hash":"cd07e5b5","md":"#### [day1#s2] Anatomy of a metric definition\n\n*Session 2*\n\n- Write a definition with formula, grain, filters, time logic, owner and limits\n- Tell taps, cards and journeys apart\n- Reconcile a definition to the source totals","notes":"","minutes":null,"lo":["LO2"]},{"id":"ridership-four-numbers","n":19,"title":"\"Ridership last week\" is four different numbers","kind":"content","session":2,"hash":"65c1da28","md":"#### [day1#ridership-four-numbers] \"Ridership last week\" is four different numbers\n\n*One word, four numbers*\n\n| Item | Value |\n| --- | --- |\n| Card taps | 19,826 |\n| Linked journeys | 16,231 |\n| Card-days | 13,992 |\n| Different cards | 9,864 |\n\nThe week of 13 to 19 September 2026, from Lab 1.2.","notes":"Ask the room which number belongs in a press release about \"riders\". None is a count of people: a card is not a person (shared cards, lost cards, two cards per person). Unique cards is the nearest, and it must say what it counts.","minutes":null,"lo":["LO2"]},{"id":"taps-cards-journeys","n":20,"title":"A tap, a journey and a card count different things","kind":"content","session":2,"hash":"a7b81d44","md":"#### [day1#taps-cards-journeys] A tap, a journey and a card count different things\n\n*Counting units in transit*\n\n1. **Tap** one card at one validator, every boarding\n2. **Journey** taps of one card within 60 minutes linked as one trip\n3. **Card-day** one card that travelled on a day\n4. **Card** one card seen in the period\n\n> **The trap.** Each step to the right is distinct within its period, so it is no longer additive: card-days add across days, cards do not.","notes":"The 60-minute transfer window is Wadi Noor's fare rule (a transfer within 60 minutes is free), so the journey definition borrows it. A different window is a different metric, with a different name. Session 3 shows the non-additivity with numbers.","minutes":null,"lo":["LO2"]},{"id":"eight-parts","n":21,"title":"A definition someone else can compute has eight parts","kind":"content","session":2,"hash":"96733468","md":"#### [day1#eight-parts] A definition someone else can compute has eight parts\n\n*Anatomy of a definition*\n\n1. **Name** and the **question** it answers\n2. **Formula**: one aggregate, or a ratio of two\n3. **Grain**: what one counted row is\n4. **Filters**: what is in and out\n\n5. **Time logic**: which date, which calendar, which week\n6. **Unit** of the result\n7. **Owner**: a person and their role\n8. **Limits**: what it must not be used for\n\n> **The test.** Give it to a colleague: if they compute your number without asking you anything, it is a definition.","notes":"The catalogue template in the labs has these eight parts plus the table the formula runs on. The peer checklist, W.lint(), checks that each part is present and has the right shape; the colleague checks that it means what it says. Both are needed for the LO2 evidence.","minutes":null,"lo":["LO2"]},{"id":"one-definition","n":22,"title":"The journeys definition, as the catalogue holds it","kind":"content","session":2,"hash":"a199a62d","md":"#### [day1#one-definition] The journeys definition, as the catalogue holds it\n\n*An entry of the catalogue*\n\n```yaml\n# file: labs/data/catalogue/metric_catalogue.yaml\n- name: journeys\n  question: How many journeys did riders make, counting a transfer as part of one journey?\n  formula: SUM(journey_start)\n  table: boarding_linked\n  grain: one card tap, journey_start = 1 when the card made no tap in the 60 minutes before\n  filters: none\n  time_logic: service_date of the tap; the 60-minute look-back crosses midnight\n  unit: journeys\n  owner: Dhuha Al-Rowais, network planning manager\n  limits: a return trip within 60 minutes counts as a transfer\n```","notes":"Point at time_logic: a tap shortly after midnight can be linked to one before it, so the look-back crosses the day boundary while the tap is counted on its own service date. Point at limits: it names a known undercount (quick returns), which protects the reader from over-reading the number.","minutes":null,"lo":["LO2"]},{"id":"owner-and-change","n":23,"title":"An owner decides what the metric means; a change gets a new version","kind":"content","session":2,"hash":"226bd7d3","md":"#### [day1#owner-and-change] An owner decides what the metric means; a change gets a new version\n\n*Owners and change control*\n\n- The **owner** answers questions about the definition and approves changes\n- A change that moves the number is announced, dated and versioned\n- A second meaning is a **second metric** with its own name and owner\n- The board's measure stays, renamed `terminal_on_time_rate`, owned by Yasmeen","notes":"This is how the three figures are resolved without anyone losing: on_time_rate (Tawfiq), timepoint_on_time_rate (Dhuha) and terminal_on_time_rate (Yasmeen) are three metrics with three names. The dashboard and the agent use the names. The change log itself (pull requests on metric files, review in continuous integration) is DS-408's subject; here it is a dated line in the catalogue.","minutes":null,"lo":["LO2"]},{"id":"reconcile-to-source","n":24,"title":"A definition reconciles when its formula, run as written, gives the source total","kind":"content","session":2,"hash":"01569782","md":"#### [day1#reconcile-to-source] A definition reconciles when its formula, run as written, gives the source total\n\n*Proof, not belief*\n\n```python\n# file: Lab 1.2 · reconcile\nfor d in defs:\n    got = W.measure(con, d, *WEEK)\n    W.check(got == counts[d[\"name\"]], d[\"name\"])\n```\n\n- Run the formula on the table the definition names, for the period\n- Compare with the count taken directly from the source\n- Add a sum test: **taps by route plus taps without a route equal all taps**","notes":"The sum test matters on Day 3: in October some taps have no route, and a definition that silently drops them under-reports. \"Taps without a route are counted\" is written in the filters line of the taps definition for exactly that reason.","minutes":null,"lo":["LO2"]},{"id":"dictionary-classification","n":25,"title":"The dictionary marks what a metric may count but never show","kind":"content","session":2,"hash":"72b4dda3","md":"#### [day1#dictionary-classification] The dictionary marks what a metric may count but never show\n\n*Responsible use, from the first definition*\n\n- `card_id` is pseudonymous personal data: **Restricted**\n- Counting distinct cards is allowed; listing them is not\n- The PDPL limits personal data to the minimum the purpose needs\n- Counts of cards are not shown below 10\n\n- **Four levels.** The NDMO Data Classification Policy has four: Top Secret, Secret, Restricted, Public. Label every field the catalogue uses.","notes":"Haneen Al-Shamrani, the data governance officer, owns the classification register. Which level a field gets is the organisation's decision under the policy; the course labels card numbers and complaint text Restricted as a working example. Sources: Personal Data Protection Law (personal data limited to the minimum necessary for the purpose); NDMO Data Classification Policy (the four levels).","minutes":null,"lo":["LO2"]},{"id":"checkpoint-2","n":26,"title":"Which definition can a colleague compute without asking?","kind":"quiz","session":2,"hash":"612f7110","md":"#### [day1#checkpoint-2] Which definition can a colleague compute without asking?\n\n*Checkpoint*\n\n**Question:** Four drafts of \"weekly riders\". Which one could Muneer compute for any week and get the number you would get?\n\n- A. Distinct cards in fct_boarding per week\n- B. COUNT(DISTINCT card_id)\n- C. Riders who used the network last week, owned by planning\n- D. COUNT(DISTINCT card_id) on fct_boarding, by service_date, weeks Sunday to Saturday","notes":"Answer: D. Wrong choices each miss a part of the eight: the time logic, the grain and period, or the formula. If the room picks A, ask \"which week?\" and show that ISO weeks start on Monday.","minutes":null,"lo":["LO2"]},{"id":"lab-1-2","n":27,"title":"Four ridership definitions","kind":"lab","session":2,"hash":"5abec1df","md":"#### [day1#lab-1-2] Four ridership definitions\n\nLab 1.2 · 25 min\n\nCount four ridership numbers for one week, write each as a governed definition, run the peer checklist and reconcile every definition to the source totals.\n\n[D1_2_ridership_metrics.ipynb](https://sdaiaacademy.github.io/ds-307/labs/D1_2_ridership_metrics.ipynb)\n\n- [ ] Count four ridership numbers for one week (6 min)\n- [ ] Write the four definitions in the catalogue template (8 min)\n- [ ] Run the peer checklist (5 min)\n- [ ] Reconcile each definition to the source totals (6 min)\n- [ ] ✱ Stretch: Add the Arabic name and a limits line to each definition","notes":"AI-tutor: an assistant may explain a DuckDB error, not write the YAML. Common problems: YAML indentation (two spaces under the dash); COUNT(DISTINCT card_id, service_date) without the brackets, which DuckDB reads differently; grain lines that do not start with \"one\". The safety net supplies the reference definitions, so the reconciliation cells run for everyone.","minutes":null,"lo":[]},{"id":"s3","n":28,"title":"Ratios, distinct counts and time logic","kind":"section","session":3,"hash":"5c39219e","md":"#### [day1#s3] Ratios, distinct counts and time logic\n\n*Session 3*\n\n- Compute a ratio of sums and say why it differs from a mean of ratios\n- Explain why distinct counts do not add across periods\n- Test a metric against hand-computed values","notes":"","minutes":null,"lo":["LO2"]},{"id":"ratio-of-sums","n":29,"title":"A network rate is a ratio of sums, not a mean of route rates","kind":"content","session":3,"hash":"68065c15","md":"#### [day1#ratio-of-sums] A network rate is a ratio of sums, not a mean of route rates\n\n*Ratios*\n\n| Route | Departed | On time | Rate |\n| --- | --- | --- | --- |\n| A | 100 | 90 | 90% |\n| B | 10 | 5 | 50% |\n| C | 40 | 30 | 75% |\n| Network | 150 | 125 | 83.3% |\n\n**71.7%** mean of the three route rates\n\n- **Not the network.** The mean gives route B's ten trips the weight of route A's hundred.","notes":"The toy example of Lab 1.3; participants compute it by hand first. On the real September network the gap is smaller: 80.7% as a ratio of sums against 79.9% as a mean of the twelve route rates, because routes are closer in size. The rule does not change with the size of the gap.","minutes":null,"lo":["LO2"]},{"id":"when-mean-of-ratios","n":30,"title":"A mean of ratios answers \"how does a typical route do?\"","kind":"content","session":3,"hash":"215b9b84","md":"#### [day1#when-mean-of-ratios] A mean of ratios answers \"how does a typical route do?\"\n\n*When the mean is right*\n\n- Network performance: **ratio of sums**, each trip counted once\n- The typical route: **mean of route ratios**, each route counted once\n- Both are legitimate; they are **two metrics** with two names\n- A dashboard that averages a column of percentages has chosen the second without saying so","notes":"The last bullet is the common way this goes wrong: an export of route rates, then AVERAGE in a spreadsheet. Ask participants to name a report at their own workplace that averages percentages.","minutes":null,"lo":["LO2"]},{"id":"distinct-not-additive","n":31,"title":"Weekly distinct cards do not add up to a month","kind":"content","session":3,"hash":"44e89f0e","md":"#### [day1#distinct-not-additive] Weekly distinct cards do not add up to a month\n\n*Distinct counts*\n\n| Week starting | Distinct cards |\n| --- | --- |\n| 2026-09-06 | 9,909 |\n| 2026-09-13 | 9,864 |\n| 2026-09-20 | 9,257 |\n| 2026-09-27 | 9,734 |\n\n- **38,764** the four weeks added\n- **22,962** distinct over the four weeks","notes":"From Lab 1.3. A card that travels every week is counted four times in the sum and once in the four-week count. Any total of a distinct count must be computed again over the longer period, never summed. Semantic layers mark such metrics as non-additive for this reason.","minutes":null,"lo":["LO2"]},{"id":"snapshots-and-flows","n":32,"title":"Flows add over time; snapshots do not","kind":"content","session":3,"hash":"81748a9a","md":"#### [day1#snapshots-and-flows] Flows add over time; snapshots do not\n\n*Flows and snapshots*\n\n- **Flow.** Taps, trips, complaints: events in a period. A month is the sum of its days.\n- **Snapshot.** Active passes, buses in service, open complaints: a state on a date. A month is a chosen day, or an average of days, never a sum.\n\n> **State the rule.** A snapshot metric's time logic names the day it is taken: the last day of the period, or the mean of daily values.","notes":"The capstone's fares area has a snapshot: active 30-day passes on a date. Participants will meet it there. Ask for one more snapshot from the room's own work: headcount, open tickets, stock on hand.","minutes":null,"lo":["LO2"]},{"id":"time-logic","n":33,"title":"Which date, which week, which calendar","kind":"content","session":3,"hash":"1b4122ed","md":"#### [day1#time-logic] Which date, which week, which calendar\n\n*Time logic*\n\n| Choice | At Wadi Noor | What goes wrong otherwise |\n| --- | --- | --- |\n| The date that places a row | the service date of the trip | a trip after midnight lands on the next day |\n| The week | Sunday to Saturday | ISO weeks start on Monday and split the working week |\n| The month | Gregorian unless a Hijri month is named | Ramadan and the Eids move eleven days a year |\n| Like with like | compare holiday timetables with holidays | National Day looks like a fall in demand |","notes":"Each row is a line of time_logic in the catalogue. Hijri months come from dim_date, built with the Umm al-Qura calendar; FN-104 showed the conversion, Day 2 builds the dual-calendar date dimension. The last row is the subject of Lab 1.4.","minutes":null,"lo":["LO2"]},{"id":"test-a-metric","n":34,"title":"Test a metric on an example you computed by hand, then on the source","kind":"content","session":3,"hash":"68558956","md":"#### [day1#test-a-metric] Test a metric on an example you computed by hand, then on the source\n\n*Testing a metric*\n\n1. **1 · By hand** a toy of three routes, with fractions on paper\n2. **2 · Same rows** the toy as a table the function can read\n3. **3 · Equal** the function returns the hand value exactly\n4. **4 · Network** the function on September, against a reference\n\n> **Also test what it must not equal.** The toy's ratio of sums must differ from its mean of ratios: a test that would pass with the wrong formula proves nothing.","notes":"This is the shape of every test in the course, and the shape of the 25 test queries of Day 2. Lab 1.3 passes a table name to the function so the same code runs on toy_trip and fct_trip.","minutes":null,"lo":["LO2"]},{"id":"checkpoint-3","n":35,"title":"How many cards travelled in September?","kind":"quiz","session":3,"hash":"01af59e1","md":"#### [day1#checkpoint-3] How many cards travelled in September?\n\n*Checkpoint*\n\n**Question:** A dashboard shows distinct cards per week. A manager wants the September total for a funding bid. What do you give?\n\n- A. A new distinct count over all of September's service dates\n- B. The sum of the weekly figures\n- C. The average of the weekly figures\n- D. The largest weekly figure","notes":"Answer: A. Remind the room that \"cards\" is still not \"people\": the bid should say so, using the limits line of the definition.","minutes":null,"lo":["LO2"]},{"id":"lab-1-3","n":36,"title":"Two ratio metrics, tested","kind":"lab","session":3,"hash":"d24a8fb4","md":"#### [day1#lab-1-3] Two ratio metrics, tested\n\nLab 1.3 · 25 min\n\nImplement the on-time rate and the cancellation rate as functions and test them against hand-computed values and the network totals; see why weekly distinct cards do not add to a month.\n\n[D1_3_ratio_metrics.ipynb](https://sdaiaacademy.github.io/ds-307/labs/D1_3_ratio_metrics.ipynb)\n\n- [ ] Hand-compute the on-time rate of a small example (5 min)\n- [ ] Implement the two ratio metrics (8 min)\n- [ ] Test them against the hand values and the network (6 min)\n- [ ] Show that weekly distinct cards do not add to a month (6 min)\n- [ ] ✱ Stretch: The same two metrics by Hijri month","notes":"AI-tutor. Watch for integer division: in DuckDB / on integers returns a fraction (a DOUBLE), but some engines truncate; the hand values are fractions, so a truncating engine fails the toy test, which is the point of testing. Watch for COUNT(\\*) where the catalogue says COUNT(trip_id). The stretch uses dim_date.hijri_month_key.","minutes":null,"lo":[]},{"id":"s4","n":37,"title":"Metric trees","kind":"section","session":4,"hash":"5531ed93","md":"#### [day1#s4] Metric trees\n\n*Session 4*\n\n- Decompose a goal metric into drivers that multiply back to it\n- Add a guardrail that a driver could harm\n- Assign an owner to each node","notes":"","minutes":null,"lo":["LO2"]},{"id":"tree-shape","n":38,"title":"A metric tree links one goal to the drivers that teams can move","kind":"content","session":4,"hash":"3b70e06f","md":"#### [day1#tree-shape] A metric tree links one goal to the drivers that teams can move\n\n*Metric trees*\n\n1. **Goal** weekly card taps\n2. **Timetable** scheduled trips\n3. **Delivery** 1 − cancellation rate\n4. **Demand** taps per departed trip\n\n> **Guardrail.** Complaints per 10,000 taps: it watches for harm a driver could do, such as crowding more riders onto each bus.","notes":"Check the algebra with the room: scheduled trips times one minus the cancellation rate is the departed trips; times taps per departed trip is the taps. A tree whose nodes do not combine back to the goal is only a list of related numbers. Each node is a catalogue metric.","minutes":null,"lo":["LO2"]},{"id":"tree-kinds","n":39,"title":"Multiply for rates and volumes, add for segments","kind":"content","session":4,"hash":"13615e1e","md":"#### [day1#tree-kinds] Multiply for rates and volumes, add for segments\n\n*Two kinds of tree*\n\n- **Multiplicative.** Taps = trips × (1 − cancelled) × taps per trip. Changes combine as products; log changes add.\n- **Additive.** Taps = North + Central + East. Each segment's change adds to the total; Day 3 drills down this way.\n\n> **Use both.** Multiply to find which driver moved; add to find where it moved.","notes":"The anomaly lab on Day 3 uses the additive form: the drop in weekly ridership is split by depot, then route, then day. The multiplicative form is today's lab.","minutes":null,"lo":["LO2"]},{"id":"tree-two-weeks","n":40,"title":"Taps fell 8.5%: the timetable explains almost all of it","kind":"content","session":4,"hash":"3b2ef942","md":"#### [day1#tree-two-weeks] Taps fell 8.5%: the timetable explains almost all of it\n\n*The tree on two weeks*\n\n| Node | Week of 13 Sep | Week of 20 Sep | Change |\n| --- | --- | --- | --- |\n| Taps (goal) | 19,826 | 18,146 | -8.5% |\n| Scheduled trips | 1,950 | 1,794 | -8.0% |\n| 1 − cancellation rate | 97.0% | 97.7% | +0.8% |\n| Taps per departed trip | 10.48 | 10.35 | -1.3% |","notes":"From Lab 1.4. The week of 20 September holds National Day, which runs a holiday timetable with half the trips. Demand per bus barely moved. With log changes, the timetable carries 94% of the change. Ask: what would \"demand is down\" have led Mashael to do?","minutes":null,"lo":["LO2"]},{"id":"guardrail-and-owners","n":41,"title":"Every node has an owner, and the guardrail has a direction","kind":"content","session":4,"hash":"72a30cb9","md":"#### [day1#guardrail-and-owners] Every node has an owner, and the guardrail has a direction\n\n*Owners on the nodes*\n\n| Node | Owner |\n| --- | --- |\n| Taps | Muneer Al-Thaqafi, data platform |\n| Scheduled trips, taps per departed trip | Dhuha Al-Rowais, planning |\n| Cancellation rate | Tawfiq Al-Sahafi, control centre |\n| Complaints per 10,000 taps (guardrail, worry if up) | Yasmeen Al-Jaafari, strategy |","notes":"The guardrail moved from 27.7 to 23.1 complaints per 10,000 taps between the two weeks (Lab 1.4): no warning. A guardrail without a stated direction is a decoration. The owners come from the catalogue, so the tree and the catalogue cannot disagree.","minutes":null,"lo":["LO2"]},{"id":"tree-pitfalls","n":42,"title":"A tree misleads when its drivers overlap or do not reconcile","kind":"content","session":4,"hash":"e9ee71cf","md":"#### [day1#tree-pitfalls] A tree misleads when its drivers overlap or do not reconcile\n\n*What goes wrong*\n\n- Two drivers that count the same thing double its effect\n- A driver measured at another grain or period breaks the product\n- A driver nobody owns is a number nobody acts on\n- A tree with no guardrail rewards crowding, skipping stops or cutting short trips","notes":"Reconciliation is the test: multiply back and compare with the goal, every week. Lab 1.4 checks it to a millionth of a tap. If a team proposes a driver \"on-time rate\", ask how it multiplies into taps: it does not, so it belongs beside the tree as a guardrail or a separate goal.","minutes":null,"lo":["LO2"]},{"id":"nbia-kpis","n":43,"title":"The NDMO standards ask for analytics KPIs, measured and registered","kind":"content","session":4,"hash":"e9402d8d","md":"#### [day1#nbia-kpis] The NDMO standards ask for analytics KPIs, measured and registered\n\n*The national standard*\n\n- The Business Intelligence and Analytics domain has **5 controls** and **10 specifications**\n- It asks for a plan, prioritised use cases, validation of their outcomes, KPIs and a register\n- A governed catalogue is the register of what each number means\n\n- **For this course.** Each dashboard is a use case: validate it, and record the metrics it shows with their owners.","notes":"Sources: NDMO Data Management and Personal Data Protection Standards, Business Intelligence and Analytics domain (controls BIA.1 to BIA.5). Do not quote clause wording; say what it asks in plain words, as on the slide.","minutes":null,"lo":["LO2"]},{"id":"checkpoint-4","n":44,"title":"Which driver belongs in the tree?","kind":"quiz","session":4,"hash":"2609cfff","md":"#### [day1#checkpoint-4] Which driver belongs in the tree?\n\n*Checkpoint*\n\n**Question:** The tree is taps = scheduled trips × (1 − cancellation rate) × taps per departed trip. A colleague proposes adding \"on-time rate\" as a fourth driver. What do you say?\n\n- A. Add it: punctuality drives demand\n- B. Replace the cancellation rate with it\n- C. Keep it beside the tree, as a guardrail or its own goal\n- D. Leave it out of the review","notes":"Answer: C. Some participants will argue punctuality causes demand. Agree, and point out that a causal link is a hypothesis to test, not a factor of an identity.","minutes":null,"lo":["LO2"]},{"id":"lab-1-4","n":45,"title":"A network metric tree","kind":"lab","session":4,"hash":"bcb013a6","md":"#### [day1#lab-1-4] A network metric tree\n\nLab 1.4 · 25 min\n\nBuild a tree from weekly boardings to three drivers and a guardrail, reconcile it for two weeks and say which driver moved.\n\n[D1_4_metric_tree.ipynb](https://sdaiaacademy.github.io/ds-307/labs/D1_4_metric_tree.ipynb)\n\n- [ ] Choose the goal and its decomposition (5 min)\n- [ ] Compute the three drivers for two weeks (8 min)\n- [ ] Reconcile the tree to the goal (6 min)\n- [ ] Add the guardrail and the owners (6 min)\n- [ ] ✱ Stretch: Attribute the week-on-week change to each driver with log changes","notes":"AI-tutor. Most participants finish the reconciliation quickly; the discussion is about the cause. Ask them to look at dim_date for 23 September (National Day). The stretch uses log changes so that the shares add to 100%: the timetable carries 94.2%, demand per bus 14.4%, and fewer cancellations offset 8.6%.","minutes":null,"lo":[]},{"id":"wrap-up","n":46,"title":"Three things to keep","kind":"content","session":4,"hash":"29731123","md":"#### [day1#wrap-up] Three things to keep\n\n*Day 1 · wrap-up*\n\n- **Diagnose before you debug.** Two figures differ in grain, rule, filter or period before they differ by a bug.\n- **One name, one meaning.** Eight parts and an owner; a second meaning gets a second name.\n- **Ratios and distinct counts.** Ratio of sums for a network; distinct counts are computed again, never summed.","notes":"Ask each participant to say which of the three they will use at work next week. The catalogue they built today is the input of Day 2.","minutes":null,"lo":[]},{"id":"next","n":47,"title":"Day 2: Model once","kind":"content","session":4,"hash":"53bd869d","md":"#### [day1#next] Day 2: Model once\n\n*Next*\n\nTomorrow the catalogue becomes a star schema and a semantic model in which each metric is defined once. Finish today's labs if you can; Day 2 starts from the supplied catalogue either way.","notes":"Nothing to install. Participants who did not finish Lab 1.2 lose nothing: labs/data/catalogue/metric_catalogue.yaml is the reference state of Day 2.","minutes":null,"lo":[]}],"activities":[{"id":"checkpoint-1-q1","slide":"checkpoint-1","type":"single","prompt":"Operations reports 80.7% and planning 66.0% for the same September, on the same warehouse, both with a tolerance of one minute early to five late. What explains most of the gap?","options":[{"key":"A","text":"Planning reads a stale copy of the data"},{"key":"B","text":"Planning counts every timepoint arrival, where delays have built up"},{"key":"C","text":"Planning counts cancelled trips as late"},{"key":"D","text":"Planning reports a Hijri month"}],"correct":[1],"explanation":"Planning's unit is the timepoint arrival, not the trip. Later timepoints carry the delay built up along the route, so the share falls. One rule, the grain, explains the whole gap.","misconceptions":["Assumes a disagreement is a data fault; both queries read the same rows","","The planning rule never mentions cancelled trips; a cancelled trip has no arrivals to count","Both reports use the calendar month of September"],"lo":["LO1"]},{"id":"checkpoint-2-q1","slide":"checkpoint-2","type":"single","prompt":"Four drafts of \"weekly riders\". Which one could Muneer compute for any week and get the number you would get?","options":[{"key":"A","text":"Distinct cards in fct_boarding per week"},{"key":"B","text":"COUNT(DISTINCT card_id)"},{"key":"C","text":"Riders who used the network last week, owned by planning"},{"key":"D","text":"COUNT(DISTINCT card_id) on fct_boarding, by service_date, weeks Sunday to Saturday"}],"correct":[3],"explanation":"Only the last states the formula, the table that sets the grain, the date that places a tap in a week, and the week's first day. It still needs an owner and limits to enter the catalogue.","misconceptions":["Names a table but not the week: Sunday or Monday start, service date or tap time","A formula without a grain or a period: which rows, which dates?","Names the purpose, not the computation: two analysts would write two queries",""],"lo":["LO2"]},{"id":"checkpoint-3-q1","slide":"checkpoint-3","type":"single","prompt":"A dashboard shows distinct cards per week. A manager wants the September total for a funding bid. What do you give?","options":[{"key":"A","text":"A new distinct count over all of September's service dates"},{"key":"B","text":"The sum of the weekly figures"},{"key":"C","text":"The average of the weekly figures"},{"key":"D","text":"The largest weekly figure"}],"correct":[0],"explanation":"A distinct count is computed again over the period asked for. In Lab 1.3 the four weeks summed to 38,764 cards, the distinct count over the same four weeks was 22,962.","misconceptions":["","Distinct counts are not additive: cards that travel every week are counted again each week","An average of weeks is a typical week, not a month; it undercounts cards seen in only some weeks","The largest week still misses cards that travelled only in other weeks"],"lo":["LO2"]},{"id":"checkpoint-4-q1","slide":"checkpoint-4","type":"single","prompt":"The tree is taps = scheduled trips × (1 − cancellation rate) × taps per departed trip. A colleague proposes adding \"on-time rate\" as a fourth driver. What do you say?","options":[{"key":"A","text":"Add it: punctuality drives demand"},{"key":"B","text":"Replace the cancellation rate with it"},{"key":"C","text":"Keep it beside the tree, as a guardrail or its own goal"},{"key":"D","text":"Leave it out of the review"}],"correct":[2],"explanation":"The drivers of a multiplicative tree must multiply back to the goal. On-time rate does not appear in the identity, so it would break the reconciliation. It can still be watched beside the tree.","misconceptions":["A factor that does not appear in the identity breaks the reconciliation: the product no longer equals taps","Replacing a factor of the identity with an unrelated rate breaks the product just the same","","Punctuality matters to riders; leaving it out of the review entirely loses it"],"lo":["LO2"]}],"ai":{"context":{"course":"../context/course.md","courseJs":"../context/course.js","day":"day1.md","llms":"../llms.txt"},"tasks":[],"tools":[]},"bridge":{"allowedOrigins":[]},"features":{},"strings":{}}</script>
+<script src="../_engine/academy.js"></script>
+</body>
+</html>

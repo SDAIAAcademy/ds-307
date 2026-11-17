@@ -1,0 +1,136 @@
+# The governed metric catalogue of Wadi Noor Transit: the reference state of Day 2 onwards.
+# One entry per business question (business_questions.md). Every entry passes W.lint().
+# `table` and `formula` let the labs compute an entry on one table; a ratio names its two parts.
+metrics:
+  - name: taps
+    label_ar: النقرات
+    question: How many card taps did the network record in the period?
+    formula: COUNT(tap_id)
+    table: fct_boarding
+    grain: one card tap at a validator (fct_boarding)
+    filters: none; taps that could not be attributed to a route or trip are counted
+    time_logic: service_date; weeks run Sunday to Saturday; months are Gregorian unless a Hijri month is named
+    unit: taps
+    owner: Muneer Al-Thaqafi, data platform lead
+    limits: counts taps, not people; a rider who changes bus taps twice
+  - name: unique_cards
+    label_ar: البطاقات المختلفة
+    question: How many different cards travelled in the period?
+    formula: COUNT(DISTINCT card_id)
+    table: fct_boarding
+    grain: one card tap at a validator (fct_boarding)
+    filters: none
+    time_logic: service_date; distinct within the period asked for, so weeks do not add up to a month
+    unit: cards
+    owner: Muneer Al-Thaqafi, data platform lead
+    limits: a card is not a person; shared and lost cards make it differ from riders; never shown below 10
+  - name: journeys
+    label_ar: الرحلات المترابطة
+    question: How many journeys did riders make, counting a transfer as part of one journey?
+    formula: SUM(journey_start)
+    table: boarding_linked
+    grain: one card tap at a validator, with journey_start = 1 when the same card made no tap in the 60 minutes before
+    filters: none
+    time_logic: service_date of the tap; the 60-minute look-back crosses midnight
+    unit: journeys
+    owner: Dhuha Al-Rowais, network planning manager
+    limits: a return within 60 minutes counts as a transfer; taps on passes are linked the same way
+  - name: rider_days
+    label_ar: أيام الركوب
+    question: How many card-days were there in the period (one card travelling on one day counts once)?
+    formula: COUNT(DISTINCT (card_id, service_date))
+    table: fct_boarding
+    grain: one card tap at a validator (fct_boarding)
+    filters: none
+    time_logic: service_date; additive across days, not across cards
+    unit: card-days
+    owner: Yasmeen Al-Jaafari, strategy and finance analyst
+    limits: used for the day-pass price review; not a count of people
+  - name: on_time_rate
+    label_ar: نسبة الانطلاق في الموعد
+    question: What share of the trips that departed left their first timepoint on time?
+    formula: SUM(CASE WHEN status <> 'cancelled' AND dep_delay_min BETWEEN -1 AND 5 THEN 1 ELSE 0 END) / SUM(CASE WHEN status <> 'cancelled' THEN 1 ELSE 0 END)
+    table: fct_trip
+    grain: one scheduled trip (fct_trip)
+    filters: departed trips only (operated or partial); cancelled trips are reported by cancellation_rate
+    time_logic: service_date; a ratio of sums over the whole period, never a mean of daily or route ratios
+    unit: share of departed trips
+    owner: Tawfiq Al-Sahafi, control centre manager
+    limits: measures the start of the trip only; read it with cancellation_rate
+  - name: cancellation_rate
+    label_ar: نسبة الرحلات الملغاة
+    question: What share of the scheduled trips were cancelled?
+    formula: SUM(CASE WHEN status = 'cancelled' THEN 1 ELSE 0 END) / COUNT(trip_id)
+    table: fct_trip
+    grain: one scheduled trip (fct_trip)
+    filters: none
+    time_logic: service_date; a ratio of sums over the period
+    unit: share of scheduled trips
+    owner: Tawfiq Al-Sahafi, control centre manager
+    limits: a partial trip is not cancelled
+  - name: timepoint_on_time_rate
+    label_ar: نسبة الوصول في الموعد عند نقاط التوقيت
+    question: What share of the recorded timepoint arrivals were on time?
+    formula: SUM(CASE WHEN delay_min BETWEEN -1 AND 5 THEN 1 ELSE 0 END) / COUNT(delay_min)
+    table: fct_timepoint
+    grain: one departed trip at one timepoint (fct_timepoint)
+    filters: recorded arrivals only; a partial trip contributes the timepoints it reached
+    time_logic: service_date of the trip (join to fct_trip)
+    unit: share of timepoint arrivals
+    owner: Dhuha Al-Rowais, network planning manager
+    limits: weights long trips and late timepoints more than on_time_rate does
+  - name: taps_per_departed_trip
+    label_ar: النقرات لكل رحلة منطلقة
+    question: How many taps were there per trip that departed?
+    formula: taps / departed trips, each summed over the period first
+    table: fct_boarding and fct_trip
+    grain: one value per period, a ratio of two facts each aggregated at its own grain before they meet
+    filters: departed trips only in the denominator
+    time_logic: service_date on both sides
+    unit: taps per departed trip
+    owner: Dhuha Al-Rowais, network planning manager
+    limits: never computed on a join of taps to trips row by row
+  - name: complaints_per_10k_taps
+    label_ar: الشكاوى لكل عشرة آلاف نقرة
+    question: How many complaints were received per 10,000 taps?
+    formula: 10000 x complaints / taps, each summed over the period first
+    table: fct_complaint and fct_boarding
+    grain: one value per period, a ratio of two facts each aggregated at its own grain
+    filters: none
+    time_logic: received_date for complaints, service_date for taps
+    unit: complaints per 10,000 taps
+    owner: Yasmeen Al-Jaafari, strategy and finance analyst
+    limits: the guardrail of the network tree; complaint text itself is Restricted and never read
+  - name: scheduled_trips
+    label_ar: الرحلات المجدولة
+    question: How many trips were in the timetable?
+    formula: COUNT(trip_id)
+    table: fct_trip
+    grain: one scheduled trip (fct_trip)
+    filters: none
+    time_logic: service_date
+    unit: trips
+    owner: Dhuha Al-Rowais, network planning manager
+    limits: holiday timetables have fewer trips; compare like days
+  - name: terminal_on_time_rate
+    label_ar: نسبة الوصول إلى نهاية الخط في الموعد
+    question: What share of scheduled trips reached their terminus no more than five minutes late?
+    formula: SUM(CASE WHEN status = 'operated' AND arr_delay_min <= 5 THEN 1 ELSE 0 END) / COUNT(trip_id)
+    table: fct_trip
+    grain: one scheduled trip (fct_trip)
+    filters: none; cancelled and partial trips count as not on time
+    time_logic: service_date; the board reports it by Hijri month
+    unit: share of scheduled trips
+    owner: Yasmeen Al-Jaafari, strategy and finance analyst
+    limits: early arrivals count as on time; a different measure from on_time_rate, with its own name
+  - name: operated_km
+    label_ar: الكيلومترات المشغلة
+    question: How many timetabled kilometres did the departed trips run?
+    formula: SUM(length_km) over departed trips, joined to the route version valid on the service date
+    table: fct_trip and dim_route
+    grain: one scheduled trip (fct_trip)
+    filters: departed trips only
+    time_logic: service_date; the route length of the version valid that day
+    unit: kilometres
+    owner: Tawfiq Al-Sahafi, control centre manager
+    limits: a partial trip is counted at full length

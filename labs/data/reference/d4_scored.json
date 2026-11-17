@@ -1,0 +1,642 @@
+[
+ {
+  "id": "Q01",
+  "type": "count",
+  "config": "raw",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q02",
+  "type": "count",
+  "config": "raw",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q03",
+  "type": "count",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": true,
+  "error": "period"
+ },
+ {
+  "id": "Q04",
+  "type": "count",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": true,
+  "error": "filter"
+ },
+ {
+  "id": "Q05",
+  "type": "count",
+  "config": "raw",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q06",
+  "type": "count",
+  "config": "raw",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q07",
+  "type": "count",
+  "config": "raw",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q08",
+  "type": "count",
+  "config": "raw",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q09",
+  "type": "ratio",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": true,
+  "error": "definition"
+ },
+ {
+  "id": "Q10",
+  "type": "ratio",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": true,
+  "error": "grain"
+ },
+ {
+  "id": "Q11",
+  "type": "ratio",
+  "config": "raw",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q12",
+  "type": "ratio",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": true,
+  "error": "filter"
+ },
+ {
+  "id": "Q13",
+  "type": "ratio",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": false,
+  "error": "join"
+ },
+ {
+  "id": "Q14",
+  "type": "ratio",
+  "config": "raw",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q15",
+  "type": "ratio",
+  "config": "raw",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q16",
+  "type": "ratio",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": true,
+  "error": "definition"
+ },
+ {
+  "id": "Q17",
+  "type": "distinct",
+  "config": "raw",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q18",
+  "type": "distinct",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": false,
+  "error": "grain"
+ },
+ {
+  "id": "Q19",
+  "type": "distinct",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": true,
+  "error": "definition"
+ },
+ {
+  "id": "Q20",
+  "type": "distinct",
+  "config": "raw",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q21",
+  "type": "distinct",
+  "config": "raw",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q22",
+  "type": "distinct",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": true,
+  "error": "definition"
+ },
+ {
+  "id": "Q23",
+  "type": "distinct",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": false,
+  "error": "grain"
+ },
+ {
+  "id": "Q24",
+  "type": "distinct",
+  "config": "raw",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q25",
+  "type": "calendar",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": true,
+  "error": "period"
+ },
+ {
+  "id": "Q26",
+  "type": "calendar",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": true,
+  "error": "period"
+ },
+ {
+  "id": "Q27",
+  "type": "calendar",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": true,
+  "error": "period"
+ },
+ {
+  "id": "Q28",
+  "type": "calendar",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": true,
+  "error": "period"
+ },
+ {
+  "id": "Q29",
+  "type": "calendar",
+  "config": "raw",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q30",
+  "type": "calendar",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": true,
+  "error": "filter"
+ },
+ {
+  "id": "Q31",
+  "type": "calendar",
+  "config": "raw",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q32",
+  "type": "calendar",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": true,
+  "error": "period"
+ },
+ {
+  "id": "Q33",
+  "type": "restricted",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": false,
+  "error": "leak"
+ },
+ {
+  "id": "Q34",
+  "type": "restricted",
+  "config": "raw",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q35",
+  "type": "restricted",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": false,
+  "error": "leak"
+ },
+ {
+  "id": "Q36",
+  "type": "restricted",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": false,
+  "error": "leak"
+ },
+ {
+  "id": "Q37",
+  "type": "restricted",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": false,
+  "error": "leak"
+ },
+ {
+  "id": "Q38",
+  "type": "restricted",
+  "config": "raw",
+  "correct": false,
+  "plausible_wrong": false,
+  "error": "invented"
+ },
+ {
+  "id": "Q39",
+  "type": "restricted",
+  "config": "raw",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q40",
+  "type": "restricted",
+  "config": "raw",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q01",
+  "type": "count",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q02",
+  "type": "count",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q03",
+  "type": "count",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q04",
+  "type": "count",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q05",
+  "type": "count",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q06",
+  "type": "count",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q07",
+  "type": "count",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q08",
+  "type": "count",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q09",
+  "type": "ratio",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q10",
+  "type": "ratio",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q11",
+  "type": "ratio",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q12",
+  "type": "ratio",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q13",
+  "type": "ratio",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q14",
+  "type": "ratio",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q15",
+  "type": "ratio",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q16",
+  "type": "ratio",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q17",
+  "type": "distinct",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q18",
+  "type": "distinct",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q19",
+  "type": "distinct",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q20",
+  "type": "distinct",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q21",
+  "type": "distinct",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q22",
+  "type": "distinct",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q23",
+  "type": "distinct",
+  "config": "semantic",
+  "correct": false,
+  "plausible_wrong": false,
+  "error": "grain"
+ },
+ {
+  "id": "Q24",
+  "type": "distinct",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q25",
+  "type": "calendar",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q26",
+  "type": "calendar",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q27",
+  "type": "calendar",
+  "config": "semantic",
+  "correct": false,
+  "plausible_wrong": false,
+  "error": "period"
+ },
+ {
+  "id": "Q28",
+  "type": "calendar",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q29",
+  "type": "calendar",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q30",
+  "type": "calendar",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q31",
+  "type": "calendar",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q32",
+  "type": "calendar",
+  "config": "semantic",
+  "correct": false,
+  "plausible_wrong": true,
+  "error": "period"
+ },
+ {
+  "id": "Q33",
+  "type": "restricted",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q34",
+  "type": "restricted",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q35",
+  "type": "restricted",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q36",
+  "type": "restricted",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q37",
+  "type": "restricted",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q38",
+  "type": "restricted",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q39",
+  "type": "restricted",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ },
+ {
+  "id": "Q40",
+  "type": "restricted",
+  "config": "semantic",
+  "correct": true,
+  "plausible_wrong": false,
+  "error": NaN
+ }
+]

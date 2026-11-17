@@ -1,0 +1,35 @@
+[
+ {
+  "label": "measured at the terminus, not the first stop",
+  "rules": {
+   "point": "terminal"
+  }
+ },
+ {
+  "label": "early arrivals count as on time",
+  "rules": {
+   "point": "terminal",
+   "early": null
+  }
+ },
+ {
+  "label": "cancelled trips count as late",
+  "rules": {
+   "point": "terminal",
+   "early": null,
+   "cancelled": "fail"
+  }
+ },
+ {
+  "label": "Hijri month Rabi al-Thani, not September",
+  "rules": {
+   "point": "terminal",
+   "early": null,
+   "cancelled": "fail",
+   "period": [
+    "hijri",
+    "1448-04"
+   ]
+  }
+ }
+]

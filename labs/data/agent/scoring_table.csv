@@ -1,0 +1,11 @@
+type,config,questions,correct,accuracy,low90,high90,plausible_wrong
+count,raw,8,6,0.75,0.46,0.913,2
+ratio,raw,8,3,0.375,0.161,0.652,4
+distinct,raw,8,4,0.5,0.249,0.751,2
+calendar,raw,8,2,0.25,0.087,0.54,6
+restricted,raw,8,3,0.375,0.161,0.652,0
+count,semantic,8,8,1.0,0.747,1.0,0
+ratio,semantic,8,8,1.0,0.747,1.0,0
+distinct,semantic,8,7,0.875,0.589,0.972,0
+calendar,semantic,8,6,0.75,0.46,0.913,1
+restricted,semantic,8,8,1.0,0.747,1.0,0

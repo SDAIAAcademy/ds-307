@@ -1,0 +1,23 @@
+# The three September on-time figures, as their owners wrote the rule under each report (Lab 1.1).
+operations:
+  report: Control centre monthly operations report, September 2026
+  owner: Tawfiq Al-Sahafi, control centre manager
+  published: 80.7%
+  rule_as_written: >-
+    On-time performance is the share of trips that left their first stop no more than one minute early and
+    no more than five minutes late. Cancelled trips did not run, so they are not counted. Calendar month.
+planning:
+  report: Network planning service review, September 2026
+  owner: Dhuha Al-Rowais, network planning manager
+  published: 66.0%
+  rule_as_written: >-
+    Punctuality is measured at every timepoint, not only at the start: the share of recorded timepoint
+    arrivals between one minute early and five minutes late. Calendar month.
+board:
+  report: Board performance pack, September meeting
+  owner: Yasmeen Al-Jaafari, strategy and finance analyst
+  published: 58.4%
+  rule_as_written: >-
+    A trip is on time when it reaches its terminus no more than five minutes late. A trip that did not run, or
+    did not reach the terminus, is not on time. The board pack reports the Hijri month that ends in the
+    meeting's month: Rabi al-Thani 1448.

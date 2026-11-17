@@ -1,0 +1,57 @@
+[
+ {
+  "hijri_month_key": "1447-07",
+  "month_name": "Rajab",
+  "taps_per_day": 2762.0
+ },
+ {
+  "hijri_month_key": "1447-08",
+  "month_name": "Shaban",
+  "taps_per_day": 2855.1724137931033
+ },
+ {
+  "hijri_month_key": "1447-09",
+  "month_name": "Ramadan",
+  "taps_per_day": 2185.6
+ },
+ {
+  "hijri_month_key": "1447-10",
+  "month_name": "Shawwal",
+  "taps_per_day": 2642.103448275862
+ },
+ {
+  "hijri_month_key": "1447-11",
+  "month_name": "Dhu al-Qadah",
+  "taps_per_day": 2933.633333333333
+ },
+ {
+  "hijri_month_key": "1447-12",
+  "month_name": "Dhu al-Hijjah",
+  "taps_per_day": 2730.7586206896553
+ },
+ {
+  "hijri_month_key": "1448-01",
+  "month_name": "Muharram",
+  "taps_per_day": 3028.5172413793102
+ },
+ {
+  "hijri_month_key": "1448-02",
+  "month_name": "Safar",
+  "taps_per_day": 3057.133333333333
+ },
+ {
+  "hijri_month_key": "1448-03",
+  "month_name": "Rabi al-Awwal",
+  "taps_per_day": 2911.0344827586205
+ },
+ {
+  "hijri_month_key": "1448-04",
+  "month_name": "Rabi al-Thani",
+  "taps_per_day": 2765.9666666666667
+ },
+ {
+  "hijri_month_key": "1448-05",
+  "month_name": "Jumada al-Ula",
+  "taps_per_day": 2844.65
+ }
+]
